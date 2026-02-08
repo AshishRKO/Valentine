@@ -62,12 +62,10 @@ if (confettiButton) {
   }
 
   yesBtn?.addEventListener("click", () => {
-    document.body.classList.add("valentine-accepted");
     createConfetti();
     setTimeout(() => {
-      const hero = document.querySelector(".hero");
-      if (hero) hero.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 400);
+      window.location.href = "start.html";
+    }, 600);
   });
 
   noBtn?.addEventListener("mouseenter", moveNoButton);
@@ -81,82 +79,85 @@ if (confettiButton) {
   }, { passive: false });
 })();
 
-// Journey: step-by-step, no skipping
-let lastUnlockedStep = 1;
+// Journey: step-by-step (single-page only); no-op on multi-page
+function completeStep() {}
+(function () {
+  if (!document.querySelector(".journey-step")) return;
+  let lastUnlockedStep = 1;
+  const TOTAL_STEPS = 11;
 
-function getSection(step) {
-  return document.querySelector(`.journey-step[data-step="${step}"]`);
-}
-
-const TOTAL_STEPS = 11;
-
-function completeStep(step) {
-  if (step !== lastUnlockedStep + 1) return;
-  lastUnlockedStep = step;
-  const section = getSection(step);
-  if (section) {
-    section.classList.remove("journey-step--locked");
-    section.querySelector(".journey-step__lock")?.setAttribute("aria-hidden", "true");
+  function getSection(step) {
+    return document.querySelector(`.journey-step[data-step="${step}"]`);
   }
-  updateProgressBar();
-  showCelebration();
-  updateScrollLock();
-  setTimeout(() => scrollToSection(step), 300);
-}
 
-function updateProgressBar() {
-  const numEl = document.getElementById("journeyStepNum");
-  const fillEl = document.getElementById("journeyProgressFill");
-  if (numEl) numEl.textContent = lastUnlockedStep;
-  if (fillEl) fillEl.style.width = (lastUnlockedStep / TOTAL_STEPS) * 100 + "%";
-}
+  window.completeStep = function (step) {
+    if (step !== lastUnlockedStep + 1) return;
+    lastUnlockedStep = step;
+    const section = getSection(step);
+    if (section) {
+      section.classList.remove("journey-step--locked");
+      section.querySelector(".journey-step__lock")?.setAttribute("aria-hidden", "true");
+    }
+    updateProgressBar();
+    showCelebration();
+    updateScrollLock();
+    setTimeout(() => scrollToSection(step), 300);
+  };
 
-function showCelebration() {
-  createConfetti();
-  const toast = document.createElement("div");
-  toast.className = "journey-celebration";
-  toast.setAttribute("aria-live", "polite");
-  toast.textContent = "Step complete! 💕";
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 2400);
-}
-
-function scrollToSection(step) {
-  const section = getSection(step);
-  if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-let maxScrollY = Infinity;
-function updateScrollLock() {
-  const last = getSection(lastUnlockedStep);
-  if (last) {
-    const rect = last.getBoundingClientRect();
-    maxScrollY = last.offsetTop + last.offsetHeight - window.innerHeight;
-    if (maxScrollY < 0) maxScrollY = 0;
+  function updateProgressBar() {
+    const numEl = document.getElementById("journeyStepNum");
+    const fillEl = document.getElementById("journeyProgressFill");
+    if (numEl) numEl.textContent = lastUnlockedStep;
+    if (fillEl) fillEl.style.width = (lastUnlockedStep / TOTAL_STEPS) * 100 + "%";
   }
-}
-window.addEventListener("scroll", () => {
-  if (window.scrollY > maxScrollY) window.scrollTo(0, maxScrollY);
-}, { passive: false });
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
+  function showCelebration() {
+    createConfetti();
+    const toast = document.createElement("div");
+    toast.className = "journey-celebration";
+    toast.setAttribute("aria-live", "polite");
+    toast.textContent = "Step complete! 💕";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2400);
+  }
+
+  function scrollToSection(step) {
+    const section = getSection(step);
+    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  let maxScrollY = Infinity;
+  function updateScrollLock() {
+    const last = getSection(lastUnlockedStep);
+    if (last) {
+      const rect = last.getBoundingClientRect();
+      maxScrollY = last.offsetTop + last.offsetHeight - window.innerHeight;
+      if (maxScrollY < 0) maxScrollY = 0;
+    }
+  }
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > maxScrollY) window.scrollTo(0, maxScrollY);
+  }, { passive: false });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      updateScrollLock();
+      updateProgressBar();
+    });
+  } else {
     updateScrollLock();
     updateProgressBar();
-  });
-} else {
-  updateScrollLock();
-  updateProgressBar();
-}
+  }
 
-document.querySelectorAll("[data-journey-next]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const section = btn.closest(".journey-step");
-    if (!section) return;
-    const step = parseInt(section.getAttribute("data-step"), 10);
-    completeStep(step + 1);
+  document.querySelectorAll("[data-journey-next]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const section = btn.closest(".journey-step");
+      if (!section) return;
+      const step = parseInt(section.getAttribute("data-step"), 10);
+      window.completeStep(step + 1);
+    });
   });
-});
+})();
 
 // Scratch card
 (function () {
@@ -307,8 +308,16 @@ function initQuiz(containerSelector, resultId, onAllAnswered) {
     });
   });
 }
-initQuiz("#quiz", "quizResult", () => completeStep(8));
-initQuiz("#quickfire", "quickfireResult", () => completeStep(9));
+initQuiz("#quiz", "quizResult", () => {
+  const next = document.getElementById("quizNext");
+  if (next) next.hidden = false;
+  completeStep(8);
+});
+initQuiz("#quickfire", "quickfireResult", () => {
+  const next = document.getElementById("quickfireNext");
+  if (next) next.hidden = false;
+  completeStep(9);
+});
 
 // Proposal: choose a button
 const proposalAnswer = document.getElementById("proposalAnswer");
@@ -409,7 +418,7 @@ const secretSubmit = document.getElementById("secretSubmit");
 const secretMessage = document.getElementById("secretMessage");
 const secretClose = document.getElementById("secretClose");
 const secretTrigger = document.getElementById("secretTrigger");
-const secretWords = ["aku", "ardhangini", "akansha"];
+const secretWords = ["aku", "ardhangini", "akanksha"];
 function openSecretModal() {
   if (!secretModal) return;
   secretModal.setAttribute("aria-hidden", "false");

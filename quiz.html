@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz — For Akanksha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="page-quiz">
+    <header class="journey-header">
+      <span class="journey-header__brand">For Aku</span>
+      <span class="journey-header__step">Step 5 of 9</span>
+    </header>
+
+    <main class="journey-main">
+      <section class="section section--soft">
+        <div class="section__heading">
+          <h2>How well do you know us?</h2>
+          <p>Pick the answer that fits our story.</p>
+        </div>
+        <div class="quiz" id="quiz">
+          <div class="quiz__item">
+            <p class="quiz__question">When did we first message?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt" data-correct>Nov 7, 2025</button>
+              <button type="button" class="quiz__opt">Dec 20</button>
+              <button type="button" class="quiz__opt">Jan 1</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item">
+            <p class="quiz__question">What did we say we'd find a way for?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">A vacation</button>
+              <button type="button" class="quiz__opt" data-correct>Us</button>
+              <button type="button" class="quiz__opt">A house</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item">
+            <p class="quiz__question">When did we first meet in person?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">Nov 7</button>
+              <button type="button" class="quiz__opt" data-correct>Dec 20</button>
+              <button type="button" class="quiz__opt">New Year's</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item">
+            <p class="quiz__question">What's the first thing we joked about?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt" data-correct>Height</button>
+              <button type="button" class="quiz__opt">Food</button>
+              <button type="button" class="quiz__opt">Weather</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+        </div>
+        <p class="quiz__result" id="quizResult" aria-live="polite"></p>
+      </section>
+
+      <nav class="journey-next" id="quizNext" hidden>
+        <a href="quickfire.html" class="button">Continue your journey →</a>
+      </nav>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

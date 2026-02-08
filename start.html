@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your journey — For Akanksha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="page-start">
+    <header class="journey-header">
+      <span class="journey-header__brand">For Aku</span>
+      <span class="journey-header__step">Step 1 of 9</span>
+    </header>
+
+    <main class="journey-main">
+      <section class="section section--soft">
+        <div class="section__heading">
+          <h2>It Started With a Simple Hello</h2>
+          <p>I reached out with respect, a little nervous, and a lot of sincerity.</p>
+        </div>
+        <div class="section__heading">
+          <h3>Your first task</h3>
+          <p>Scratch the card below with your finger or mouse. Don't peek!</p>
+        </div>
+        <div class="scratch-wrap">
+          <div class="scratch-card">
+            <div class="scratch-card__message" id="scratchMessage">You're my favourite person. 💕</div>
+            <canvas class="scratch-card__canvas" id="scratchCanvas" width="320" height="180" aria-label="Scratch to reveal"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <nav class="journey-next">
+        <a href="intro.html" class="button">Continue your journey →</a>
+      </nav>
+    </main>
+
+    <div class="confetti" id="confetti"></div>
+    <script src="script.js"></script>
+  </body>
+</html>

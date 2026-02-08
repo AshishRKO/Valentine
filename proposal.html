@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The question — For Akanksha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="page-proposal">
+    <header class="journey-header">
+      <span class="journey-header__brand">For Aku</span>
+      <span class="journey-header__step">Step 8 of 9</span>
+    </header>
+
+    <main class="journey-main">
+      <section class="section section--proposal proposal-section">
+        <div class="proposal-box">
+          <p class="proposal-box__lead">(Forever and always.)</p>
+          <h2 class="proposal-box__title">Akanksha, will you be my Valentine?</h2>
+          <div class="proposal-answer" id="proposalAnswer">
+            <p class="proposal-answer__hint">Say yes?</p>
+            <div class="proposal-answer__row proposal-answer__row--buttons">
+              <button type="button" class="button button--proposal" id="yesChoose">Yes! 💕</button>
+              <button type="button" class="button button--proposal-alt" id="yesDo">I do</button>
+            </div>
+          </div>
+          <div class="proposal-answer-done" id="proposalDone" hidden>
+            <p class="proposal-answer-done__text">You said yes. 💕</p>
+          </div>
+        </div>
+      </section>
+
+      <nav class="journey-next journey-next--after-proposal" id="proposalNext" hidden>
+        <a href="closing.html" class="button">To the end →</a>
+      </nav>
+    </main>
+
+    <div class="confetti" id="confetti"></div>
+    <script src="script.js"></script>
+    <script>
+      (function () {
+        var yesChoose = document.getElementById("yesChoose");
+        var yesDo = document.getElementById("yesDo");
+        var proposalAnswer = document.getElementById("proposalAnswer");
+        var proposalDone = document.getElementById("proposalDone");
+        var proposalNext = document.getElementById("proposalNext");
+        function accept() {
+          if (!proposalAnswer || !proposalDone) return;
+          proposalAnswer.hidden = true;
+          proposalDone.hidden = false;
+          if (typeof createConfetti === "function") createConfetti();
+          if (proposalNext) proposalNext.hidden = false;
+        }
+        yesChoose && yesChoose.addEventListener("click", accept);
+        yesDo && yesDo.addEventListener("click", accept);
+        var section = document.querySelector(".proposal-section");
+        if (section) {
+          var lastTap = 0;
+          section.addEventListener("click", function (e) {
+            var now = Date.now();
+            if (now - lastTap < 400 && now - lastTap > 0) {
+              var container = document.createElement("div");
+              container.className = "hearts-float";
+              for (var i = 0; i < 10; i++) {
+                var heart = document.createElement("span");
+                heart.textContent = "❤️";
+                heart.style.cssText = "position:absolute;left:" + (e.clientX + (Math.random() - 0.5) * 80) + "px;top:" + e.clientY + "px;font-size:" + (24 + Math.random() * 20) + "px;animation:heartFloat 2s ease-out forwards;pointer-events:none;";
+                container.appendChild(heart);
+              }
+              document.body.appendChild(container);
+              setTimeout(function () { container.remove(); }, 2200);
+              lastTap = 0;
+            } else {
+              lastTap = now;
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

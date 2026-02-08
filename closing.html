@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The end — For Akanksha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="page-closing">
+    <header class="journey-header">
+      <span class="journey-header__brand">For Aku</span>
+      <span class="journey-header__step">Step 9 of 9</span>
+    </header>
+
+    <main class="journey-main">
+      <section class="section section--soft">
+        <div class="section__heading">
+          <h2>You've reached the end of this little journey.</h2>
+        </div>
+        <div class="intro-text">
+          <p>Thank you for saying yes — to us, and to being my Valentine.</p>
+          <p>I'm so glad we found a way. Here's to every step ahead. 💕</p>
+        </div>
+      </section>
+
+      <footer class="footer footer--journey">
+        <p class="footer__magic">
+          <button type="button" class="button button--ghost" id="confettiButton">Tap for a little magic ✨</button>
+        </p>
+        <p class="footer__secret">
+          <button type="button" class="button button--ghost" id="secretTrigger">Unlock a secret</button>
+        </p>
+      </footer>
+    </main>
+
+    <div class="confetti" id="confetti"></div>
+
+    <div class="secret-modal" id="secretModal" aria-hidden="true">
+      <div class="secret-modal__inner">
+        <button type="button" class="secret-modal__close" id="secretClose" aria-label="Close">×</button>
+        <p>Unlock a secret — enter a word that means something to us.</p>
+        <input type="text" class="secret-modal__input" id="secretInput" placeholder="Type here…" autocomplete="off" />
+        <button type="button" class="button" id="secretSubmit">Try</button>
+        <p class="secret-modal__message" id="secretMessage" hidden></p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
