@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>For Akansha — My Proposal to You</title>
+    <meta
+      name="description"
+      content="A small corner of the internet, just for you. My proposal for our wedding."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="valentine-gate" id="valentineGate">
+      <div class="valentine-gate__content">
+        <h1 class="valentine-gate__title">Akansha, will you be my Valentine?</h1>
+        <p class="valentine-gate__sub">(There’s only one right answer… 😄)</p>
+        <div class="valentine-gate__buttons">
+          <button type="button" class="button button--valentine-yes" id="valentineYes">Yes! 💕</button>
+          <div class="valentine-gate__no-wrap">
+            <button type="button" class="button button--valentine-no" id="valentineNo">No</button>
+          </div>
+        </div>
+        <p class="valentine-gate__hint" id="valentineHint" hidden>Nice try! Yes is this way ↑ 😊</p>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero__overlay"></div>
+      <nav class="nav">
+        <div class="nav__brand">For Aku</div>
+        <div class="nav__links">
+          <a href="#scratch">Scratch</a>
+          <a href="#intro">Introduction</a>
+          <a href="#first-smile">First Smile</a>
+          <a href="#story-dates">Story</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#quickfire">Quick fire</a>
+          <a href="#admire">Admire</a>
+          <a href="#promises">Promises</a>
+          <a href="#proposal">Proposal</a>
+          <a href="#closing">Closing</a>
+        </div>
+      </nav>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow">Akansha, this is for you</p>
+        <h1 class="hero__title">It Started With a Simple Hello</h1>
+        <p class="hero__subtitle">
+          I reached out with respect, a little nervous, and a lot of sincerity.
+          And from the very first conversation, this journey felt calm, natural, and right.
+        </p>
+        <a class="button" href="#scratch">Start here — scratch the card</a>
+      </div>
+    </header>
+
+    <div class="journey-progress" id="journeyProgress" aria-label="Journey progress">
+      <span class="journey-progress__text">Step <span id="journeyStepNum">1</span> of 11</span>
+      <div class="journey-progress__bar"><div class="journey-progress__fill" id="journeyProgressFill"></div></div>
+    </div>
+
+    <main>
+      <section id="scratch" class="section section--soft journey-step" data-step="1">
+        <div class="section__heading">
+          <h2>Your first task</h2>
+          <p>Scratch the card below with your finger or mouse. Don’t peek!</p>
+        </div>
+        <div class="scratch-wrap">
+          <div class="scratch-card">
+            <div class="scratch-card__message" id="scratchMessage">
+              You’re my favourite person. 💕
+            </div>
+            <canvas class="scratch-card__canvas" id="scratchCanvas" width="320" height="180" aria-label="Scratch to reveal message"></canvas>
+          </div>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="intro" class="section journey-step journey-step--locked" data-step="2">
+        <div class="section__heading">
+          <h2>From an Introduction to a Connection</h2>
+        </div>
+        <div class="intro-text">
+          <p>
+            Our parents introduced us, but what mattered most to me was what we felt.
+          </p>
+          <p>
+            The ease of our conversations.<br />
+            The comfort of honesty.<br />
+            The feeling that this could grow into something meaningful.
+          </p>
+        </div>
+        <button type="button" class="ps-note" id="psIntro" aria-label="Read P.S.">P.S.</button>
+        <div class="journey-step__continue">
+          <button type="button" class="button" data-journey-next>Continue</button>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="first-smile" class="section section--soft journey-step journey-step--locked" data-step="3">
+        <div class="section__heading">
+          <h2>The First Smile</h2>
+        </div>
+        <div class="intro-text">
+          <p>
+            Before deep conversations, there was a simple question.<br />
+            <em class="easter-egg" id="heightEgg" title="Tap me">“What’s your height?”</em>
+          </p>
+          <p>
+            And suddenly, the nervousness turned into laughter.<br />
+            That’s when I knew—talking to you would always feel easy.
+          </p>
+        </div>
+        <button type="button" class="ps-note" id="psSmile" aria-label="Read P.S.">P.S.</button>
+        <div class="journey-step__continue">
+          <button type="button" class="button" data-journey-next>Continue</button>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="story-dates" class="section section--soft journey-step journey-step--locked" data-step="4">
+        <div class="section__heading">
+          <h2>Our story in dates</h2>
+          <p>Tap each dot to reveal a moment.</p>
+        </div>
+        <div class="story-timeline">
+          <button type="button" class="story-timeline__dot" data-date="Nov 7, 2025" data-moment="First message — “Hey Akansha”">1</button>
+          <button type="button" class="story-timeline__dot" data-date="Nov 8" data-moment="First call. We talked for hours.">2</button>
+          <button type="button" class="story-timeline__dot" data-date="Dec" data-moment="“We’ll find a way.” And we did.">3</button>
+          <button type="button" class="story-timeline__dot" data-date="Dec 20" data-moment="First meet. You, me, and a day I’ll never forget.">4</button>
+          <button type="button" class="story-timeline__dot" data-date="Today" data-moment="Still choosing you. Every day.">5</button>
+        </div>
+        <p class="story-timeline__reveal" id="storyReveal" aria-live="polite"></p>
+        <div class="journey-step__continue">
+          <button type="button" class="button" data-journey-next>Continue</button>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="why-you" class="section journey-step journey-step--locked" data-step="5">
+        <div class="section__heading">
+          <h2>Why I Wanted to Know You Better</h2>
+        </div>
+        <div class="intro-text">
+          <p>
+            I told you I respected our parents’ intentions,<br />
+            but more than anything, I wanted to know you.
+          </p>
+          <p>
+            Not just as a proposal—<br />
+            but as a person, a partner, and a future we could choose together.
+          </p>
+        </div>
+        <div class="journey-step__continue">
+          <button type="button" class="button" data-journey-next>Continue</button>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="admire" class="section section--soft journey-step journey-step--locked" data-step="6">
+        <div class="section__heading">
+          <h2>What I’ve Come to Admire About You</h2>
+          <p>A few of the things that matter to me.</p>
+        </div>
+        <div class="reasons">
+          <div class="reason">
+            <span class="reason__number">01</span>
+            <p>Your clarity and honesty.</p>
+          </div>
+          <div class="reason">
+            <span class="reason__number">02</span>
+            <p>Your ability to make conversations feel comfortable.</p>
+          </div>
+          <div class="reason">
+            <span class="reason__number">03</span>
+            <p>Your confidence to speak your mind.</p>
+          </div>
+          <div class="reason">
+            <span class="reason__number">04</span>
+            <p>Your calm and practical approach to life.</p>
+          </div>
+        </div>
+        <div class="section__heading section__heading--sub">
+          <h3>Our moments</h3>
+        </div>
+        <div class="gallery" data-gallery>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251124-WA0010.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251127-WA0021.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251218-WA0026.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251220-WA0030.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251220-WA0035.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251220-WA0042.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251220-WA0050.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251220-WA0060.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251221-WA0006.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251222-WA0036.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20251225-WA0027.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260104-WA0018.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260108-WA0014.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260114-WA0026.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260116-WA0040.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260125-WA0035.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260131-WA0018.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260202-WA0022.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260204-WA0000.jpg" alt="Our moments" loading="lazy" /></div>
+            <div class="gallery__item"><img src="WhatsApp/IMG-20260207-WA0004.jpg" alt="Our moments" loading="lazy" /></div>
+        </div>
+        <div class="journey-step__continue">
+          <button type="button" class="button" data-journey-next>I've seen our moments — continue</button>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="quiz" class="section journey-step journey-step--locked" data-step="7">
+        <div class="section__heading">
+          <h2>How well do you know us?</h2>
+          <p>Pick an answer for each. No pressure — it’s just for fun.</p>
+        </div>
+        <div class="quiz">
+          <div class="quiz__item" data-quiz="0">
+            <p class="quiz__question">What did you ask Ashish first?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt" data-correct>Height</button>
+              <button type="button" class="quiz__opt">His job</button>
+              <button type="button" class="quiz__opt">His kundali</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="1">
+            <p class="quiz__question">When did you first meet in person?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">November 2025</button>
+              <button type="button" class="quiz__opt" data-correct>December 20, 2025</button>
+              <button type="button" class="quiz__opt">January 2026</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="2">
+            <p class="quiz__question">When dates didn’t match (Uttarakhand!), what did he say?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">Let’s wait</button>
+              <button type="button" class="quiz__opt" data-correct>We’ll find a way</button>
+              <button type="button" class="quiz__opt">I’ll come later</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="3">
+            <p class="quiz__question">What’s Ashish’s height? (You asked for a reason 😄)</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt" data-correct>5'8"</button>
+              <button type="button" class="quiz__opt">5'10"</button>
+              <button type="button" class="quiz__opt">5'6"</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="4">
+            <p class="quiz__question">Where does Ashish live?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">UK</button>
+              <button type="button" class="quiz__opt" data-correct>Germany</button>
+              <button type="button" class="quiz__opt">USA</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="5">
+            <p class="quiz__question">What did Ashish prefer for the first call?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt" data-correct>Video call</button>
+              <button type="button" class="quiz__opt">Voice call</button>
+              <button type="button" class="quiz__opt">Text only</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="6">
+            <p class="quiz__question">You said these matter most to you. Which one did you mention?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">Money and status</button>
+              <button type="button" class="quiz__opt" data-correct>Respect, love and care</button>
+              <button type="button" class="quiz__opt">Same city first</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="7">
+            <p class="quiz__question">Who gave Ashish your number?</p>
+            <div class="quiz__options">
+              <button type="button" class="quiz__opt">A common friend</button>
+              <button type="button" class="quiz__opt" data-correct>His father</button>
+              <button type="button" class="quiz__opt">A matrimonial site</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+        </div>
+        <p class="quiz__result" id="quizResult"></p>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="quickfire" class="section section--soft journey-step journey-step--locked" data-step="8">
+        <div class="section__heading">
+          <h2>Quick fire — true or false?</h2>
+          <p>No overthinking. Just tap your gut.</p>
+        </div>
+        <div class="quiz quickfire">
+          <div class="quiz__item" data-quiz="q0">
+            <p class="quiz__question">Ashish said chatting with you “always brightens his day”.</p>
+            <div class="quiz__options quiz__options--tf">
+              <button type="button" class="quiz__opt" data-correct>True</button>
+              <button type="button" class="quiz__opt">False</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="q1">
+            <p class="quiz__question">He wanted to know you as a person, not just as a “proposal”.</p>
+            <div class="quiz__options quiz__options--tf">
+              <button type="button" class="quiz__opt" data-correct>True</button>
+              <button type="button" class="quiz__opt">False</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="q2">
+            <p class="quiz__question">You once said you didn’t even notice how long you’d been talking.</p>
+            <div class="quiz__options quiz__options--tf">
+              <button type="button" class="quiz__opt" data-correct>True</button>
+              <button type="button" class="quiz__opt">False</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="q3">
+            <p class="quiz__question">Ashish said he will “choose you every single day”.</p>
+            <div class="quiz__options quiz__options--tf">
+              <button type="button" class="quiz__opt" data-correct>True</button>
+              <button type="button" class="quiz__opt">False</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+          <div class="quiz__item" data-quiz="q4">
+            <p class="quiz__question">You called him your “cute handsome babe”.</p>
+            <div class="quiz__options quiz__options--tf">
+              <button type="button" class="quiz__opt" data-correct>True</button>
+              <button type="button" class="quiz__opt">False</button>
+            </div>
+            <p class="quiz__feedback" aria-live="polite"></p>
+          </div>
+        </div>
+        <p class="quiz__result" id="quickfireResult"></p>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="promises" class="section journey-step journey-step--locked" data-step="9">
+        <div class="section__heading">
+          <h2>What I Promise You</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline__item">
+            <span class="timeline__time">Respect</span>
+            <p>To always speak to you with respect.</p>
+          </div>
+          <div class="timeline__item">
+            <span class="timeline__time">Listen</span>
+            <p>To listen, even when we disagree.</p>
+          </div>
+          <div class="timeline__item">
+            <span class="timeline__time">Grow</span>
+            <p>To build a partnership where we grow together.</p>
+          </div>
+          <div class="timeline__item">
+            <span class="timeline__time">Gratitude</span>
+            <p>To never take your “yes” for granted.</p>
+          </div>
+        </div>
+        <div class="journey-step__continue">
+          <button type="button" class="button" data-journey-next>Continue</button>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="proposal" class="section section--proposal journey-step journey-step--locked" data-step="10">
+        <div class="proposal-box">
+          <p class="proposal-box__lead">
+            We started this journey with honesty and mutual respect.
+            Today, I want to take the next step—not because it’s expected,
+            but because it feels right.
+          </p>
+          <h2 class="proposal-box__title">Akansha, will you choose me—not just as someone your family introduced you to, but as your partner in life, your teammate, and your home?</h2>
+          <div class="proposal-answer" id="proposalAnswer">
+            <p class="proposal-answer__hint">Choose your answer:</p>
+            <div class="proposal-answer__row proposal-answer__row--buttons">
+              <button class="button button--proposal" id="yesChoose" type="button">Yes, I choose you 💍</button>
+              <button class="button button--proposal button--proposal-alt" id="yesDo" type="button">I do</button>
+            </div>
+          </div>
+          <div class="proposal-answer-done" id="proposalDone" hidden>
+            <p class="proposal-answer-done__text">Thank you. I’m so glad. 💍</p>
+          </div>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+
+      <section id="closing" class="section section--rose journey-step journey-step--locked" data-step="11">
+        <div class="love-note">
+          <h2>This is just the beginning</h2>
+          <p>
+            I’m grateful we found clarity, comfort, and choice in each other.<br />
+            I look forward to building our life—together.
+          </p>
+          <p class="love-note__signature">— Ashish</p>
+          <p class="love-note__signature love-note__date">February 7, 2026</p>
+        </div>
+        <div class="journey-step__lock" aria-hidden="true">Complete the step above to continue 💕</div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Made with love for Akansha — my soon-to-be Ardhangini.</p>
+      <button class="button button--ghost" id="confettiButton">
+        Tap for a little magic
+      </button>
+      <button type="button" class="footer-secret" id="secretTrigger">🔒 Unlock a secret</button>
+    </footer>
+
+    <div class="secret-modal" id="secretModal" aria-hidden="true">
+      <div class="secret-modal__inner">
+        <p>Enter a word only we know:</p>
+        <input type="text" class="secret-modal__input" id="secretInput" placeholder="Try Aku or Ardhangini…" autocomplete="off" />
+        <button type="button" class="button" id="secretSubmit">Unlock</button>
+        <p class="secret-modal__message" id="secretMessage" hidden></p>
+        <button type="button" class="secret-modal__close" id="secretClose" aria-label="Close">×</button>
+      </div>
+    </div>
+
+    <div class="ps-popover" id="psPopover" hidden aria-live="polite"></div>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lightbox__close" id="lightboxClose" type="button" aria-label="Close">×</button>
+      <div class="lightbox__inner">
+        <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+      </div>
+    </div>
+
+    <div class="confetti" id="confetti"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
