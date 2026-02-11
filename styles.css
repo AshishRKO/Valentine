@@ -10,15 +10,39 @@
   --rose-dark: #b83b5e;
   --rose-mid: #d14d72;
   --cream: #fff7f2;
+  --blush: #ffe4ec;
   --ink: #2f2f36;
+}
+
+html {
+  font-size: 18px;
 }
 
 body {
   margin: 0;
   font-family: "Lora", Georgia, serif;
   color: var(--ink);
-  background: var(--cream);
+  background: linear-gradient(165deg, #fff8f9 0%, #fff0f4 25%, #ffe8ef 50%, #fff2f6 75%, #fffafb 100%);
+  background-attachment: fixed;
   line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 105, 180, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 228, 232, 0.2) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 body.valentine-accepted .valentine-gate {
@@ -104,6 +128,65 @@ body.valentine-accepted .valentine-gate {
   opacity: 0.95;
   animation: fadeIn 0.3s ease;
 }
+.valentine-gate--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.valentine-yes-message {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f857a6 0%, #ff5858 50%, #b83b5e 100%);
+  animation: fadeIn 0.5s ease;
+}
+.valentine-yes-message[hidden] {
+  display: none;
+}
+.valentine-yes-message__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  text-align: center;
+}
+.valentine-yes-message__text {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(4rem, 22vw, 12rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
+}
+.valentine-yes-message__heart {
+  display: inline-block;
+  margin: 0 0.05em;
+  color: #e53935;
+  animation: pulse 1s ease-in-out infinite;
+}
+.valentine-yes-message__continue {
+  background: #fff;
+  color: var(--rose-dark);
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.valentine-yes-message__continue:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+@keyframes pulse {
+  50% { transform: scale(1.15); }
+}
 
 /* Journey pages: header + next link */
 .journey-header {
@@ -111,9 +194,10 @@ body.valentine-accepted .valentine-gate {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid var(--rose);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 240, 245, 0.95) 100%);
+  border-bottom: 1px solid rgba(214, 77, 114, 0.2);
   font-size: 0.95rem;
+  box-shadow: 0 2px 12px rgba(184, 59, 94, 0.04);
 }
 .journey-header__brand {
   font-family: "Dancing Script", cursive;
@@ -125,10 +209,16 @@ body.valentine-accepted .valentine-gate {
   opacity: 0.85;
 }
 .journey-main {
-  max-width: 640px;
+  width: 100%;
+  max-width: min(700px, 94vw);
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2rem clamp(1rem, 5vw, 2.5rem) 4rem;
 }
+
+.journey-main--wide {
+  max-width: min(760px, 94vw);
+}
+
 .journey-next {
   text-align: center;
   margin-top: 2.5rem;
@@ -263,11 +353,14 @@ img {
 }
 
 .section {
-  padding: 4.5rem 6vw;
+  padding: 4.5rem clamp(0, 6vw, 3rem);
 }
 
 .section--soft {
-  background: var(--rose);
+  background: linear-gradient(180deg, rgba(255, 248, 250, 0.9) 0%, rgba(255, 228, 235, 0.6) 100%);
+  border-radius: 24px;
+  margin: 0 0.5rem;
+  box-shadow: 0 4px 24px rgba(184, 59, 94, 0.06);
 }
 
 /* Photo galleries */
@@ -286,8 +379,29 @@ img {
 .gallery {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
 }
+
+/* Our moments gallery: 2 cols on small, 3 on medium+ */
+.gallery--moments,
+.gallery--her {
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+}
+
+@media (min-width: 400px) {
+  .gallery--moments,
+  .gallery--her {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 600px) {
+  .gallery--moments,
+  .gallery--her {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .gallery__item {
   border-radius: 16px;
   overflow: hidden;
@@ -305,6 +419,21 @@ img {
 .gallery__item:hover img {
   transform: scale(1.05);
 }
+
+.gallery__item--empty {
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.gallery__item--empty::after {
+  content: "💕";
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
 
 /* Lightbox */
 .lightbox {
@@ -410,7 +539,7 @@ img {
 
 .section__heading {
   text-align: center;
-  max-width: 700px;
+  max-width: min(700px, 100%);
   margin: 0 auto 2.5rem;
 }
 
@@ -437,8 +566,14 @@ img {
   margin: 0;
 }
 
+.section__heading-desc {
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  color: var(--rose-mid);
+}
+
 .intro-text {
-  max-width: 640px;
+  max-width: min(640px, 100%);
   margin: 0 auto;
   text-align: center;
 }
@@ -455,17 +590,20 @@ img {
 .scratch-wrap {
   display: flex;
   justify-content: center;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
+  width: 100%;
 }
+
 .scratch-card {
   position: relative;
-  width: 320px;
-  max-width: 100%;
-  height: 180px;
+  width: 100%;
+  max-width: min(480px, 95vw);
+  aspect-ratio: 16 / 9;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
 }
+
 .scratch-card__message {
   position: absolute;
   inset: 0;
@@ -475,16 +613,20 @@ img {
   background: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
   color: #fff;
   font-family: "Dancing Script", cursive;
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 4vw, 2rem);
   padding: 1.5rem;
   text-align: center;
 }
+
 .scratch-card__canvas {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   cursor: grab;
   touch-action: none;
 }
+
 .scratch-card__canvas:active {
   cursor: grabbing;
 }
@@ -561,6 +703,160 @@ img {
   font-family: "Dancing Script", cursive;
   font-size: 1.8rem;
   color: var(--rose-dark);
+}
+
+/* Quiz intro (start page) */
+.quiz-intro__text {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin: 0 0 2rem;
+  opacity: 0.9;
+}
+
+/* Quiz single question (one per page) */
+.quiz-single {
+  max-width: 520px;
+  margin: 0 auto;
+  transition: transform 0.4s ease;
+}
+
+.quiz-single__context {
+  font-size: 1rem;
+  color: var(--rose-mid);
+  margin: 0 0 0.5rem;
+  font-style: italic;
+}
+
+.quiz-single__question {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: var(--rose-dark);
+  margin: 0 0 1.5rem;
+  line-height: 1.3;
+}
+
+.quiz-single__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quiz-single__opt {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  border: 2px solid var(--rose-mid);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.quiz-single__opt:hover:not(:disabled) {
+  background: var(--rose);
+  border-color: var(--rose-dark);
+  transform: translateX(4px);
+}
+
+.quiz-single__opt:disabled {
+  cursor: default;
+}
+
+.quiz-single__opt--correct {
+  border-color: #2e7d32;
+  background: #e8f5e9;
+  color: #1b5e20;
+  animation: quizCorrect 0.5s ease;
+}
+
+.quiz-single__opt--wrong {
+  border-color: #c62828;
+  background: #ffebee;
+  color: #b71c1c;
+  animation: quizShake 0.5s ease;
+}
+
+@keyframes quizCorrect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes quizShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.quiz-single__feedback {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(184, 59, 94, 0.2);
+}
+
+.quiz-single__result {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  text-align: center;
+  margin: 0;
+  animation: quizResultIn 0.5s ease;
+}
+
+.quiz-single__result--correct {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.quiz-single__result--incorrect {
+  color: #c62828;
+}
+
+.quiz-single__result--reaction {
+  color: var(--rose-dark);
+  font-style: italic;
+}
+
+@keyframes quizResultIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quiz-single--correct {
+  animation: quizSectionPulse 0.6s ease;
+}
+
+.quiz-single--incorrect .quiz-single__opt--wrong {
+  animation: quizShake 0.5s ease;
+}
+
+.quiz-single--reaction .quiz-single__result {
+  color: var(--rose-dark);
+}
+
+@keyframes quizSectionPulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.quiz-single__next {
+  margin-top: 1.5rem;
+}
+
+.quiz-single__next[hidden] {
+  display: none !important;
 }
 
 /* Proposal type answer */
@@ -742,14 +1038,147 @@ img {
   display: none;
 }
 
-/* Story timeline */
+/* Story timeline — visual vertical timeline */
+.story-section .section__heading p {
+  font-size: 0.95rem;
+  color: #666;
+}
+
 .story-timeline {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
+  position: relative;
   margin-bottom: 1rem;
 }
+
+/* Vertical line */
+.story-timeline--visual {
+  max-width: min(640px, 100%);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.story-timeline__line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  margin-left: -1.5px;
+  background: linear-gradient(180deg, var(--rose-mid), var(--rose-dark));
+  border-radius: 999px;
+}
+
+/* Each milestone */
+.story-timeline__item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  min-height: 60px;
+}
+
+.story-timeline__item:last-child {
+  margin-bottom: 0;
+}
+
+/* Node (dot on the line) */
+.story-timeline__node {
+  position: absolute;
+  left: 50%;
+  top: 0.5rem;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  background: var(--rose-dark);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--rose-mid);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Content card — left or right of line */
+.story-timeline__content {
+  width: calc(50% - 2rem);
+  background: #fff;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(248, 87, 166, 0.15);
+}
+
+.story-timeline__item--left .story-timeline__content {
+  margin-right: auto;
+  margin-left: 0;
+  padding-left: 1.5rem;
+}
+
+.story-timeline__item--right .story-timeline__content {
+  margin-left: auto;
+  margin-right: 0;
+  padding-right: 1.5rem;
+}
+
+.story-timeline__item--right {
+  flex-direction: row-reverse;
+}
+
+.story-timeline__item--right .story-timeline__content {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.story-timeline__item--left .story-timeline__content {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.story-timeline__date {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: var(--rose-mid);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.story-timeline__moment {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* Mobile: stack to one side, line to the left */
+@media (max-width: 600px) {
+  .story-timeline__line {
+    left: 1rem;
+    margin-left: 0;
+  }
+
+  .story-timeline__node {
+    left: 1rem;
+    margin-left: 0;
+    transform: translateX(-50%);
+  }
+
+  .story-timeline__item,
+  .story-timeline__item--right {
+    flex-direction: row;
+  }
+
+  .story-timeline__content {
+    width: calc(100% - 2.5rem);
+    margin-left: 2.5rem !important;
+    margin-right: 0 !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
+
+/* Legacy dot style (kept for any single-page version) */
 .story-timeline__dot {
   width: 48px;
   height: 48px;
@@ -952,6 +1381,355 @@ img {
   color: var(--rose-mid);
 }
 
+/* Celebration / closing page */
+.page-closing .journey-main--celebration {
+  max-width: min(720px, 94vw);
+  padding-bottom: 4rem;
+}
+
+.celebration-hero {
+  text-align: center;
+  padding: 2.5rem clamp(1rem, 4vw, 1.5rem) 2rem;
+  margin: 0 calc(-1 * clamp(1rem, 5vw, 2.5rem)) 1.5rem;
+  background: linear-gradient(145deg, #f857a6 0%, #ff5858 40%, #b83b5e 100%);
+  border-radius: 0 0 32px 32px;
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(248, 87, 166, 0.35);
+}
+
+.celebration-hero__deco {
+  font-size: 1.5rem;
+  letter-spacing: 0.2em;
+  margin: 0 0 0.5rem;
+  opacity: 0.95;
+}
+.celebration-hero__deco--b {
+  margin: 1rem 0 0;
+  letter-spacing: 0.15em;
+}
+
+.celebration-hero__title {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(2.5rem, 10vw, 4.5rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+}
+
+.celebration-hero__yay {
+  display: block;
+  font-size: 0.5em;
+  margin-bottom: 0.15em;
+  opacity: 0.95;
+}
+
+.celebration-hero__sub {
+  font-size: 1.15rem;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Time We've Shared counter */
+.time-counter-section {
+  background: linear-gradient(180deg, #fff5f8 0%, #ffe8ef 100%);
+  padding: 2rem clamp(1rem, 4vw, 1.5rem) 2.5rem;
+  margin: 0 calc(-1 * clamp(1rem, 5vw, 2.5rem)) 2rem;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.time-counter__icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.time-counter__title {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--rose-dark);
+  margin: 0 0 0.25rem;
+}
+
+.time-counter__tagline {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0 0 1.5rem;
+}
+
+.time-counter__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  max-width: 480px;
+  margin: 0 auto 1.25rem;
+}
+
+.time-counter__card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border-top: 3px solid var(--rose-mid);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.time-counter__number {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--rose-dark);
+  line-height: 1.1;
+}
+
+.time-counter__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.time-counter__unit-icon {
+  font-size: 1rem;
+  margin-top: 0.15rem;
+  opacity: 0.8;
+}
+
+.time-counter__footer {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+@media (max-width: 520px) {
+  .time-counter__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.celebration-letter {
+  background: #fff;
+  padding: 2rem 2rem 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(248, 87, 166, 0.2);
+}
+
+.celebration-letter__greeting {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: var(--rose-dark);
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+
+.celebration-letter__body {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.celebration-letter__body p {
+  margin: 0 0 1.25rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.celebration-letter__body p:last-of-type {
+  margin-bottom: 0;
+}
+
+.celebration-letter__sign-off {
+  text-align: center;
+  margin: 2rem 0 0;
+  font-size: 1.05rem;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.celebration-letter__name {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.8rem;
+  color: var(--rose-dark);
+  font-weight: 600;
+}
+
+.celebration-letter__ps {
+  text-align: center;
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--rose-mid);
+  font-style: italic;
+}
+
+/* Love meter */
+/* Celebration poem */
+.celebration-poem {
+  background: linear-gradient(180deg, #fff9fb 0%, #fff 100%);
+  padding: 2rem 1.5rem 2.5rem;
+  margin-bottom: 2rem;
+  border-radius: 24px;
+  border: 1px solid rgba(248, 87, 166, 0.15);
+}
+
+.celebration-poem__line {
+  max-width: min(520px, 100%);
+  margin: 0 auto 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--ink);
+  text-align: center;
+  font-style: italic;
+}
+
+.celebration-poem__line:last-child {
+  margin-bottom: 0;
+}
+
+.love-meter-section {
+  background: #fff;
+  padding: 2rem 1.5rem;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(248, 87, 166, 0.2);
+}
+
+.love-meter__title {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  color: var(--rose-dark);
+  text-align: center;
+  margin: 0 0 0.25rem;
+}
+
+.love-meter__hint {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--ink);
+  opacity: 0.9;
+  margin: 0 0 1.5rem;
+}
+
+.love-meter {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto 1rem;
+}
+
+.love-meter__track {
+  height: 28px;
+  background: var(--rose);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.love-meter__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f857a6, #ff5858);
+  border-radius: 999px;
+  transition: width 0.15s ease-out;
+}
+
+.love-meter__input {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 36px;
+  margin: -18px 0 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.love-meter__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.love-meter__label {
+  text-align: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  color: var(--rose-dark);
+  margin: 0;
+}
+
+.love-meter__max-msg {
+  text-align: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--rose-dark);
+  margin: 0.5rem 0 0;
+  animation: loveMeterPop 0.4s ease;
+}
+
+@keyframes loveMeterPop {
+  0% { transform: scale(0.9); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.celebration-actions {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.celebration-actions__deco {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+  letter-spacing: 0.1em;
+}
+
+.celebration-actions__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.button--celebration {
+  padding: 1rem 1.5rem;
+  font-size: 1.05rem;
+  border-radius: 999px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #f857a6, #ff5858);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 24px rgba(248, 87, 166, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.button--celebration:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(248, 87, 166, 0.5);
+}
+
+.button--celebration-alt {
+  background: #fff;
+  color: var(--rose-dark);
+  border: 2px solid var(--rose-mid);
+}
+.button--celebration-alt:hover {
+  background: var(--rose);
+  color: var(--rose-dark);
+  border-color: var(--rose-dark);
+}
+
+.celebration-actions__hint {
+  font-size: 0.95rem;
+  color: var(--rose-mid);
+  margin: 0;
+}
+
 .footer {
   background: #1f1d24;
   color: #fff;
@@ -1000,5 +1778,38 @@ img {
 
   .hero {
     padding: 2rem 7vw 4rem;
+  }
+}
+
+/* Responsive: small screens — prevent overflow, better touch targets */
+@media (max-width: 480px) {
+  .journey-header {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .journey-main {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .section {
+    padding: 2.5rem 0;
+  }
+
+  .button,
+  .journey-next .button {
+    padding: 0.9rem 1.5rem;
+    min-height: 48px;
+  }
+}
+
+/* Responsive: large screens — use a bit more width so content isn’t tiny */
+@media (min-width: 900px) {
+  .journey-main {
+    max-width: min(720px, 88vw);
+  }
+
+  .journey-main--wide {
+    max-width: min(820px, 92vw);
   }
 }

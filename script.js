@@ -63,9 +63,11 @@ if (confettiButton) {
 
   yesBtn?.addEventListener("click", () => {
     createConfetti();
-    setTimeout(() => {
-      window.location.href = "start.html";
-    }, 600);
+    gate?.classList.add("valentine-gate--hidden");
+    const messageEl = document.getElementById("valentineYesMessage");
+    if (messageEl) {
+      messageEl.hidden = false;
+    }
   });
 
   noBtn?.addEventListener("mouseenter", moveNoButton);
@@ -272,8 +274,7 @@ function initQuiz(containerSelector, resultId, onAllAnswered) {
   if (!items.length) return;
 
   let correctCount = 0;
-  const total = items.length;
-  const optsPerQuestion = items[0].querySelectorAll(".quiz__opt").length;
+  const totalOpts = container.querySelectorAll(".quiz__opt").length;
 
   items.forEach((item) => {
     const opts = item.querySelectorAll(".quiz__opt");
@@ -282,26 +283,36 @@ function initQuiz(containerSelector, resultId, onAllAnswered) {
       btn.addEventListener("click", () => {
         if (btn.disabled) return;
         opts.forEach((b) => (b.disabled = true));
-        const right = btn.hasAttribute("data-correct");
-        if (right) {
+        const reaction = item.getAttribute("data-reaction");
+        if (reaction) {
           correctCount++;
           btn.classList.add("correct");
           if (feedback) {
-            feedback.textContent = "Correct! 💕";
+            feedback.textContent = reaction;
             feedback.classList.add("right");
           }
         } else {
-          btn.classList.add("wrong");
-          const correctBtn = item.querySelector(".quiz__opt[data-correct]");
-          if (correctBtn) correctBtn.classList.add("correct");
-          if (feedback) {
-            feedback.textContent = "Not quite — but that's okay!";
-            feedback.classList.add("wrong");
+          const right = btn.hasAttribute("data-correct");
+          if (right) {
+            correctCount++;
+            btn.classList.add("correct");
+            if (feedback) {
+              feedback.textContent = "Correct! 💕";
+              feedback.classList.add("right");
+            }
+          } else {
+            btn.classList.add("wrong");
+            const correctBtn = item.querySelector(".quiz__opt[data-correct]");
+            if (correctBtn) correctBtn.classList.add("correct");
+            if (feedback) {
+              feedback.textContent = "Not quite — but that's okay!";
+              feedback.classList.add("wrong");
+            }
           }
         }
         const answeredInBlock = container.querySelectorAll(".quiz__opt:disabled").length;
-        if (answeredInBlock >= total * optsPerQuestion) {
-          resultEl.textContent = correctCount === total ? "You know us so well! 💕" : "Thanks for playing! 💕";
+        if (answeredInBlock >= totalOpts) {
+          resultEl.textContent = correctCount === items.length ? "You know us so well! 💕" : "Thanks for playing! 💕";
           if (typeof onAllAnswered === "function") onAllAnswered();
         }
       });
@@ -313,12 +324,6 @@ initQuiz("#quiz", "quizResult", () => {
   if (next) next.hidden = false;
   completeStep(8);
 });
-initQuiz("#quickfire", "quickfireResult", () => {
-  const next = document.getElementById("quickfireNext");
-  if (next) next.hidden = false;
-  completeStep(9);
-});
-
 // Proposal: choose a button
 const proposalAnswer = document.getElementById("proposalAnswer");
 const proposalDone = document.getElementById("proposalDone");
@@ -369,9 +374,13 @@ function closeLightbox() {
   document.body.style.overflow = "";
 }
 
-document.querySelectorAll("[data-gallery] .gallery__item img").forEach((img) => {
-  img.addEventListener("click", () => openLightbox(img.src, img.alt));
-});
+function bindLightbox(selector) {
+  document.querySelectorAll(selector).forEach((img) => {
+    img.addEventListener("click", () => openLightbox(img.src, img.alt));
+  });
+}
+bindLightbox("[data-gallery] .gallery__item img");
+bindLightbox("[data-gallery] .collage__item img");
 
 if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
 if (lightbox) {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The end — For Akanksha</title>
+    <title>Celebration — For Akanksha</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,31 +12,91 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body id="page-closing">
+  <body id="page-closing" class="page-closing">
     <header class="journey-header">
       <span class="journey-header__brand">For Aku</span>
-      <span class="journey-header__step">Step 9 of 9</span>
+      <span class="journey-header__step">Step 8 of 8</span>
     </header>
 
-    <main class="journey-main">
-      <section class="section section--soft">
-        <div class="section__heading">
-          <h2>You've reached the end of this little journey.</h2>
-        </div>
-        <div class="intro-text">
-          <p>Thank you for saying yes — to us, and to being my Valentine.</p>
-          <p>I'm so glad we found a way. Here's to every step ahead. 💕</p>
-        </div>
+    <main class="journey-main journey-main--celebration">
+      <section class="celebration-hero">
+        <div class="celebration-hero__deco celebration-hero__deco--t">🌸 💐 🌺 🌷 💖</div>
+        <h1 class="celebration-hero__title">
+          <span class="celebration-hero__yay">YAY! 🎉</span>
+          Akanksha said yes!
+        </h1>
+        <p class="celebration-hero__sub">You just made me the happiest person ever! 💕</p>
+        <div class="celebration-hero__deco celebration-hero__deco--b">🦋 ✨ 💖 ✨ 🦋</div>
       </section>
 
-      <footer class="footer footer--journey">
-        <p class="footer__magic">
-          <button type="button" class="button button--ghost" id="confettiButton">Tap for a little magic ✨</button>
-        </p>
-        <p class="footer__secret">
-          <button type="button" class="button button--ghost" id="secretTrigger">Unlock a secret</button>
-        </p>
-      </footer>
+      <section class="time-counter-section">
+        <div class="time-counter__icon" aria-hidden="true">🕐</div>
+        <h2 class="time-counter__title">Time We've Shared</h2>
+        <p class="time-counter__tagline">Every second with you is a treasure</p>
+        <div class="time-counter__grid">
+          <div class="time-counter__card">
+            <span class="time-counter__number" id="timeDays">0</span>
+            <span class="time-counter__label">Days</span>
+            <span class="time-counter__unit-icon" aria-hidden="true">📅</span>
+          </div>
+          <div class="time-counter__card">
+            <span class="time-counter__number" id="timeHours">00</span>
+            <span class="time-counter__label">Hours</span>
+            <span class="time-counter__unit-icon" aria-hidden="true">🕐</span>
+          </div>
+          <div class="time-counter__card">
+            <span class="time-counter__number" id="timeMinutes">00</span>
+            <span class="time-counter__label">Minutes</span>
+            <span class="time-counter__unit-icon" aria-hidden="true">⏱</span>
+          </div>
+          <div class="time-counter__card">
+            <span class="time-counter__number" id="timeSeconds">00</span>
+            <span class="time-counter__label">Seconds</span>
+            <span class="time-counter__unit-icon" aria-hidden="true">⚡</span>
+          </div>
+        </div>
+        <p class="time-counter__footer">…and counting! Here's to infinity more moments together 💕</p>
+      </section>
+
+      <section class="celebration-letter">
+        <h2 class="celebration-letter__greeting">💌 My dearest Akanksha 💌</h2>
+        <div class="celebration-letter__body">
+          <p>From the moment I met you, I knew you were special. Every day with you feels like a beautiful adventure, and I can't imagine my life without your smile, your laugh, and your love.</p>
+          <p>You make every ordinary moment extraordinary, and I fall more in love with you with each passing day. Thank you for being you — my best friend, my confidant, and my forever Valentine. 💫</p>
+          <p>Here's to us, to love, and to countless beautiful memories together! 💕</p>
+        </div>
+        <p class="celebration-letter__sign-off">Forever &amp; always yours, ❤️<br /><span class="celebration-letter__name">Your Valentine</span></p>
+        <p class="celebration-letter__ps">P.S. My love for you? It's over 9000. 💕</p>
+      </section>
+
+      <section class="celebration-poem">
+        <p class="celebration-poem__line">Every day, I find it hard to believe how lucky I am.</p>
+        <p class="celebration-poem__line">Among trillions of stars, over billions of years,<br />for us to be here—alive, present, and crossing paths—<br />is unimaginably rare.</p>
+        <p class="celebration-poem__line">And yet, here I am,<br />given this impossible chance<br />to get to know you.</p>
+        <p class="celebration-poem__line">I can't wait to spend all the time in the world<br />growing this connection<br />and sharing that love with you.</p>
+      </section>
+
+      <section class="love-meter-section">
+        <h2 class="love-meter__title">How much do you love me? 💕</h2>
+        <p class="love-meter__hint">Slide the meter and show me!</p>
+        <div class="love-meter">
+          <div class="love-meter__track">
+            <div class="love-meter__fill" id="loveMeterFill" style="width: 0%"></div>
+          </div>
+          <input type="range" class="love-meter__input" id="loveMeterInput" min="0" max="100" value="0" aria-label="How much you love me" />
+        </div>
+        <p class="love-meter__label" id="loveMeterLabel">Slide to show your love →</p>
+        <p class="love-meter__max-msg" id="loveMeterMax" hidden>Love you 3000! 💕</p>
+      </section>
+
+      <section class="celebration-actions">
+        <p class="celebration-actions__deco">🎉 ✨ 🤗 ✨ 🎉</p>
+        <div class="celebration-actions__buttons">
+          <button type="button" class="button button--celebration" id="confettiButton">🎉 More confetti!</button>
+          <button type="button" class="button button--celebration button--celebration-alt" id="secretTrigger">✨ Unlock a secret</button>
+        </div>
+        <p class="celebration-actions__hint">Tap for a little extra magic 💖</p>
+      </section>
     </main>
 
     <div class="confetti" id="confetti"></div>
@@ -52,5 +112,69 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+      (function () {
+        var startDate = new Date("2025-11-07T00:00:00");
+        var daysEl = document.getElementById("timeDays");
+        var hoursEl = document.getElementById("timeHours");
+        var minsEl = document.getElementById("timeMinutes");
+        var secsEl = document.getElementById("timeSeconds");
+        function pad(n) { return n < 10 ? "0" + n : String(n); }
+        function updateTimeCounter() {
+          var now = new Date();
+          var diff = Math.max(0, (now - startDate) / 1000);
+          var days = Math.floor(diff / 86400);
+          var hours = Math.floor((diff % 86400) / 3600);
+          var mins = Math.floor((diff % 3600) / 60);
+          var secs = Math.floor(diff % 60);
+          if (daysEl) daysEl.textContent = days;
+          if (hoursEl) hoursEl.textContent = pad(hours);
+          if (minsEl) minsEl.textContent = pad(mins);
+          if (secsEl) secsEl.textContent = pad(secs);
+        }
+        updateTimeCounter();
+        setInterval(updateTimeCounter, 1000);
+      })();
+    </script>
+    <script>
+      (function () {
+        var input = document.getElementById("loveMeterInput");
+        var fill = document.getElementById("loveMeterFill");
+        var label = document.getElementById("loveMeterLabel");
+        var maxMsg = document.getElementById("loveMeterMax");
+        var labels = [
+          "Slide to show your love →",
+          "A little 💕",
+          "More than that!",
+          "So much!",
+          "Almost there...",
+          "Love you 3000! 💕"
+        ];
+        var hasHitMax = false;
+        function getLabelIndex(val) {
+          if (val >= 100) return 5;
+          if (val >= 80) return 4;
+          if (val >= 60) return 3;
+          if (val >= 40) return 2;
+          if (val >= 20) return 1;
+          return 0;
+        }
+        if (input && fill && label) {
+          input.addEventListener("input", function () {
+            var val = parseInt(input.value, 10);
+            fill.style.width = val + "%";
+            label.textContent = labels[getLabelIndex(val)];
+            label.hidden = val >= 100;
+            if (maxMsg) {
+              maxMsg.hidden = val < 100;
+              if (val >= 100 && !hasHitMax && typeof createConfetti === "function") {
+                hasHitMax = true;
+                createConfetti();
+              }
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

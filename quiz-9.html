@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz — For Akanksha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="page-quiz">
+    <header class="journey-header">
+      <span class="journey-header__brand">For Aku</span>
+      <span class="journey-header__step">Question 7 of 10</span>
+    </header>
+
+    <main class="journey-main">
+      <section class="section section--soft quiz-single" data-quiz-single data-next="quiz-10.html" data-correct-message="Not coffee. Not wine. Just simple ganne ka juice… and a really nice time 😊">
+        <p class="quiz-single__context">Our first drink together… ☕</p>
+        <h2 class="quiz-single__question">What was the first drink we had together?</h2>
+        <div class="quiz-single__options">
+          <button type="button" class="quiz-single__opt">A) Coffee at a Cafe ☕</button>
+          <button type="button" class="quiz-single__opt">B) Tea at a Restaurant 🍵</button>
+          <button type="button" class="quiz-single__opt" data-correct>C) Ganne ka juice at a Thela</button>
+          <button type="button" class="quiz-single__opt">D) Wine with cheese</button>
+        </div>
+        <div class="quiz-single__feedback" hidden>
+          <p class="quiz-single__result" hidden></p>
+        </div>
+        <nav class="journey-next quiz-single__next" hidden>
+          <a href="quiz-10.html" class="button">Next question →</a>
+        </nav>
+      </section>
+    </main>
+
+    <div class="confetti" id="confetti"></div>
+    <script src="script.js"></script>
+    <script src="quiz-sounds.js"></script>
+    <script src="quiz-single.js"></script>
+  </body>
+</html>

@@ -15,23 +15,53 @@
   <body id="page-story">
     <header class="journey-header">
       <span class="journey-header__brand">For Aku</span>
-      <span class="journey-header__step">Step 3 of 9</span>
+      <span class="journey-header__step">Step 3 of 8</span>
     </header>
 
     <main class="journey-main">
-      <section class="section section--soft">
+      <section class="section section--soft story-section">
         <div class="section__heading">
           <h2>Our story in dates</h2>
-          <p>Tap each dot to reveal a moment.</p>
+          <p>Our journey, one moment at a time.</p>
         </div>
-        <div class="story-timeline">
-          <button type="button" class="story-timeline__dot" data-date="Nov 7, 2025" data-moment="First message — “Hey Akanksha”">1</button>
-          <button type="button" class="story-timeline__dot" data-date="Nov 8" data-moment="First call. We talked for hours.">2</button>
-          <button type="button" class="story-timeline__dot" data-date="Dec" data-moment="“We'll find a way.” And we did.">3</button>
-          <button type="button" class="story-timeline__dot" data-date="Dec 20" data-moment="First meet. You, me, and a day I'll never forget.">4</button>
-          <button type="button" class="story-timeline__dot" data-date="Today" data-moment="Still choosing you. Every day.">5</button>
+        <div class="story-timeline story-timeline--visual">
+          <div class="story-timeline__line" aria-hidden="true"></div>
+          <article class="story-timeline__item story-timeline__item--left">
+            <span class="story-timeline__node" aria-hidden="true"></span>
+            <div class="story-timeline__content">
+              <span class="story-timeline__date">Nov 7, 2025</span>
+              <p class="story-timeline__moment">First message — “Hey Akanksha”</p>
+            </div>
+          </article>
+          <article class="story-timeline__item story-timeline__item--right">
+            <span class="story-timeline__node" aria-hidden="true"></span>
+            <div class="story-timeline__content">
+              <span class="story-timeline__date">Nov 8</span>
+              <p class="story-timeline__moment">First call. We talked for hours.</p>
+            </div>
+          </article>
+          <article class="story-timeline__item story-timeline__item--left">
+            <span class="story-timeline__node" aria-hidden="true"></span>
+            <div class="story-timeline__content">
+              <span class="story-timeline__date">Dec</span>
+              <p class="story-timeline__moment">“We'll find a way.” And we did.</p>
+            </div>
+          </article>
+          <article class="story-timeline__item story-timeline__item--right">
+            <span class="story-timeline__node" aria-hidden="true"></span>
+            <div class="story-timeline__content">
+              <span class="story-timeline__date">Dec 20</span>
+              <p class="story-timeline__moment">First meet. You, me, and a day I'll never forget.</p>
+            </div>
+          </article>
+          <article class="story-timeline__item story-timeline__item--left">
+            <span class="story-timeline__node" aria-hidden="true"></span>
+            <div class="story-timeline__content">
+              <span class="story-timeline__date">Today</span>
+              <p class="story-timeline__moment">Still choosing you. Every day.</p>
+            </div>
+          </article>
         </div>
-        <p class="story-timeline__reveal" id="storyReveal" aria-live="polite"></p>
       </section>
 
       <section class="section">
