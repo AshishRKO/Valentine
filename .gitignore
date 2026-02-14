@@ -1,3 +1,6 @@
 # WhatsApp export and chat (private — do not push)
 WhatsApp/
 WhatsApp Chat with Aku.txt
+
+# Dependencies
+node_modules/

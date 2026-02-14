@@ -89,6 +89,39 @@
         <p class="love-meter__max-msg" id="loveMeterMax" hidden>Love you 3000! 💕</p>
       </section>
 
+      <section class="dinner-section" aria-labelledby="dinnerTitle">
+        <p class="dinner-section__deco" aria-hidden="true">🍽️ ✨ 🕯️ ✨ 🍽️</p>
+        <h2 class="dinner-section__title" id="dinnerTitle">Tonight we're having dinner… just us two</h2>
+        <p class="dinner-section__sub">Candlelit. No rush. Just you and me.</p>
+
+        <div class="dinner-invite">
+          <p class="dinner-invite__label">The invite you made for us 💕</p>
+          <div class="dinner-invite__video-wrap">
+            <video
+              class="dinner-invite__video"
+              src="images/her/WhatsApp%20Video%202026-02-13%20at%2017.27.47.mp4"
+              controls
+              playsinline
+              preload="metadata"
+              aria-label="Akanksha's Valentine dinner invite video"
+            >
+              <p>Your browser doesn't support video. You made a Valentine dinner invite — I saved it here for us.</p>
+            </video>
+          </div>
+        </div>
+
+        <div class="dinner-candle-wrap">
+          <p class="dinner-candle__hint" id="dinnerCandleHint">Tap the candle to light it</p>
+          <button type="button" class="dinner-candle" id="dinnerCandle" aria-label="Light the candle">
+            <span class="dinner-candle__flame" aria-hidden="true">🕯️</span>
+          </button>
+          <p class="dinner-candle__message" id="dinnerCandleMessage" aria-live="polite">
+            I can't wait to sit across from you tonight.<br />Just us. 💕
+          </p>
+        </div>
+        <p class="dinner-section__footer">Table for two · Valentine's Day 💕</p>
+      </section>
+
       <section class="celebration-actions">
         <p class="celebration-actions__deco">🎉 ✨ 🤗 ✨ 🎉</p>
         <div class="celebration-actions__buttons">
@@ -172,6 +205,21 @@
                 createConfetti();
               }
             }
+          });
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        var btn = document.getElementById("dinnerCandle");
+        var hint = document.getElementById("dinnerCandleHint");
+        var msg = document.getElementById("dinnerCandleMessage");
+        if (btn && msg) {
+          btn.addEventListener("click", function () {
+            btn.classList.add("dinner-candle--lit");
+            btn.setAttribute("aria-label", "Candle lit");
+            if (hint) hint.hidden = true;
+            msg.classList.add("dinner-candle__message--visible");
           });
         }
       })();
