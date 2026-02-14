@@ -144,6 +144,8 @@ body.valentine-accepted .valentine-gate {
   padding: 2rem;
   background: linear-gradient(135deg, #f857a6 0%, #ff5858 50%, #b83b5e 100%);
   animation: fadeIn 0.5s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .valentine-yes-message[hidden] {
   display: none;
@@ -155,6 +157,8 @@ body.valentine-accepted .valentine-gate {
   justify-content: center;
   gap: 2.5rem;
   text-align: center;
+  margin: auto;
+  min-height: min-content;
 }
 .valentine-yes-message__img {
   width: 100%;
