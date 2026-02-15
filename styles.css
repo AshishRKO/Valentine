@@ -249,6 +249,28 @@ body.valentine-accepted .valentine-gate {
   box-shadow: 0 8px 24px rgba(184, 59, 94, 0.35);
 }
 
+.journey-next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.journey-next .quiz-skip,
+.journey-next .button--text {
+  background: transparent;
+  color: var(--rose-mid);
+  box-shadow: none;
+  font-size: 0.95rem;
+}
+.journey-next .quiz-skip:hover,
+.journey-next .button--text:hover {
+  background: transparent;
+  color: var(--rose-dark);
+  box-shadow: none;
+  text-decoration: underline;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -396,20 +418,23 @@ img {
 
 /* Our moments gallery: 2 cols on small, 3 on medium+ */
 .gallery--moments,
-.gallery--her {
+.gallery--her,
+.gallery--dinner {
   grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
 }
 
 @media (min-width: 400px) {
   .gallery--moments,
-  .gallery--her {
+  .gallery--her,
+  .gallery--dinner {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 600px) {
   .gallery--moments,
-  .gallery--her {
+  .gallery--her,
+  .gallery--dinner {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -1162,6 +1187,13 @@ img {
   line-height: 1.6;
   color: var(--ink);
 }
+.story-timeline__link {
+  color: var(--rose-dark);
+  text-decoration: none;
+}
+.story-timeline__link:hover {
+  text-decoration: underline;
+}
 
 /* Mobile: stack to one side, line to the left */
 @media (max-width: 600px) {
@@ -1826,6 +1858,65 @@ img {
   font-size: 0.95rem;
   color: var(--rose-mid);
   margin: 0;
+}
+.dinner-section__link {
+  margin: 1.25rem 0 0;
+}
+.dinner-section__btn {
+  background: transparent;
+  color: var(--rose-dark);
+  border: 2px solid var(--rose-mid);
+}
+.dinner-section__btn:hover {
+  background: rgba(248, 87, 166, 0.1);
+  border-color: var(--rose-dark);
+}
+
+/* Dedicated dinner page */
+.dinner-hero {
+  text-align: center;
+}
+.dinner-hero__deco {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  letter-spacing: 0.15em;
+}
+.dinner-hero__title {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--rose-dark);
+  margin: 0 0 0.75rem;
+}
+.dinner-hero__sub {
+  font-size: 1.05rem;
+  color: var(--ink);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto 0.5rem;
+}
+.dinner-hero__date {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.4rem;
+  color: var(--rose-mid);
+  margin: 0;
+}
+.dinner-video-wrap {
+  margin-top: 1.5rem;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dinner-video__label {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.2rem;
+  color: var(--rose-dark);
+  margin: 0 0 0.5rem;
+}
+.dinner-video {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .celebration-actions {
