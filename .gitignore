@@ -4,3 +4,12 @@ WhatsApp Chat with Aku.txt
 
 # Dependencies
 node_modules/
+
+# macOS noise
+.DS_Store
+
+# Raw photo originals — keep them local only.
+# The compressed, web-sized copies under wedding/photos/ get committed.
+DCIM/
+images/Camera/
+images/Ring Ceremony/

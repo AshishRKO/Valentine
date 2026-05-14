@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f6a37d" />
+    <title>Happy Birthday, Akanksha — 17 June, 2026</title>
+    <meta
+      name="description"
+      content="A small surprise for your first birthday as my wife. Made with love by Ashish."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="birthday.css" />
+  </head>
+  <body id="page-birthday">
+    <!-- Gift gate: tap to unwrap -->
+    <section class="bday-gate" id="bdayGate" aria-labelledby="bdayGateTitle">
+      <div class="bday-gate__sparkles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="bday-gate__content">
+        <p class="bday-gate__hint">Psst… there's a surprise for you</p>
+        <h1 class="bday-gate__title" id="bdayGateTitle">Tap to unwrap</h1>
+        <button
+          type="button"
+          class="bday-gift"
+          id="bdayGift"
+          aria-label="Unwrap your birthday surprise"
+        >
+          <span class="bday-gift__shadow" aria-hidden="true"></span>
+          <span class="bday-gift__bow-left" aria-hidden="true"></span>
+          <span class="bday-gift__bow-right" aria-hidden="true"></span>
+          <span class="bday-gift__bow-knot" aria-hidden="true"></span>
+          <span class="bday-gift__ribbon-v" aria-hidden="true"></span>
+          <span class="bday-gift__ribbon-h" aria-hidden="true"></span>
+          <span class="bday-gift__lid" aria-hidden="true"></span>
+          <span class="bday-gift__body" aria-hidden="true"></span>
+          <span class="bday-gift__glow" aria-hidden="true"></span>
+        </button>
+        <p class="bday-gate__from">— from Ashish, with all my love</p>
+      </div>
+    </section>
+
+    <!-- Main page: revealed after unwrap -->
+    <main class="bday-main" id="bdayMain" hidden>
+      <!-- Floating balloons across the whole page -->
+      <div class="balloons" aria-hidden="true">
+        <span class="balloon balloon--1"></span>
+        <span class="balloon balloon--2"></span>
+        <span class="balloon balloon--3"></span>
+        <span class="balloon balloon--4"></span>
+        <span class="balloon balloon--5"></span>
+        <span class="balloon balloon--6"></span>
+        <span class="balloon balloon--7"></span>
+      </div>
+
+      <!-- Hero -->
+      <section class="bday-hero" aria-labelledby="bdayHeroTitle">
+        <p class="bday-hero__eyebrow">17 June, 2026</p>
+        <h1 class="bday-hero__title" id="bdayHeroTitle">
+          Happy Birthday,
+          <span class="bday-hero__name">Akanksha</span>
+        </h1>
+        <p class="bday-hero__sub">
+          My wife. My Aku. My favourite reason to wake up smiling.
+        </p>
+        <p class="bday-hero__from">
+          From the boy who got the luckiest <em>yes</em> on the 7th of May.
+        </p>
+
+        <!-- Countdown -->
+        <div class="bday-count" id="bdayCount" data-state="future" aria-live="polite">
+          <p class="bday-count__label" id="bdayCountLabel">Counting down to your day</p>
+          <div class="bday-count__grid">
+            <div class="bday-count__card">
+              <span class="bday-count__num" id="bdayCountDays">--</span>
+              <span class="bday-count__unit">days</span>
+            </div>
+            <div class="bday-count__card">
+              <span class="bday-count__num" id="bdayCountHours">--</span>
+              <span class="bday-count__unit">hours</span>
+            </div>
+            <div class="bday-count__card">
+              <span class="bday-count__num" id="bdayCountMinutes">--</span>
+              <span class="bday-count__unit">minutes</span>
+            </div>
+            <div class="bday-count__card">
+              <span class="bday-count__num" id="bdayCountSeconds">--</span>
+              <span class="bday-count__unit">seconds</span>
+            </div>
+          </div>
+          <p class="bday-count__foot" id="bdayCountFoot">
+            …until the world celebrates the day you arrived in it.
+          </p>
+        </div>
+
+        <a href="#bday-story" class="bday-hero__scroll" aria-label="Scroll for more">
+          <span></span>
+        </a>
+      </section>
+
+      <!-- Story: engagement to today -->
+      <section class="bday-section bday-section--story" id="bday-story">
+        <header class="bday-section__head">
+          <h2>From the 7th of May to the 17th of June</h2>
+          <p>A short story in 40 days.</p>
+        </header>
+
+        <ol class="bday-story" role="list">
+          <li class="bday-story__item">
+            <span class="bday-story__date">Nov 7, 2025</span>
+            <p>
+              I sent a "Hey, Akanksha" not knowing it would change everything.
+            </p>
+          </li>
+          <li class="bday-story__item">
+            <span class="bday-story__date">Dec 20, 2025</span>
+            <p>We met. The world got quieter. You got louder in my head.</p>
+          </li>
+          <li class="bday-story__item">
+            <span class="bday-story__date">Feb 14, 2026</span>
+            <p>Our first Valentine. Candles, you, and a dinner I'll never forget.</p>
+          </li>
+          <li class="bday-story__item bday-story__item--big">
+            <span class="bday-story__date">May 7, 2026</span>
+            <p>
+              A ring on your finger. A signature on a paper.
+              <strong>You became my wife.</strong>
+            </p>
+          </li>
+          <li class="bday-story__item">
+            <span class="bday-story__date">May 8–10, 2026</span>
+            <p>
+              Our first days. Slow mornings, easy laughter, and a "us" that
+              already felt like home.
+            </p>
+          </li>
+          <li class="bday-story__item bday-story__item--big">
+            <span class="bday-story__date">June 17, 2026</span>
+            <p>
+              <strong>Your first birthday as my wife.</strong> The first of many,
+              if I get my way.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Gallery: ring ceremony -->
+      <section class="bday-section bday-section--gallery">
+        <header class="bday-section__head">
+          <h2>The day you said yes</h2>
+          <p>7 May, 2026 — our ring ceremony.</p>
+        </header>
+        <div class="bday-gallery" data-gallery>
+          <div class="bday-gallery__item">
+            <img src="../images/Ring%20Ceremony/DSC08782.jpg" alt="Akanksha and Ashish at the ring ceremony" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Ring%20Ceremony/DSC08807.jpg" alt="Ring exchange moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Ring%20Ceremony/DSC08812.jpg" alt="A smile from Akanksha" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Ring%20Ceremony/DSC08827.jpg" alt="Ring ceremony — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Ring%20Ceremony/DSC08843.jpg" alt="A candid moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Ring%20Ceremony/DSC08872.jpg" alt="A frame to keep forever" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery: first days together -->
+      <section class="bday-section bday-section--gallery bday-section--soft">
+        <header class="bday-section__head">
+          <h2>Our first days</h2>
+          <p>The week we started being us, full-time.</p>
+        </header>
+        <div class="bday-gallery bday-gallery--moments" data-gallery>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260507_090443595_HDR.jpg" alt="Morning of May 7" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260507_092215334_HDR.jpg" alt="Together on the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260507_211615786.jpg" alt="Evening of the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260508_205320687_HDR.jpg" alt="May 8 — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260508_205718512.jpg" alt="May 8 — smiles" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260508_221511223_HDR.jpg" alt="Late May 8" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260509_191250408.jpg" alt="May 9 — out together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+          <div class="bday-gallery__item">
+            <img src="../images/Camera/IMG_20260510_172239784_HDR.jpg" alt="May 10" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+          </div>
+        </div>
+      </section>
+
+      <!-- 17 wishes -->
+      <section class="bday-section bday-section--wishes">
+        <header class="bday-section__head">
+          <h2>17 little wishes for the 17th</h2>
+          <p>One for every candle I'd light if I could.</p>
+        </header>
+        <ol class="bday-wishes" role="list">
+          <li><span class="bday-wishes__n">01</span><p>That this year feels like a long, slow morning with nowhere to be.</p></li>
+          <li><span class="bday-wishes__n">02</span><p>That every laugh of yours arrives without asking permission.</p></li>
+          <li><span class="bday-wishes__n">03</span><p>That your tea is always the right temperature, and your sleep deep.</p></li>
+          <li><span class="bday-wishes__n">04</span><p>That you find tiny excuses to be proud of yourself, often.</p></li>
+          <li><span class="bday-wishes__n">05</span><p>That your dreams get bigger and your peace gets bigger with them.</p></li>
+          <li><span class="bday-wishes__n">06</span><p>That every "I'm tired" is met with a hand, a hug, and a plan.</p></li>
+          <li><span class="bday-wishes__n">07</span><p>That our home keeps smelling like something you cooked at 9pm.</p></li>
+          <li><span class="bday-wishes__n">08</span><p>That you keep saying what's on your mind — exactly the way you do.</p></li>
+          <li><span class="bday-wishes__n">09</span><p>That we keep finding new corners of the world to be quiet in, together.</p></li>
+          <li><span class="bday-wishes__n">10</span><p>That every photo we take this year has you laughing in it.</p></li>
+          <li><span class="bday-wishes__n">11</span><p>That the people you love stay close and the people who tire you stay polite.</p></li>
+          <li><span class="bday-wishes__n">12</span><p>That you keep teaching me things I didn't know I needed to learn.</p></li>
+          <li><span class="bday-wishes__n">13</span><p>That you trust yourself a little more, every single week.</p></li>
+          <li><span class="bday-wishes__n">14</span><p>That you feel beautiful in the most ordinary moments.</p></li>
+          <li><span class="bday-wishes__n">15</span><p>That whatever you start this year, you finish — at your pace.</p></li>
+          <li><span class="bday-wishes__n">16</span><p>That I get to keep being the first call when something good happens.</p></li>
+          <li><span class="bday-wishes__n">17</span><p>And that this birthday is just the smallest, sweetest preview of the life I want to give you.</p></li>
+        </ol>
+      </section>
+
+      <!-- Cake -->
+      <section class="bday-section bday-section--cake" aria-labelledby="cakeTitle">
+        <header class="bday-section__head">
+          <h2 id="cakeTitle">Your cake is ready</h2>
+          <p class="bday-cake__hint" id="cakeHint">Tap a candle to light it.</p>
+        </header>
+
+        <div class="bday-cake" id="bdayCake">
+          <div class="bday-cake__candles">
+            <button type="button" class="candle" data-candle="1" aria-label="Light or blow out candle 1">
+              <span class="candle__flame" aria-hidden="true"></span>
+              <span class="candle__stick" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="candle" data-candle="2" aria-label="Light or blow out candle 2">
+              <span class="candle__flame" aria-hidden="true"></span>
+              <span class="candle__stick" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="candle" data-candle="3" aria-label="Light or blow out candle 3">
+              <span class="candle__flame" aria-hidden="true"></span>
+              <span class="candle__stick" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="bday-cake__top"></div>
+          <div class="bday-cake__drip" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="bday-cake__base">
+            <span class="bday-cake__dot"></span>
+            <span class="bday-cake__dot"></span>
+            <span class="bday-cake__dot"></span>
+            <span class="bday-cake__dot"></span>
+            <span class="bday-cake__dot"></span>
+            <span class="bday-cake__dot"></span>
+          </div>
+          <div class="bday-cake__plate" aria-hidden="true"></div>
+        </div>
+
+        <p class="bday-cake__status" id="cakeStatus" aria-live="polite"></p>
+
+        <!-- Wish capsule -->
+        <div class="bday-wish" id="bdayWish" hidden>
+          <p class="bday-wish__lead">Quick — make a wish before the smoke clears.</p>
+          <label for="bdayWishInput" class="bday-wish__label">Your wish</label>
+          <textarea
+            class="bday-wish__input"
+            id="bdayWishInput"
+            placeholder="Whisper it here…"
+            rows="3"
+            maxlength="500"
+          ></textarea>
+          <button type="button" class="bday-wish__seal" id="bdayWishSeal">
+            Seal my wish ✨
+          </button>
+          <p class="bday-wish__error" id="bdayWishError" hidden></p>
+          <div class="bday-wish__sealed" id="bdayWishSealed" hidden>
+            <div class="bday-wish__envelope" aria-hidden="true">
+              <span class="bday-wish__envelope-wax">♥</span>
+            </div>
+            <p>Your wish is sealed. Only you, me, and the universe know it now.</p>
+            <button type="button" class="bday-wish__reset" id="bdayWishReset">
+              Make another wish
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Letter -->
+      <section class="bday-section bday-section--letter">
+        <article class="bday-letter">
+          <p class="bday-letter__date">17 June, 2026</p>
+          <p class="bday-letter__greet">My Aku,</p>
+          <p>
+            A few months ago, your name was a name. Now it's the first thought of my morning
+            and the last word of my night. Strange how quickly that happens — and how
+            unbelievably right it feels.
+          </p>
+          <p>
+            On the 7th of May, you put a ring on my finger and a paper got signed,
+            and for a second it felt like the world held its breath. I didn't.
+            I just looked at you and thought: <em>this is it. This is my person.</em>
+          </p>
+          <p>
+            I don't have a grand thing for your birthday. Just this small corner
+            of the internet, the way I made one for Valentine's — because the only
+            language I know to give you something that lasts is to <em>build</em> it.
+            So this is what I built today. A page of all of us. A page that says
+            <em>I see you</em> on every line.
+          </p>
+          <p>
+            May 17 always be your kindest day of the year. May this year be the easiest
+            one yet, and let next year find us still standing here together, a little
+            older, a lot more in love.
+          </p>
+          <p class="bday-letter__sign">Yours, on the 17th and every day —</p>
+          <p class="bday-letter__name">Ashish</p>
+          <p class="bday-letter__ps">
+            P.S. Still 5'8". You're still 5'5". Still perfect.
+          </p>
+        </article>
+      </section>
+
+      <!-- Closing -->
+      <section class="bday-section bday-section--close" id="bdayClose">
+        <p class="bday-close__deco" aria-hidden="true">🎂 · 💐 · 🌷 · ✨ · 🎈</p>
+        <h2>To many, many more.</h2>
+        <p class="bday-close__sub">
+          Tap anywhere for some hearts. (You earned them.)
+        </p>
+        <button type="button" class="bday-close__more" id="bdayMoreConfetti">
+          One more burst of confetti 🎉
+        </button>
+        <p class="bday-close__hidden" id="bdayHiddenMsg" hidden>
+          17 taps. 17 reasons to keep being yours. — A
+        </p>
+      </section>
+    </main>
+
+    <!-- Confetti layer -->
+    <div class="bday-confetti" id="bdayConfetti" aria-hidden="true"></div>
+
+    <!-- Lightbox -->
+    <div class="bday-lightbox" id="bdayLightbox" aria-hidden="true">
+      <button
+        type="button"
+        class="bday-lightbox__close"
+        id="bdayLightboxClose"
+        aria-label="Close photo"
+      >×</button>
+      <div class="bday-lightbox__inner">
+        <img class="bday-lightbox__img" id="bdayLightboxImg" src="" alt="" />
+      </div>
+    </div>
+
+    <script src="birthday.js"></script>
+  </body>
+</html>
