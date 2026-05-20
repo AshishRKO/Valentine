@@ -304,7 +304,9 @@ button { font: inherit; cursor: pointer; }
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* Fallback for older browsers, then iOS-safe dynamic viewport */
   min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
   text-align: center;
   padding: 2rem 1.5rem;
 }

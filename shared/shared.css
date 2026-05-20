@@ -4,8 +4,9 @@
 /* ---------- Music toggle ---------- */
 .sh-music-toggle {
   position: fixed;
-  top: 0.75rem;
-  right: 0.75rem;
+  /* Notch-safe positioning — pad past the iPhone safe area when needed */
+  top: max(0.75rem, env(safe-area-inset-top, 0.75rem));
+  right: max(0.75rem, env(safe-area-inset-right, 0.75rem));
   z-index: 200;
   width: 44px;
   height: 44px;
@@ -377,9 +378,47 @@
   transform: translateY(0);
 }
 
+/* ---------- First-time mobile tip ---------- */
+.sh-mobile-tip {
+  position: fixed;
+  left: 50%;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));
+  transform: translateX(-50%);
+  z-index: 150;
+  max-width: min(420px, calc(100vw - 1.5rem));
+  padding: 0.85rem 1.2rem;
+  background: rgba(28, 20, 24, 0.88);
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+  font-family: "Cormorant Garamond", "Lora", serif;
+  font-size: 0.92rem;
+  text-align: center;
+  line-height: 1.45;
+  backdrop-filter: blur(10px);
+  animation: sh-tip-in 0.55s ease both;
+  transition: opacity 1.1s ease, transform 1.1s ease;
+}
+.sh-mobile-tip[hidden] { display: none !important; }
+.sh-mobile-tip p { margin: 0; }
+.sh-mobile-tip__sep {
+  display: inline-block;
+  margin: 0 0.35rem;
+  opacity: 0.55;
+}
+.sh-mobile-tip.is-fading {
+  opacity: 0;
+  transform: translate(-50%, 12px);
+}
+@keyframes sh-tip-in {
+  0%   { opacity: 0; transform: translate(-50%, 24px); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .sh-music-toggle.is-on::after { animation: none; }
   .sh-bestday { animation: none; }
+  .sh-mobile-tip { animation: none; }
   .reveal { transition: none; opacity: 1; transform: none; }
 }

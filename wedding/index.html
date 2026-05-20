@@ -9,6 +9,30 @@
       name="description"
       content="7 May, 2026 — the best day of my life. A small chapter, for Akanksha."
     />
+
+    <!-- Link preview (Open Graph + Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Akanksha &amp; Ashish" />
+    <meta property="og:title" content="The best day of my life — Akanksha &amp; Ashish" />
+    <meta property="og:description" content="A small chapter, in 9 quiet pages. May VII, MMXXVI." />
+    <meta property="og:url" content="https://ashishrko.github.io/Valentine/wedding/" />
+    <meta property="og:image" content="https://ashishrko.github.io/Valentine/icons/og-wedding.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The best day of my life — Akanksha &amp; Ashish" />
+    <meta name="twitter:description" content="A small chapter, in 9 quiet pages. May VII, MMXXVI." />
+    <meta name="twitter:image" content="https://ashishrko.github.io/Valentine/icons/og-wedding.jpg" />
+
+    <!-- Favicons + Add to Home Screen -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Aku &amp; Ashish" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,6 +66,17 @@
       aria-label="Play music"
       title="Play music"
     ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
+
+    <!-- First-time mobile hint: a single toast shown only on first visit -->
+    <div class="sh-mobile-tip" id="firstTimeTip" hidden role="status" aria-live="polite">
+      <p>
+        <span aria-hidden="true">🔊</span> tap for music
+        <span class="sh-mobile-tip__sep">·</span>
+        <span aria-hidden="true">🎞</span> tap any video for sound
+        <span class="sh-mobile-tip__sep">·</span>
+        <span aria-hidden="true">←/→</span> flip chapters
+      </p>
+    </div>
 
     <main class="w-main">
       <section
@@ -82,5 +117,18 @@
     <script src="../shared/interactive.js"></script>
     <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
+    <script>
+      // Show the first-time hint exactly once per device.
+      (function () {
+        var KEY = "wedding-mobile-tip-shown";
+        var tip = document.getElementById("firstTimeTip");
+        if (!tip) return;
+        try { if (localStorage.getItem(KEY) === "1") return; } catch (_) {}
+        tip.hidden = false;
+        setTimeout(function () { tip.classList.add("is-fading"); }, 5000);
+        setTimeout(function () { tip.remove(); }, 6200);
+        try { localStorage.setItem(KEY, "1"); } catch (_) {}
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,15 @@
+{
+  "name": "Akanksha & Ashish — May VII, MMXXVI",
+  "short_name": "Aku & Ashish",
+  "description": "A small chapter, for Akanksha. May 7, 2026 — the best day of my life.",
+  "start_url": "./wedding/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdf8ef",
+  "theme_color": "#c8a766",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
