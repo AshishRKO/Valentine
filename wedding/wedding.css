@@ -640,6 +640,62 @@ button { font: inherit; cursor: pointer; }
   margin-top: 2.5rem;
 }
 
+/* ---------- "Us, by the numbers" cards ---------- */
+.w-bynums__grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem auto 0;
+  max-width: 920px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+  text-align: left;
+}
+.w-bynums__card {
+  background: linear-gradient(170deg, #fffaf3 0%, #f7ecd6 100%);
+  border: 1px solid rgba(200, 167, 102, 0.28);
+  border-radius: 6px;
+  padding: 1.2rem 1.1rem 1.1rem;
+  box-shadow: 0 12px 28px rgba(42, 31, 37, 0.10);
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.w-bynums__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(42, 31, 37, 0.14);
+}
+.w-bynums__num {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  line-height: 1.05;
+  color: var(--gold-deep);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+}
+.w-bynums__sup {
+  font-size: 0.55em;
+  vertical-align: super;
+  letter-spacing: 0;
+}
+.w-bynums__label {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.w-bynums__card--big {
+  background: linear-gradient(135deg, rgba(217, 166, 166, 0.18), rgba(200, 167, 102, 0.22));
+  border-color: rgba(183, 129, 137, 0.35);
+}
+.w-bynums__card--big .w-bynums__num {
+  color: var(--rose-quiet);
+  font-size: clamp(2.4rem, 6vw, 3.1rem);
+}
+
 /* Drag-scroll on the multi-line w-strip — turn off the wrap, make it horizontal */
 .w-strip[data-drag-scroll] {
   display: flex;
