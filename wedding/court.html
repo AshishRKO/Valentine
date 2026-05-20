@@ -12,12 +12,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-court">
+  <body
+    id="page-wedding-court"
+    data-chapter-index="4"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">IV of VII</span>
     </header>
+
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
 
     <main class="w-main">
       <p class="w-chapter">Chapter IV · The Vow</p>
@@ -40,7 +59,7 @@
         And just like that — <br />the paper agreed with our hearts.
       </p>
 
-      <div class="w-strip" aria-label="More from the moment">
+      <div class="w-strip" data-drag-scroll aria-label="More from the moment">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/rings/DSC08833.jpg"
           data-lightbox-alt="The vow"
@@ -117,7 +136,7 @@
 
       <p class="w-lede" style="margin-top: 2.5rem;">A few more from the rest of the shoot —</p>
 
-      <div class="w-strip" aria-label="More portraits from the day">
+      <div class="w-strip" data-drag-scroll aria-label="More portraits from the day">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/rings/DSC08858.jpg"
           data-lightbox-alt="Portrait"
@@ -229,6 +248,8 @@
       </div>
     </div>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

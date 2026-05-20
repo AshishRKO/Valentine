@@ -12,50 +12,80 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-letter">
+  <body
+    id="page-wedding-letter"
+    data-chapter-index="7"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">VII of VII</span>
     </header>
 
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
+
     <main class="w-main">
-      <p class="w-chapter">Chapter VII · A Letter</p>
-      <h1 class="w-title"><em>For you,</em><br />on every May VII.</h1>
+      <p class="w-chapter" data-reveal>Chapter VII · A Letter</p>
+      <h1 class="w-title" data-reveal><em>For you,</em><br />on every May VII.</h1>
 
       <article class="w-letter">
-        <p class="w-letter__date">7 May, 2026</p>
-        <p class="w-letter__greeting">My Aku,</p>
-        <p>
+        <p class="w-letter__date" data-reveal>7 May, 2026</p>
+        <p class="w-letter__greeting" data-reveal>My Aku,</p>
+
+        <p data-reveal>
           I keep going back to that morning. The light, the quiet, the way the
           day held its breath before everything began. I think a part of me will
           stand in that morning forever.
         </p>
-        <p>
+
+        <p data-reveal>
           People kept asking how it felt — to get a ring, to sign a paper, to
           become a wife. I didn't know how to answer them. Because nothing about
           it felt like an <em>event</em>. It felt like a recognition. Like the
           world finally caught up with something you and I already knew.
         </p>
-        <p>
+
+        <blockquote class="w-letter__bestday" data-reveal>
+          <p>7 May, 2026 was<br /><strong>the best day of my life.</strong></p>
+          <span class="w-letter__bestday-mark" aria-hidden="true">♥</span>
+        </blockquote>
+
+        <p data-reveal>
           The days that followed — the slow ones, the ordinary ones, the
           ones where we burned a tea and forgot which side of the bed we'd
           chosen — those are the ones I'll remember most. Because they were
           the first time my life felt like <em>ours.</em>
         </p>
-        <p>
+
+        <p data-reveal>
           I don't have grand things to give you. Just my mornings,
           and my evenings, and the years in between. And this — a small
           page on a small corner of the internet, where I get to write
           you down, the way you deserve to be written down.
         </p>
-        <p>
+
+        <p data-reveal>
           Wherever we end up, whichever May VII finds us — I'll find you
           first. I promise.
         </p>
-        <p class="w-letter__sign">Forever yours —</p>
-        <p class="w-letter__name">Ashish</p>
-        <p class="w-letter__ps">
+
+        <p class="w-letter__sign" data-reveal>Forever yours —</p>
+        <p class="w-letter__name" data-reveal>Ashish</p>
+        <p class="w-letter__ps" data-reveal>
           P.S. The seventh of May is now both of our favourite day. Don't
           let me forget.
         </p>
@@ -73,6 +103,8 @@
       ← <a href="days.html">The Days That Followed</a>
     </footer>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

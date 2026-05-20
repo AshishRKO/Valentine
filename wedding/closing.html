@@ -12,24 +12,43 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-closing">
+  <body
+    id="page-wedding-closing"
+    data-chapter-index="8"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">Epilogue</span>
     </header>
 
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
+
     <main class="w-main">
       <section class="w-end">
-        <p class="w-chapter">Epilogue</p>
-        <h2 class="w-end__title">To be continued.</h2>
+        <p class="w-chapter" data-reveal>Epilogue</p>
+        <h2 class="w-end__title" data-reveal>To be continued.</h2>
         <span class="w-end__line" aria-hidden="true"></span>
-        <p class="w-end__sub">
+        <p class="w-end__sub" data-reveal>
           For Akanksha — every chapter, forever.
           And every chapter after that, too.
         </p>
 
-        <figure class="w-hero w-hero--landscape">
+        <figure class="w-hero w-hero--landscape" data-parallax>
           <img
             src="photos/rings/DSC08883.jpg"
             alt="The last frame of the day"
@@ -38,7 +57,99 @@
           />
         </figure>
 
-        <p class="w-end__sub" style="margin-top: 2rem;">
+        <div class="sh-counter" data-counter-since="2026-05-07" data-reveal>
+          <span class="sh-counter__num" data-counter-days>0</span>
+          <span class="sh-counter__label">days married — and counting</span>
+          <span class="sh-counter__words" data-counter-words></span>
+        </div>
+      </section>
+
+      <!-- Video roll: a few moving frames from today -->
+      <section class="w-end" data-reveal>
+        <p class="w-chapter">A post-script, in motion</p>
+        <h2 class="w-end__title" style="font-size: clamp(2rem, 5vw, 2.8rem);">
+          <em>Still here, still us.</em>
+        </h2>
+        <span class="w-end__line" aria-hidden="true"></span>
+        <p class="w-end__sub">
+          A handful of moving frames from a recent day —
+          because the story doesn't stop at May 10.
+        </p>
+
+        <div class="sh-video-roll" data-drag-scroll aria-label="A few moving frames">
+          <div class="sh-video-roll__row">
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.56.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.57.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.58.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.59.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.00.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.02.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.04.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.04%20(1).mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guestbook: leave a note -->
+      <section class="w-end guestbook" data-reveal>
+        <p class="w-chapter">A page in our book</p>
+        <h2 class="w-end__title" style="font-size: clamp(2rem, 5vw, 2.8rem);">
+          Leave a note.
+        </h2>
+        <span class="w-end__line" aria-hidden="true"></span>
+        <p class="w-end__sub">
+          Write whatever you want — to me, to us, to your future self
+          opening this on the next May VII. It's saved right here in your browser.
+        </p>
+
+        <form
+          class="guestbook__form"
+          id="guestbookForm"
+          data-storage-key="wedding-guestbook-2026"
+          autocomplete="off"
+        >
+          <label class="guestbook__label" for="guestbookNote">Your note</label>
+          <div class="guestbook__row">
+            <textarea
+              class="guestbook__textarea"
+              id="guestbookNote"
+              rows="3"
+              placeholder="A thought, a wish, a memory…"
+              maxlength="600"
+            ></textarea>
+            <input
+              class="guestbook__input"
+              id="guestbookName"
+              type="text"
+              placeholder="Signed (optional)"
+              maxlength="60"
+            />
+            <button class="guestbook__submit" type="submit">Sign the book</button>
+          </div>
+          <p class="guestbook__error" id="guestbookError" hidden></p>
+        </form>
+
+        <ul class="guestbook__list" id="guestbookList"></ul>
+      </section>
+
+      <section class="w-end" data-reveal>
+        <p class="w-end__sub" style="margin-top: 1rem;">
           Thank you for walking through this little book with me.
           Now — back to real life. (Where you're still my favourite part.)
         </p>
@@ -54,6 +165,8 @@
       ← <a href="letter.html">A Letter</a>
     </footer>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

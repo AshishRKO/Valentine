@@ -1,0 +1,322 @@
+/* shared/shared.css — widgets reused by birthday and wedding microsites.
+ * Classes prefixed `sh-` to avoid collisions with microsite-specific styles. */
+
+/* ---------- Music toggle ---------- */
+.sh-music-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 167, 102, 0.45);
+  background: rgba(253, 248, 239, 0.92);
+  color: #8c6a2a;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(42, 31, 37, 0.12);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.sh-music-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 28px rgba(42, 31, 37, 0.18);
+}
+.sh-music-toggle:active {
+  transform: scale(0.97);
+}
+.sh-music-toggle__icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  -webkit-mask: var(--sh-icon-note) center / contain no-repeat;
+  mask: var(--sh-icon-note) center / contain no-repeat;
+}
+.sh-music-toggle.is-on {
+  background: linear-gradient(135deg, #c8a766, #8c6a2a);
+  color: #fff;
+  border-color: #8c6a2a;
+}
+.sh-music-toggle.is-on::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 167, 102, 0.55);
+  animation: sh-pulse 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes sh-pulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Inline SVG (data URL) for the icon */
+:root {
+  --sh-icon-note: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 17.5V6l11-2v11.5' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/><circle cx='6.5' cy='17.5' r='2.5'/><circle cx='17.5' cy='15.5' r='2.5'/></svg>");
+}
+
+/* ---------- Chapter progress bar ---------- */
+.sh-chapter-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 90;
+  background: rgba(200, 167, 102, 0.15);
+  pointer-events: none;
+}
+.sh-chapter-progress__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #c8a766, #d9a6a6);
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Guestbook ---------- */
+.guestbook {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+.guestbook__form {
+  background: linear-gradient(170deg, #fffaf3 0%, #f7ecd6 100%);
+  border-radius: 6px;
+  padding: 1.5rem;
+  box-shadow: 0 14px 36px rgba(42, 31, 37, 0.12);
+}
+.guestbook__label {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #8c6a2a;
+  margin: 0 0 0.5rem;
+}
+.guestbook__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.guestbook__input,
+.guestbook__textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid rgba(200, 167, 102, 0.35);
+  border-radius: 4px;
+  background: #fff;
+  color: #2a1f25;
+  font: inherit;
+  resize: vertical;
+}
+.guestbook__textarea {
+  min-height: 80px;
+}
+.guestbook__input:focus,
+.guestbook__textarea:focus {
+  outline: none;
+  border-color: #c8a766;
+  box-shadow: 0 0 0 3px rgba(200, 167, 102, 0.22);
+}
+.guestbook__submit {
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c8a766, #8c6a2a);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.guestbook__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(140, 106, 42, 0.3);
+}
+.guestbook__error {
+  margin-top: 0.4rem;
+  color: #b83b5e;
+  font-size: 0.9rem;
+}
+.guestbook__error[hidden] { display: none; }
+.guestbook__list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.guestbook__item {
+  padding: 1rem 1.1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-left: 3px solid #c8a766;
+  border-radius: 4px;
+  box-shadow: 0 6px 14px rgba(42, 31, 37, 0.06);
+}
+.guestbook__note {
+  margin: 0 0 0.4rem;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #2a1f25;
+  line-height: 1.5;
+}
+.guestbook__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.78rem;
+  color: #94858b;
+  margin: 0;
+  font-family: "Lora", serif;
+}
+.guestbook__name {
+  font-family: "Caveat", cursive;
+  font-size: 1.05rem;
+  color: #b78189;
+}
+.guestbook__empty {
+  padding: 1rem 1.1rem;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  color: #94858b;
+  text-align: center;
+}
+
+/* ---------- Video roll ---------- */
+.sh-video-roll {
+  width: 100%;
+  max-width: 980px;
+  margin: 1.5rem auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+.sh-video-roll[data-drag-scroll].is-dragging {
+  cursor: grabbing;
+}
+.sh-video-roll__row {
+  display: flex;
+  gap: 1rem;
+  padding: 0.25rem;
+}
+.sh-video-roll__item {
+  flex: 0 0 auto;
+  width: clamp(180px, 32vw, 280px);
+  aspect-ratio: 9 / 16;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 14px 32px rgba(42, 31, 37, 0.18);
+  background: #1c1418;
+  scroll-snap-align: start;
+  position: relative;
+}
+.sh-video-roll__item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sh-video-roll__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem 0.85rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+  color: #fff;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+/* ---------- Days-married card (used on wedding cover + closing) ---------- */
+.sh-counter {
+  margin: 2rem auto 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 1.75rem;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(255, 246, 236, 0.85), rgba(247, 236, 214, 0.85));
+  border: 1px solid rgba(200, 167, 102, 0.35);
+  box-shadow: 0 12px 32px rgba(42, 31, 37, 0.12);
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+.sh-counter__num {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  line-height: 1;
+  color: #8c6a2a;
+}
+.sh-counter__label {
+  margin-top: 0.4rem;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #6a5a60;
+  letter-spacing: 0.05em;
+}
+.sh-counter__words {
+  margin-top: 0.2rem;
+  font-family: "Caveat", cursive;
+  font-size: 1.1rem;
+  color: #b78189;
+}
+
+/* ---------- Best-day banner (on cover) ---------- */
+.sh-bestday {
+  display: inline-block;
+  margin: 1rem auto 0;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(217, 166, 166, 0.18), rgba(200, 167, 102, 0.18));
+  border: 1px solid rgba(183, 129, 137, 0.35);
+  font-family: "Caveat", cursive;
+  font-size: 1.3rem;
+  color: #b78189;
+  letter-spacing: 0.02em;
+  animation: sh-shimmer 4s ease-in-out infinite;
+}
+@keyframes sh-shimmer {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 166, 166, 0); }
+  50%      { box-shadow: 0 0 24px 6px rgba(217, 166, 166, 0.25); }
+}
+
+/* ---------- Drag scroll utility ---------- */
+[data-drag-scroll] {
+  cursor: grab;
+  scroll-behavior: smooth;
+  user-select: none;
+}
+[data-drag-scroll].is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+/* ---------- Reveal-on-scroll utility ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .sh-music-toggle.is-on::after { animation: none; }
+  .sh-bestday { animation: none; }
+  .reveal { transition: none; opacity: 1; transform: none; }
+}

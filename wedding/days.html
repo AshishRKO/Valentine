@@ -12,12 +12,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-days">
+  <body
+    id="page-wedding-days"
+    data-chapter-index="6"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">VI of VII</span>
     </header>
+
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
 
     <main class="w-main">
       <p class="w-chapter">Chapter VI · The Days That Followed</p>
@@ -40,7 +59,7 @@
       </p>
 
       <p class="w-chapter" style="margin-top: 1.5rem;">May 8</p>
-      <div class="w-strip" aria-label="May 8">
+      <div class="w-strip" data-drag-scroll aria-label="May 8">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/days/IMG_20260508_205140488_HDR.jpg"
           data-lightbox-alt="May 8"
@@ -122,7 +141,7 @@
       </div>
 
       <p class="w-chapter" style="margin-top: 2rem;">May 9</p>
-      <div class="w-strip" aria-label="May 9">
+      <div class="w-strip" data-drag-scroll aria-label="May 9">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/days/IMG_20260509_190209342_HDR.jpg"
           data-lightbox-alt="May 9"
@@ -252,7 +271,7 @@
       </div>
 
       <p class="w-chapter" style="margin-top: 2rem;">May 10</p>
-      <div class="w-strip" aria-label="May 10">
+      <div class="w-strip" data-drag-scroll aria-label="May 10">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/days/IMG_20260510_172239784_HDR.jpg"
           data-lightbox-alt="May 10 — together"
@@ -280,6 +299,8 @@
       </div>
     </div>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

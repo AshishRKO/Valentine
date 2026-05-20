@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#fdf8ef" />
-    <title>The Seventh of May — Akanksha &amp; Ashish</title>
+    <title>The best day of my life — Akanksha &amp; Ashish</title>
     <meta
       name="description"
-      content="A quiet chapter — Akanksha &amp; Ashish, May VII, MMXXVI."
+      content="7 May, 2026 — the best day of my life. A small chapter, for Akanksha."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,27 +16,57 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
     <link rel="preload" as="image" href="photos/rings/DSC08827.jpg" />
   </head>
-  <body id="page-wedding-cover">
+  <body
+    id="page-wedding-cover"
+    data-chapter-index="0"
+    data-chapter-total="9"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">Cover</span>
     </header>
 
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
+
     <main class="w-main">
       <section
         class="w-cover w-cover--image"
-        style="background-image: linear-gradient(180deg, rgba(20, 14, 18, 0.25) 0%, rgba(253, 248, 239, 0.85) 100%), url('photos/rings/DSC08827.jpg');"
+        style="background-image: linear-gradient(180deg, rgba(20, 14, 18, 0.30) 0%, rgba(253, 248, 239, 0.88) 100%), url('photos/rings/DSC08827.jpg');"
+        data-parallax
       >
-        <p class="w-cover__date">May VII · MMXXVI</p>
-        <h1 class="w-cover__title">The Day<br /><em>we said yes</em></h1>
-        <p class="w-cover__names">Akanksha &amp; Ashish</p>
+        <p class="w-cover__date" data-reveal>May VII · MMXXVI</p>
+        <h1 class="w-cover__title" data-reveal>
+          The best day <br /><em>of my life</em>
+        </h1>
+        <p class="w-cover__names" data-reveal>Akanksha &amp; Ashish</p>
+        <span class="sh-bestday" data-reveal>— and every day since.</span>
         <span class="w-cover__rule" aria-hidden="true"></span>
-        <p class="w-cover__sub">
-          A small chapter — the morning we became us, and the days we spent
-          learning how.
+        <p class="w-cover__sub" data-reveal>
+          A small chapter — the morning we became us,
+          and the days we've been learning how, ever since.
         </p>
+
+        <div class="sh-counter" data-counter-since="2026-05-07" data-reveal>
+          <span class="sh-counter__num" data-counter-days>0</span>
+          <span class="sh-counter__label">days married</span>
+          <span class="sh-counter__words" data-counter-words></span>
+        </div>
+
         <a class="w-cover__begin" href="eve.html" aria-label="Begin the journey">
           <span>Begin</span>
           <span class="w-next__arrow" aria-hidden="true"></span>
@@ -49,6 +79,8 @@
       For Akanksha — with all my love
     </footer>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

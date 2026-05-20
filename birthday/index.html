@@ -16,8 +16,18 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="birthday.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-birthday">
+  <body id="page-birthday" data-music-mood="birthday">
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
+
     <!-- Gift gate: tap to unwrap -->
     <section class="bday-gate" id="bdayGate" aria-labelledby="bdayGateTitle">
       <div class="bday-gate__sparkles" aria-hidden="true">
@@ -132,6 +142,7 @@
             <p>
               A ring on your finger. A signature on a paper.
               <strong>You became my wife.</strong>
+              <em class="bday-bestday-mark">The best day of my life.</em>
             </p>
           </li>
           <li class="bday-story__item">
@@ -159,22 +170,22 @@
         </header>
         <div class="bday-gallery" data-gallery>
           <div class="bday-gallery__item">
-            <img src="../images/Ring%20Ceremony/DSC08782.jpg" alt="Akanksha and Ashish at the ring ceremony" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/rings/DSC08782.jpg" alt="Akanksha and Ashish at the ring ceremony" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Ring%20Ceremony/DSC08807.jpg" alt="Ring exchange moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/rings/DSC08807.jpg" alt="Ring exchange moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Ring%20Ceremony/DSC08812.jpg" alt="A smile from Akanksha" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/rings/DSC08812.jpg" alt="A smile from Akanksha" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Ring%20Ceremony/DSC08827.jpg" alt="Ring ceremony — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/rings/DSC08827.jpg" alt="Ring ceremony — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Ring%20Ceremony/DSC08843.jpg" alt="A candid moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/rings/DSC08843.jpg" alt="A candid moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Ring%20Ceremony/DSC08872.jpg" alt="A frame to keep forever" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/rings/DSC08872.jpg" alt="A frame to keep forever" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
         </div>
       </section>
@@ -187,28 +198,28 @@
         </header>
         <div class="bday-gallery bday-gallery--moments" data-gallery>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260507_090443595_HDR.jpg" alt="Morning of May 7" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260507_090443595_HDR.jpg" alt="Morning of May 7" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260507_092215334_HDR.jpg" alt="Together on the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260507_092215334_HDR.jpg" alt="Together on the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260507_211615786.jpg" alt="Evening of the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260507_211615786.jpg" alt="Evening of the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260508_205320687_HDR.jpg" alt="May 8 — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260508_205320687_HDR.jpg" alt="May 8 — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260508_205718512.jpg" alt="May 8 — smiles" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260508_205718512.jpg" alt="May 8 — smiles" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260508_221511223_HDR.jpg" alt="Late May 8" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260508_221511223_HDR.jpg" alt="Late May 8" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260509_191250408.jpg" alt="May 9 — out together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260509_191250408.jpg" alt="May 9 — out together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
           <div class="bday-gallery__item">
-            <img src="../images/Camera/IMG_20260510_172239784_HDR.jpg" alt="May 10" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
+            <img src="../wedding/photos/days/IMG_20260510_172239784_HDR.jpg" alt="May 10" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
           </div>
         </div>
       </section>
@@ -321,6 +332,11 @@
             and for a second it felt like the world held its breath. I didn't.
             I just looked at you and thought: <em>this is it. This is my person.</em>
           </p>
+
+          <p class="bday-letter__bestday">
+            7 May, 2026 was — and will always be —
+            <strong>the best day of my life.</strong>
+          </p>
           <p>
             I don't have a grand thing for your birthday. Just this small corner
             of the internet, the way I made one for Valentine's — because the only
@@ -339,6 +355,42 @@
             P.S. Still 5'8". You're still 5'5". Still perfect.
           </p>
         </article>
+      </section>
+
+      <!-- Video roll: a few moving frames from us -->
+      <section class="bday-section bday-section--videos">
+        <header class="bday-section__head">
+          <h2>A few moving frames</h2>
+          <p>Of us — because still photos can only carry so much of you.</p>
+        </header>
+        <div class="sh-video-roll" data-drag-scroll aria-label="A few moving frames of us">
+          <div class="sh-video-roll__row">
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.56.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.57.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.58.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.14.59.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.00.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.02.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.04.mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+            <div class="sh-video-roll__item">
+              <video src="../videos/WhatsApp%20Video%202026-05-20%20at%2010.15.04%20(1).mp4" controls playsinline preload="metadata" muted></video>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Closing -->
@@ -373,6 +425,8 @@
       </div>
     </div>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="birthday.js"></script>
   </body>
 </html>

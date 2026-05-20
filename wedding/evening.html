@@ -12,12 +12,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-evening">
+  <body
+    id="page-wedding-evening"
+    data-chapter-index="5"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">V of VII</span>
     </header>
+
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
 
     <main class="w-main">
       <p class="w-chapter">Chapter V · The Night</p>
@@ -52,6 +71,8 @@
       ← <a href="court.html">The Vow</a>
     </footer>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

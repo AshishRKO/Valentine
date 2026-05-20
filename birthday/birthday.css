@@ -1135,3 +1135,49 @@ button {
   .bday-cake__candles { gap: 22px; }
   .bday-gift { width: 180px; height: 180px; }
 }
+
+/* ---------- Best-day callouts ---------- */
+.bday-bestday-mark {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: "Caveat", cursive;
+  font-style: normal;
+  font-size: 1.25rem;
+  color: var(--rose-deep);
+  letter-spacing: 0.02em;
+}
+
+.bday-letter__bestday {
+  margin: 1.5rem -0.25rem !important;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(239, 125, 106, 0.12), rgba(233, 196, 106, 0.18));
+  border-left: 3px solid var(--coral);
+  border-right: 3px solid var(--gold);
+  border-radius: 8px;
+  text-align: center;
+  font-family: "Cormorant Garamond", "Lora", serif;
+  font-style: italic;
+  font-size: clamp(1.15rem, 3vw, 1.45rem) !important;
+  line-height: 1.5 !important;
+  color: var(--ink);
+}
+.bday-letter__bestday strong {
+  color: var(--rose-deep);
+  font-weight: 600;
+  font-style: italic;
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 1.1em;
+}
+
+/* ---------- Video roll section ---------- */
+.bday-section--videos {
+  padding-bottom: 3rem;
+}
+.bday-section--videos .sh-video-roll {
+  margin-top: 1rem;
+}
+.bday-section--videos .sh-video-roll__item {
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffe9d2, #ffc6a6);
+}

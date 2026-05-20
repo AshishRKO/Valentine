@@ -12,12 +12,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-rings">
+  <body
+    id="page-wedding-rings"
+    data-chapter-index="3"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">III of VII</span>
     </header>
+
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
 
     <main class="w-main">
       <p class="w-chapter">Chapter III · The Rings</p>
@@ -39,7 +58,7 @@
         Two rings. <br />One yes.
       </p>
 
-      <div class="w-strip" aria-label="More from the ring ceremony">
+      <div class="w-strip" data-drag-scroll aria-label="More from the ring ceremony">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/rings/DSC08751.jpg"
           data-lightbox-alt="Ring ceremony"
@@ -133,6 +152,8 @@
       </div>
     </div>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>

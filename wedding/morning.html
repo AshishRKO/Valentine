@@ -12,12 +12,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="wedding.css" />
+    <link rel="stylesheet" href="../shared/shared.css" />
   </head>
-  <body id="page-wedding-morning">
+  <body
+    id="page-wedding-morning"
+    data-chapter-index="2"
+    data-chapter-total="8"
+    data-music-mood="wedding"
+  >
+    <div class="sh-chapter-progress" aria-hidden="true">
+      <div id="chapterProgress" class="sh-chapter-progress__fill"></div>
+    </div>
+
     <header class="w-header">
       <span class="w-header__brand">May VII · MMXXVI</span>
       <span class="w-header__step">II of VII</span>
     </header>
+
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
 
     <main class="w-main">
       <p class="w-chapter">Chapter II · The Morning</p>
@@ -40,7 +59,7 @@
         Each minute behaved like an old friend <br />who didn't want to leave.
       </p>
 
-      <div class="w-strip" aria-label="A handful of frames from the morning">
+      <div class="w-strip" data-drag-scroll aria-label="A handful of frames from the morning">
         <button type="button" class="w-strip__item"
           data-lightbox-src="photos/days/IMG_20260507_090416353_HDR.jpg"
           data-lightbox-alt="Morning of May 7"
@@ -122,6 +141,8 @@
       </div>
     </div>
 
+    <script src="../shared/interactive.js"></script>
+    <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
   </body>
 </html>
