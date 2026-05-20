@@ -238,6 +238,61 @@
   }
 
   /**
+   * Videos with [data-autoplay-when-visible]:
+   *   - autoplay (muted) when in viewport, pause when out — keeps CPU low
+   *   - tap to toggle mute; unmuting pauses the ambient music engine
+   *   - shows a soft "tap for sound" hint until tapped once
+   */
+  function bindVideos() {
+    const vids = $$("[data-autoplay-when-visible]");
+    if (!vids.length) return;
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            const v = e.target;
+            if (e.isIntersecting) {
+              v.play().catch(() => { /* autoplay can fail silently */ });
+            } else {
+              v.pause();
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+      vids.forEach((v) => io.observe(v));
+    } else {
+      vids.forEach((v) => v.play().catch(() => {}));
+    }
+
+    vids.forEach((v) => {
+      const wrap = v.closest(".sh-video-roll__item, .sh-video-solo") || v;
+      wrap.classList.add("sh-video--mutable");
+
+      function toggleMute(e) {
+        e.preventDefault();
+        v.muted = !v.muted;
+        if (!v.muted) {
+          // pause the ambient engine if it's playing — don't double up audio
+          const ambient = window.__ambient && window.__ambient.music;
+          if (ambient && ambient.playing) {
+            ambient.stop();
+            const btn = document.getElementById("musicToggle");
+            if (btn) { btn.setAttribute("aria-pressed", "false"); btn.classList.remove("is-on"); }
+          }
+          v.play().catch(() => {});
+          wrap.classList.add("is-unmuted");
+        } else {
+          wrap.classList.remove("is-unmuted");
+        }
+      }
+
+      wrap.addEventListener("click", toggleMute);
+    });
+  }
+
+  /**
    * Parallax tilt on .w-hero img — subtle 1.02× scale on scroll.
    */
   function bindParallax() {
@@ -284,6 +339,7 @@
     bindReveal();
     bindGuestbook();
     bindParallax();
+    bindVideos();
   });
 
   // Expose for tests
