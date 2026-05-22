@@ -78,7 +78,7 @@
       </p>
     </div>
 
-    <!-- Falling rose petals — wedding ambience -->
+    <!-- Falling marigold petals — wedding ambience -->
     <div class="w-petals" aria-hidden="true">
       <span class="w-petals__p w-petals__p--1"></span>
       <span class="w-petals__p w-petals__p--2"></span>
@@ -92,13 +92,46 @@
       <span class="w-petals__p w-petals__p--10"></span>
     </div>
 
+    <!-- Side photo strips (laptop+ only) — couple photos drift down the margins -->
+    <aside class="w-side-photos w-side-photos--left" aria-hidden="true">
+      <div class="w-side-photos__col">
+        <img class="w-side-photos__img" src="photos/rings/DSC08775.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08812.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08862.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260507_211615786.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260509_192427016_HDR_PORTRAIT.jpg" alt="" loading="lazy" />
+        <!-- Duplicate set so the seamless drift never gaps -->
+        <img class="w-side-photos__img" src="photos/rings/DSC08775.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08812.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08862.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260507_211615786.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260509_192427016_HDR_PORTRAIT.jpg" alt="" loading="lazy" />
+      </div>
+    </aside>
+    <aside class="w-side-photos w-side-photos--right" aria-hidden="true">
+      <div class="w-side-photos__col">
+        <img class="w-side-photos__img" src="photos/rings/DSC08782.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08840.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08872.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260508_205320687_HDR.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260510_172239784_HDR.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08782.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08840.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/rings/DSC08872.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260508_205320687_HDR.jpg" alt="" loading="lazy" />
+        <img class="w-side-photos__img" src="photos/days/IMG_20260510_172239784_HDR.jpg" alt="" loading="lazy" />
+      </div>
+    </aside>
+
     <main class="w-main">
       <section
         class="w-cover w-cover--image"
         id="wCover"
-        style="background-image: linear-gradient(180deg, rgba(20, 14, 18, 0.30) 0%, rgba(20, 14, 18, 0.10) 35%, rgba(20, 14, 18, 0.10) 65%, rgba(253, 248, 239, 0.55) 100%), url('photos/rings/DSC08827.jpg');"
+        style="background-image: linear-gradient(180deg, rgba(20, 14, 18, 0.30) 0%, rgba(20, 14, 18, 0.10) 35%, rgba(20, 14, 18, 0.10) 65%, rgba(255, 245, 225, 0.55) 100%), url('photos/rings/DSC08827.jpg');"
         data-parallax
       >
+        <div class="w-garland w-garland--top" aria-hidden="true"></div>
+
         <p class="w-cover__date" data-reveal>May VII · MMXXVI</p>
         <h1 class="w-cover__title" data-reveal>
           The best day <br /><em>of my life</em>
@@ -126,6 +159,8 @@
           <span>Begin</span>
           <span class="w-next__arrow" aria-hidden="true"></span>
         </a>
+
+        <div class="w-garland w-garland--bottom" aria-hidden="true"></div>
       </section>
     </main>
 

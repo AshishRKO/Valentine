@@ -10,23 +10,33 @@
 
 :root {
   color-scheme: light;
-  /* Warmer, more wedding-album palette: peach cream + honey + dusty rose + wine */
-  --ivory: #fff4e6;
-  --ivory-warm: #fde9d4;
-  --cream: #fbd9bc;
-  --champagne: #e0a956;
-  --champagne-soft: #f0c878;
-  --gold-deep: #a87928;
-  --gold-shine: #f5d28d;
-  --blush: #d97f7f;
-  --blush-warm: #f5b3a8;
-  --rose-quiet: #c97580;
-  --rose-deep: #a64863;
-  --wine: #6b1d2a;
-  --ink: #2d1a20;
-  --ink-soft: #6b4d52;
-  --ink-mute: #9c7a80;
-  --shadow: 0 24px 60px rgba(45, 26, 32, 0.20);
+  /* Bright Bollywood palette — marigold + deep red + emerald + gold on cream */
+  --ivory: #fff5e1;
+  --ivory-warm: #ffe9c2;
+  --cream: #ffdca0;
+  --marigold: #ff8c1a;
+  --marigold-deep: #d96a00;
+  --marigold-soft: #ffb866;
+  --red: #c1272d;
+  --red-deep: #8e1b1e;
+  --emerald: #1f7548;
+  --emerald-deep: #15532f;
+  --emerald-soft: #4ea676;
+  --gold: #d4af37;
+  --gold-shine: #f0c870;
+  --gold-deep: #a07a1c;
+  /* Backwards-compat aliases so existing rules keep working */
+  --champagne: var(--gold);
+  --champagne-soft: var(--gold-shine);
+  --blush: var(--marigold-soft);
+  --blush-warm: #ffc28a;
+  --rose-quiet: var(--red);
+  --rose-deep: var(--red-deep);
+  --wine: var(--red-deep);
+  --ink: #2a0a0a;
+  --ink-soft: #5a2a2a;
+  --ink-mute: #8a5050;
+  --shadow: 0 24px 60px rgba(42, 10, 10, 0.22);
 }
 
 html {
@@ -38,18 +48,18 @@ body {
   margin: 0;
   font-family: "Lora", Georgia, serif;
   color: var(--ink);
-  /* Floral wedding-stationery background:
-     - three soft rose+gold radial washes
-     - a repeating SVG tile with two roses, a leaf, and tiny buds,
-       at 220 px / 14% opacity so the flowers feel ambient, not loud */
+  /* Bright Bollywood background: vivid marigold + emerald + red flowers
+     repeating across a warm cream gradient, with three stronger radial
+     accent washes at the corners. */
   background:
-    radial-gradient(circle at 10% 8%, rgba(217, 127, 127, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 92% 12%, rgba(224, 169, 86, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 100%, rgba(245, 179, 168, 0.18) 0%, transparent 60%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g opacity='0.18'><g transform='translate(60 60)'><circle cx='0' cy='-9' r='7' fill='%23d97f7f'/><circle cx='8.56' cy='-2.78' r='7' fill='%23d97f7f'/><circle cx='5.29' cy='7.28' r='7' fill='%23d97f7f'/><circle cx='-5.29' cy='7.28' r='7' fill='%23d97f7f'/><circle cx='-8.56' cy='-2.78' r='7' fill='%23d97f7f'/><circle cx='0' cy='0' r='5' fill='%23a64863'/></g><g transform='translate(165 165) scale(0.7)'><circle cx='0' cy='-9' r='7' fill='%23e0a956'/><circle cx='8.56' cy='-2.78' r='7' fill='%23e0a956'/><circle cx='5.29' cy='7.28' r='7' fill='%23e0a956'/><circle cx='-5.29' cy='7.28' r='7' fill='%23e0a956'/><circle cx='-8.56' cy='-2.78' r='7' fill='%23e0a956'/><circle cx='0' cy='0' r='5' fill='%23a87928'/></g><path d='M150 50 Q175 35 195 70 Q170 80 150 50' fill='%23a87928' fill-opacity='0.30'/><path d='M30 170 Q10 155 5 190' fill='none' stroke='%23a87928' stroke-width='1.5'/><circle cx='180' cy='28' r='3' fill='%23a64863'/><circle cx='28' cy='28' r='2' fill='%23a87928'/><circle cx='110' cy='110' r='2.5' fill='%23a64863'/><path d='M110 110 Q90 130 60 110' fill='none' stroke='%23a87928' stroke-width='0.7'/><path d='M110 110 Q130 90 160 110' fill='none' stroke='%23a87928' stroke-width='0.7'/></g></svg>"),
+    radial-gradient(circle at 8% 6%, rgba(255, 140, 26, 0.22) 0%, transparent 38%),
+    radial-gradient(circle at 92% 8%, rgba(193, 39, 45, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 5% 95%, rgba(31, 117, 72, 0.18) 0%, transparent 42%),
+    radial-gradient(circle at 95% 95%, rgba(212, 175, 55, 0.22) 0%, transparent 42%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g opacity='0.20'><!-- big marigold top-left --><g transform='translate(60 60)'><g fill='%23ffa040'><circle r='5' cx='0' cy='-12'/><circle r='5' cx='8.5' cy='-8.5'/><circle r='5' cx='12' cy='0'/><circle r='5' cx='8.5' cy='8.5'/><circle r='5' cx='0' cy='12'/><circle r='5' cx='-8.5' cy='8.5'/><circle r='5' cx='-12' cy='0'/><circle r='5' cx='-8.5' cy='-8.5'/></g><g fill='%23ff8c1a'><circle r='4' cx='0' cy='-7'/><circle r='4' cx='5' cy='-5'/><circle r='4' cx='7' cy='0'/><circle r='4' cx='5' cy='5'/><circle r='4' cx='0' cy='7'/><circle r='4' cx='-5' cy='5'/><circle r='4' cx='-7' cy='0'/><circle r='4' cx='-5' cy='-5'/></g><circle r='5' fill='%23c1272d'/></g><!-- emerald leaf cluster top-right --><g transform='translate(180 70)'><ellipse cx='0' cy='0' rx='14' ry='5' fill='%231f7548' transform='rotate(-25)'/><ellipse cx='4' cy='6' rx='12' ry='4' fill='%234ea676' transform='rotate(20)'/></g><!-- small marigold bottom-right --><g transform='translate(180 180) scale(0.7)'><g fill='%23ffa040'><circle r='5' cx='0' cy='-12'/><circle r='5' cx='8.5' cy='-8.5'/><circle r='5' cx='12' cy='0'/><circle r='5' cx='8.5' cy='8.5'/><circle r='5' cx='0' cy='12'/><circle r='5' cx='-8.5' cy='8.5'/><circle r='5' cx='-12' cy='0'/><circle r='5' cx='-8.5' cy='-8.5'/></g><circle r='5' fill='%23d96a00'/></g><!-- emerald leaf bottom-left --><g transform='translate(60 180)'><ellipse cx='0' cy='0' rx='12' ry='4' fill='%231f7548' transform='rotate(15)'/></g><!-- red diamond + tiny buds --><path d='M120 28 L125 35 L120 42 L115 35 Z' fill='%23c1272d'/><circle cx='30' cy='120' r='3' fill='%23d4af37'/><circle cx='210' cy='120' r='3' fill='%23d4af37'/><circle cx='120' cy='212' r='3' fill='%23c1272d'/><!-- gold vines --><path d='M75 70 Q100 100 165 165' fill='none' stroke='%23d4af37' stroke-width='1' opacity='0.6'/><path d='M165 70 Q140 110 75 165' fill='none' stroke='%23d4af37' stroke-width='1' opacity='0.6'/></g></svg>"),
     linear-gradient(180deg, var(--ivory) 0%, var(--ivory-warm) 100%);
   background-attachment: fixed;
-  background-size: auto, auto, auto, 220px 220px, auto;
+  background-size: auto, auto, auto, auto, 240px 240px, auto;
   line-height: 1.65;
   overflow-x: hidden;
   min-height: 100vh;
@@ -786,6 +796,78 @@ button { font: inherit; cursor: pointer; }
   margin-top: 2.5rem;
 }
 
+/* ---------- Marigold garland (hung across the top + bottom) ---------- */
+.w-garland {
+  width: 100%;
+  height: 72px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='72' viewBox='0 0 120 72'><!-- thin twine, slightly sagging --><path d='M0 18 Q30 28 60 22 Q90 18 120 28' fill='none' stroke='%238b6a3a' stroke-width='1.2'/><!-- marigold cluster --><g transform='translate(60 36)'><g fill='%23ffa040'><circle r='5' cx='0' cy='-15'/><circle r='5' cx='10.6' cy='-10.6'/><circle r='5' cx='15' cy='0'/><circle r='5' cx='10.6' cy='10.6'/><circle r='5' cx='0' cy='15'/><circle r='5' cx='-10.6' cy='10.6'/><circle r='5' cx='-15' cy='0'/><circle r='5' cx='-10.6' cy='-10.6'/></g><g fill='%23ff8c1a'><circle r='4' cx='0' cy='-9'/><circle r='4' cx='6.4' cy='-6.4'/><circle r='4' cx='9' cy='0'/><circle r='4' cx='6.4' cy='6.4'/><circle r='4' cx='0' cy='9'/><circle r='4' cx='-6.4' cy='6.4'/><circle r='4' cx='-9' cy='0'/><circle r='4' cx='-6.4' cy='-6.4'/></g><circle r='5' fill='%23c1272d'/></g><!-- emerald leaves left + right of marigold --><ellipse cx='34' cy='38' rx='8' ry='3' fill='%231f7548' transform='rotate(-20 34 38)'/><ellipse cx='86' cy='34' rx='8' ry='3' fill='%231f7548' transform='rotate(20 86 34)'/></svg>");
+  background-repeat: repeat-x;
+  background-size: 120px 72px;
+  background-position: top center;
+  filter: drop-shadow(0 4px 8px rgba(193, 39, 45, 0.18));
+  pointer-events: none;
+  z-index: 1;
+}
+.w-garland--top {
+  margin-top: -10px;
+  margin-bottom: 0.5rem;
+}
+.w-garland--bottom {
+  margin-top: 1rem;
+  margin-bottom: -10px;
+  transform: scaleY(-1); /* hang upside-down so the string hugs the top edge */
+}
+
+/* ---------- Mandala corners + side flourishes ---------- */
+.w-mandala {
+  display: inline-block;
+  width: clamp(60px, 12vw, 100px);
+  height: clamp(60px, 12vw, 100px);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g transform='translate(50 50)'><circle r='44' fill='none' stroke='%23d4af37' stroke-width='0.8' stroke-dasharray='2 4'/><circle r='34' fill='none' stroke='%23d4af37' stroke-width='1.2'/><circle r='22' fill='none' stroke='%23d4af37' stroke-width='0.8'/><g fill='%23d4af37' fill-opacity='0.75'><ellipse cx='28' cy='0' rx='9' ry='3.5'/><ellipse cx='19.8' cy='19.8' rx='9' ry='3.5' transform='rotate(45 19.8 19.8)'/><ellipse cx='0' cy='28' rx='9' ry='3.5' transform='rotate(90 0 28)'/><ellipse cx='-19.8' cy='19.8' rx='9' ry='3.5' transform='rotate(135 -19.8 19.8)'/><ellipse cx='-28' cy='0' rx='9' ry='3.5'/><ellipse cx='-19.8' cy='-19.8' rx='9' ry='3.5' transform='rotate(45 -19.8 -19.8)'/><ellipse cx='0' cy='-28' rx='9' ry='3.5' transform='rotate(90 0 -28)'/><ellipse cx='19.8' cy='-19.8' rx='9' ry='3.5' transform='rotate(135 19.8 -19.8)'/></g><circle r='6' fill='%23c1272d'/><circle r='2.5' fill='%23ffa040'/></g></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.85;
+}
+
+/* ---------- Side photo strips (laptop only) ---------- */
+.w-side-photos {
+  position: fixed;
+  top: 90px;
+  width: clamp(80px, 8vw, 130px);
+  height: calc(100vh - 100px);
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  display: none;
+}
+@media (min-width: 1180px) {
+  .w-side-photos { display: block; }
+}
+.w-side-photos--left  { left: 0.5rem; }
+.w-side-photos--right { right: 0.5rem; }
+.w-side-photos__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  /* slow scroll loop so the column drifts gently */
+  animation: w-side-drift 60s linear infinite;
+}
+.w-side-photos--right .w-side-photos__col { animation-direction: reverse; }
+.w-side-photos__img {
+  width: 100%;
+  border-radius: 8px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  opacity: 0.50;
+  box-shadow: 0 8px 16px rgba(42, 10, 10, 0.18);
+  border: 2px solid var(--gold);
+  filter: saturate(1.1);
+}
+@keyframes w-side-drift {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
 /* ---------- Tap-to-spawn hearts (cover) ---------- */
 .w-hearts {
   position: fixed;
@@ -930,13 +1012,13 @@ button { font: inherit; cursor: pointer; }
   top: -2px;
 }
 
-/* ---------- Floral ornament (replaces the plain gold line) ---------- */
+/* ---------- Floral ornament (marigold + emerald leaves on a thin gold line) ---------- */
 .w-ornament {
   display: block;
-  width: clamp(180px, 36vw, 240px);
-  height: 22px;
+  width: clamp(180px, 36vw, 260px);
+  height: 28px;
   margin: 1rem auto 1.25rem;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 22'><g fill='none' stroke='%238c6a2a' stroke-width='0.7' stroke-linecap='round'><line x1='12' y1='11' x2='95' y2='11' opacity='0.5'/><line x1='145' y1='11' x2='228' y2='11' opacity='0.5'/><!-- left leaf --><path d='M95 11 Q102 4 110 8 Q105 12 100 11' fill='%238c6a2a' fill-opacity='0.25'/><!-- right leaf (mirror) --><path d='M145 11 Q138 4 130 8 Q135 12 140 11' fill='%238c6a2a' fill-opacity='0.25'/><!-- heart center --><path d='M120 4 C 116 0, 110 0, 110 6 C 110 10, 120 18, 120 18 C 120 18, 130 10, 130 6 C 130 0, 124 0, 120 4 Z' fill='%23b78189' fill-opacity='0.85' stroke='%23b78189' stroke-width='0.4'/></g></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 28'><g><line x1='10' y1='14' x2='95' y2='14' stroke='%23d4af37' stroke-width='0.8' opacity='0.7'/><line x1='165' y1='14' x2='250' y2='14' stroke='%23d4af37' stroke-width='0.8' opacity='0.7'/><!-- emerald leaves flanking --><ellipse cx='100' cy='14' rx='9' ry='3.5' fill='%231f7548' transform='rotate(-20 100 14)'/><ellipse cx='160' cy='14' rx='9' ry='3.5' fill='%231f7548' transform='rotate(20 160 14)'/><!-- center marigold --><g transform='translate(130 14)'><g fill='%23ffa040'><circle r='3.5' cx='0' cy='-9'/><circle r='3.5' cx='6.4' cy='-6.4'/><circle r='3.5' cx='9' cy='0'/><circle r='3.5' cx='6.4' cy='6.4'/><circle r='3.5' cx='0' cy='9'/><circle r='3.5' cx='-6.4' cy='6.4'/><circle r='3.5' cx='-9' cy='0'/><circle r='3.5' cx='-6.4' cy='-6.4'/></g><circle r='4' fill='%23c1272d'/><circle r='1.5' fill='%23ffd28a'/></g></g></svg>");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -962,9 +1044,10 @@ button { font: inherit; cursor: pointer; }
   top: -28px;
   width: 14px;
   height: 14px;
-  background: radial-gradient(ellipse at 60% 35%, #f7dcd9 0%, #d9a6a6 65%, #9a4555 100%);
+  /* Marigold petals — bright yellow-orange */
+  background: radial-gradient(ellipse at 60% 35%, #ffd28a 0%, #ff8c1a 65%, #c1272d 100%);
   border-radius: 80% 0 80% 0;
-  filter: drop-shadow(0 4px 8px rgba(154, 69, 85, 0.15));
+  filter: drop-shadow(0 4px 8px rgba(217, 106, 0, 0.20));
   animation: w-petal-fall linear infinite;
   opacity: 0;
 }
