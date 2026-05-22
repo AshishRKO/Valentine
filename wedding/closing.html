@@ -154,46 +154,39 @@
         </div>
       </section>
 
-      <!-- Guestbook: leave a note -->
-      <section class="w-end guestbook" data-reveal>
-        <p class="w-chapter">A page in our book</p>
+      <!-- Sealed for you — tap-to-open envelope with a hidden message -->
+      <section class="w-end" id="wSealSection" data-reveal>
+        <p class="w-chapter">Sealed for you</p>
       <span class="w-ornament w-ornament--small" aria-hidden="true"></span>
         <h2 class="w-end__title" style="font-size: clamp(2rem, 5vw, 2.8rem);">
-          Leave a note.
+          <em>Tap the wax to open.</em>
         </h2>
         <span class="w-end__line" aria-hidden="true"></span>
-        <p class="w-end__sub">
-          To me, to us, to your future self.
-        </p>
 
-        <form
-          class="guestbook__form"
-          id="guestbookForm"
-          data-storage-key="wedding-guestbook-2026"
-          autocomplete="off"
-        >
-          <label class="guestbook__label" for="guestbookNote">Your note</label>
-          <div class="guestbook__row">
-            <textarea
-              class="guestbook__textarea"
-              id="guestbookNote"
-              rows="3"
-              placeholder="A thought, a wish, a memory…"
-              maxlength="600"
-            ></textarea>
-            <input
-              class="guestbook__input"
-              id="guestbookName"
-              type="text"
-              placeholder="Signed (optional)"
-              maxlength="60"
-            />
-            <button class="guestbook__submit" type="submit">Sign the book</button>
-          </div>
-          <p class="guestbook__error" id="guestbookError" hidden></p>
-        </form>
+        <div class="w-seal" id="wSeal">
+          <button type="button" class="w-seal__envelope" id="wSealEnvelope" aria-expanded="false" aria-controls="wSealMessage" aria-label="Break the seal to read the hidden message">
+            <span class="w-seal__body" aria-hidden="true"></span>
+            <span class="w-seal__flap" aria-hidden="true"></span>
+            <span class="w-seal__wax" aria-hidden="true">A &amp; A</span>
+          </button>
+          <p class="w-seal__hint">a small letter, just for you</p>
 
-        <ul class="guestbook__list" id="guestbookList"></ul>
+          <article class="w-seal__message" id="wSealMessage" hidden>
+            <p>
+              My Aku — if you've read this far, you know what this little
+              book is. The loud days — the anniversaries, the birthdays,
+              the ones the world celebrates — those will take care of
+              themselves. It's the quiet ones I'm signing up for. The
+              burned teas, the wrong side of the bed, the fight that's
+              funny by Sunday. All of them.
+            </p>
+            <p style="margin-top: 1rem;">
+              The seventh of May was the best day of my life because
+              it gave me yours.
+            </p>
+            <p class="w-seal__sign">Yours, forever &mdash; A</p>
+          </article>
+        </div>
       </section>
 
       <section class="w-end" data-reveal>
@@ -207,8 +200,60 @@
       ← <a href="letter.html">A Letter</a>
     </footer>
 
+    <!-- Heart layer for the sealed-envelope section -->
+    <div class="w-hearts" id="wHearts" aria-hidden="true"></div>
+
     <script src="../shared/interactive.js"></script>
     <script src="../shared/music.js"></script>
     <script src="wedding.js"></script>
+    <script>
+      (function () {
+        var seal = document.getElementById("wSeal");
+        var btn = document.getElementById("wSealEnvelope");
+        var msg = document.getElementById("wSealMessage");
+        var layer = document.getElementById("wHearts");
+        var section = document.getElementById("wSealSection");
+        if (!seal || !btn || !msg) return;
+
+        var glyphs = ["♥", "❤", "💖", "💕"];
+        var colors = ["#c1272d", "#8e1b1e", "#ff8c1a", "#d4af37"];
+
+        function spawnHeart(x, y) {
+          if (!layer) return;
+          var h = document.createElement("span");
+          h.className = "w-hearts__h";
+          h.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+          h.style.color = colors[Math.floor(Math.random() * colors.length)];
+          h.style.left = x + "px";
+          h.style.top  = y + "px";
+          layer.appendChild(h);
+          setTimeout(function () { h.remove(); }, 1900);
+        }
+
+        btn.addEventListener("click", function (e) {
+          if (!seal.classList.contains("is-open")) {
+            seal.classList.add("is-open");
+            btn.setAttribute("aria-expanded", "true");
+            setTimeout(function () { msg.hidden = false; }, 480);
+          }
+          var pt = e.touches ? e.touches[0] : e;
+          for (var i = 0; i < 4; i++) {
+            spawnHeart(
+              pt.clientX + (Math.random() - 0.5) * 80,
+              pt.clientY + (Math.random() - 0.5) * 30
+            );
+          }
+        });
+
+        // Tap anywhere else in the section also spawns one heart, for delight
+        if (section) {
+          section.addEventListener("click", function (e) {
+            if (e.target.closest("#wSealEnvelope")) return;
+            var pt = e.touches ? e.touches[0] : e;
+            spawnHeart(pt.clientX, pt.clientY);
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
