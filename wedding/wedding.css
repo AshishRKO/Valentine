@@ -38,17 +38,18 @@ body {
   margin: 0;
   font-family: "Lora", Georgia, serif;
   color: var(--ink);
-  /* Warmed background — ivory with a soft rose-cream wash and a very
-     faint floral watermark, to make the whole page feel like wedding
-     stationery instead of a white sheet of paper. */
+  /* Floral wedding-stationery background:
+     - three soft rose+gold radial washes
+     - a repeating SVG tile with two roses, a leaf, and tiny buds,
+       at 220 px / 14% opacity so the flowers feel ambient, not loud */
   background:
-    radial-gradient(circle at 12% 10%, rgba(217, 166, 166, 0.10) 0%, transparent 50%),
-    radial-gradient(circle at 88% 14%, rgba(200, 167, 102, 0.10) 0%, transparent 55%),
-    radial-gradient(circle at 50% 100%, rgba(236, 200, 197, 0.18) 0%, transparent 65%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'><g fill='none' stroke='%23c8a766' stroke-width='0.6' opacity='0.07'><path d='M90 30 Q98 50 90 70 Q82 50 90 30Z'/><path d='M90 110 Q98 130 90 150 Q82 130 90 110Z'/><path d='M30 90 Q50 98 70 90 Q50 82 30 90Z'/><path d='M110 90 Q130 98 150 90 Q130 82 110 90Z'/><circle cx='90' cy='90' r='2.5' fill='%23c8a766' opacity='0.7'/></g></svg>"),
+    radial-gradient(circle at 10% 8%, rgba(217, 127, 127, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 92% 12%, rgba(224, 169, 86, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(245, 179, 168, 0.18) 0%, transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g opacity='0.18'><g transform='translate(60 60)'><circle cx='0' cy='-9' r='7' fill='%23d97f7f'/><circle cx='8.56' cy='-2.78' r='7' fill='%23d97f7f'/><circle cx='5.29' cy='7.28' r='7' fill='%23d97f7f'/><circle cx='-5.29' cy='7.28' r='7' fill='%23d97f7f'/><circle cx='-8.56' cy='-2.78' r='7' fill='%23d97f7f'/><circle cx='0' cy='0' r='5' fill='%23a64863'/></g><g transform='translate(165 165) scale(0.7)'><circle cx='0' cy='-9' r='7' fill='%23e0a956'/><circle cx='8.56' cy='-2.78' r='7' fill='%23e0a956'/><circle cx='5.29' cy='7.28' r='7' fill='%23e0a956'/><circle cx='-5.29' cy='7.28' r='7' fill='%23e0a956'/><circle cx='-8.56' cy='-2.78' r='7' fill='%23e0a956'/><circle cx='0' cy='0' r='5' fill='%23a87928'/></g><path d='M150 50 Q175 35 195 70 Q170 80 150 50' fill='%23a87928' fill-opacity='0.30'/><path d='M30 170 Q10 155 5 190' fill='none' stroke='%23a87928' stroke-width='1.5'/><circle cx='180' cy='28' r='3' fill='%23a64863'/><circle cx='28' cy='28' r='2' fill='%23a87928'/><circle cx='110' cy='110' r='2.5' fill='%23a64863'/><path d='M110 110 Q90 130 60 110' fill='none' stroke='%23a87928' stroke-width='0.7'/><path d='M110 110 Q130 90 160 110' fill='none' stroke='%23a87928' stroke-width='0.7'/></g></svg>"),
     linear-gradient(180deg, var(--ivory) 0%, var(--ivory-warm) 100%);
   background-attachment: fixed;
-  background-size: auto, auto, auto, 180px 180px, auto;
+  background-size: auto, auto, auto, 220px 220px, auto;
   line-height: 1.65;
   overflow-x: hidden;
   min-height: 100vh;
@@ -96,7 +97,7 @@ button { font: inherit; cursor: pointer; }
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1080px;
+  max-width: min(1280px, 96vw);
   margin: 0 auto;
   padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem) 3rem;
   text-align: center;
@@ -389,6 +390,12 @@ button { font: inherit; cursor: pointer; }
   min-height: calc(100dvh - 60px);
   text-align: center;
   padding: 2rem 1.5rem;
+}
+/* Cover photo goes full-bleed regardless of the .w-main container width */
+.w-cover--image {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 .w-cover__date {
   font-family: "Cormorant Garamond", serif;
@@ -796,6 +803,79 @@ button { font: inherit; cursor: pointer; }
   0%   { transform: translate(-50%, 0) scale(0.6) rotate(-10deg); opacity: 1; }
   50%  { transform: translate(-50%, -90px) scale(1.2) rotate(8deg); opacity: 1; }
   100% { transform: translate(-50%, -180px) scale(0.9) rotate(-6deg); opacity: 0; }
+}
+
+/* ---------- "Ashish weds Akanksha" — wedding-invitation block ---------- */
+.w-invite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem auto 1.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.35s ease forwards;
+}
+.w-invite__name {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--gold-deep);
+}
+.w-invite__verb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+  line-height: 1;
+  color: var(--rose-deep);
+  letter-spacing: 0.02em;
+}
+.w-invite__flourish {
+  display: inline-block;
+  width: clamp(36px, 8vw, 70px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--champagne));
+  position: relative;
+}
+.w-invite__flourish::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--champagne);
+}
+.w-invite__verb .w-invite__flourish:last-child {
+  background: linear-gradient(90deg, var(--champagne), transparent);
+}
+.w-invite__verb .w-invite__flourish:last-child::after {
+  right: auto;
+  left: -3px;
+}
+
+/* Cover-photo variant: white text + shadow + lighter flourishes */
+.w-cover--image .w-invite__name {
+  color: #fff;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+.w-cover--image .w-invite__verb {
+  color: var(--blush-warm);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+.w-cover--image .w-invite__flourish {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9));
+}
+.w-cover--image .w-invite__flourish::after {
+  background: #fff;
+}
+.w-cover--image .w-invite__verb .w-invite__flourish:last-child {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent);
 }
 
 /* ---------- A & A monogram ---------- */
