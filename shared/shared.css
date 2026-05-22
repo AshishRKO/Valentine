@@ -123,20 +123,25 @@
   box-shadow: 0 0 0 3px rgba(200, 167, 102, 0.22);
 }
 .guestbook__submit {
-  margin-top: 0.5rem;
-  padding: 0.7rem 1.5rem;
+  margin-top: 0.6rem;
+  padding: 1rem 2rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, #c8a766, #8c6a2a);
+  background: linear-gradient(135deg, #ff8c1a, #c1272d);
   color: #fff;
   border: none;
+  font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  min-height: 52px;
 }
 .guestbook__submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(140, 106, 42, 0.3);
+  box-shadow: 0 14px 28px rgba(193, 39, 45, 0.35);
+}
+.guestbook__submit:active {
+  transform: translateY(0);
 }
 .guestbook__error {
   margin-top: 0.4rem;

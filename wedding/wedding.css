@@ -343,18 +343,27 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.05em;
 }
 .w-next__link {
+  display: inline-block;
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
-  font-size: 1.5rem;
-  color: var(--gold-deep);
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  color: #fff;
+  background: linear-gradient(135deg, var(--marigold) 0%, var(--red) 100%);
   text-decoration: none;
-  border-bottom: 1px solid rgba(140, 106, 42, 0.4);
-  padding: 0.2rem 0;
-  transition: color 0.25s ease, border-color 0.25s ease;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(193, 39, 45, 0.30);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 48px;
+  letter-spacing: 0.02em;
 }
 .w-next__link:hover {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(193, 39, 45, 0.40);
+  color: #fff;
+}
+.w-next__link:active {
+  transform: translateY(0);
 }
 .w-next__arrow {
   display: inline-block;
@@ -462,26 +471,36 @@ button { font: inherit; cursor: pointer; }
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.4rem;
   text-decoration: none;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--marigold) 0%, var(--red) 100%);
+  box-shadow: 0 12px 32px rgba(193, 39, 45, 0.35);
   opacity: 0;
   animation: fadeUp 1s 0.8s ease forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 56px;
+}
+.w-cover__begin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(193, 39, 45, 0.45);
+}
+.w-cover__begin:active {
+  transform: translateY(0);
 }
 .w-cover__begin span:first-child {
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
-  font-size: 1.4rem;
-  color: var(--gold-deep);
-  border-bottom: 1px solid rgba(140, 106, 42, 0.45);
-  padding-bottom: 0.2rem;
-}
-.w-cover__begin:hover span:first-child {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
+  font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.04em;
 }
 .w-cover__begin .w-next__arrow {
-  margin-top: 0.4rem;
+  margin-top: 0.2rem;
+  border-color: #fff;
 }
 
 /* Optional cover image (background) — keep the photo readable, not washed */
@@ -660,18 +679,25 @@ button { font: inherit; cursor: pointer; }
   color: var(--rose-quiet);
 }
 .w-end__restart {
+  display: inline-block;
   margin-top: 2.5rem;
+  padding: 0.85rem 2rem;
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
-  font-size: 1rem;
-  color: var(--ink-mute);
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  color: var(--red-deep);
+  background: rgba(255, 245, 225, 0.92);
+  border: 2px solid var(--marigold);
+  border-radius: 999px;
   text-decoration: none;
-  border-bottom: 1px solid rgba(140, 106, 42, 0.3);
-  padding-bottom: 0.15rem;
+  min-height: 48px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .w-end__restart:hover {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
+  background: var(--marigold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(255, 140, 26, 0.35);
 }
 
 /* ---------- Lightbox ---------- */
