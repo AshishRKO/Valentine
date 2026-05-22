@@ -10,21 +10,23 @@
 
 :root {
   color-scheme: light;
-  --ivory: #fdf8ef;
-  --ivory-warm: #fbf2e3;
-  --cream: #f5ead0;
-  --champagne: #c8a766;
-  --champagne-soft: #ddc18e;
-  --gold-deep: #8c6a2a;
-  --gold-shine: #d4b876;
-  --blush: #d9a6a6;
-  --blush-warm: #ecc8c5;
-  --rose-quiet: #b78189;
-  --rose-deep: #9a4555;
-  --ink: #2a1f25;
-  --ink-soft: #6a5a60;
-  --ink-mute: #94858b;
-  --shadow: 0 24px 60px rgba(42, 31, 37, 0.18);
+  /* Warmer, more wedding-album palette: peach cream + honey + dusty rose + wine */
+  --ivory: #fff4e6;
+  --ivory-warm: #fde9d4;
+  --cream: #fbd9bc;
+  --champagne: #e0a956;
+  --champagne-soft: #f0c878;
+  --gold-deep: #a87928;
+  --gold-shine: #f5d28d;
+  --blush: #d97f7f;
+  --blush-warm: #f5b3a8;
+  --rose-quiet: #c97580;
+  --rose-deep: #a64863;
+  --wine: #6b1d2a;
+  --ink: #2d1a20;
+  --ink-soft: #6b4d52;
+  --ink-mute: #9c7a80;
+  --shadow: 0 24px 60px rgba(45, 26, 32, 0.20);
 }
 
 html {
@@ -264,31 +266,53 @@ button { font: inherit; cursor: pointer; }
 .w-quote::before { top: 0; }
 .w-quote::after  { bottom: 0; }
 
-/* ---------- Strip gallery (a row of small photos) ---------- */
+/* ---------- Photo grid (replaces horizontal strip carousel) ---------- */
 .w-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.6rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
   width: 100%;
   max-width: 980px;
-  margin: 1.5rem auto 2.5rem;
+  margin: 1.25rem auto 2rem;
 }
+@media (min-width: 600px) { .w-strip { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; } }
+@media (min-width: 980px) { .w-strip { grid-template-columns: repeat(4, 1fr); } }
+
 .w-strip__item {
-  aspect-ratio: 1;
-  border-radius: 3px;
+  aspect-ratio: 4 / 5; /* taller — more prominent than the old square thumbs */
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 10px 24px rgba(42, 31, 37, 0.12);
+  box-shadow: 0 12px 28px rgba(45, 26, 32, 0.18);
   background: var(--cream);
   cursor: zoom-in;
   position: relative;
+  border: none;
+  padding: 0;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.w-strip__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 36px rgba(45, 26, 32, 0.25);
+}
+.w-strip__item:active {
+  transform: scale(0.97);
+}
+.w-strip__item::after {
+  /* Subtle gold inset border, matches the photo-album corner-frame motif */
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(224, 169, 86, 0.45);
+  border-radius: 6px;
+  pointer-events: none;
 }
 .w-strip__item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.w-strip__item:hover img { transform: scale(1.04); }
+.w-strip__item:hover img { transform: scale(1.06); }
 
 /* ---------- Continue link ---------- */
 .w-next {
@@ -755,6 +779,25 @@ button { font: inherit; cursor: pointer; }
   margin-top: 2.5rem;
 }
 
+/* ---------- Tap-to-spawn hearts (cover) ---------- */
+.w-hearts {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+}
+.w-hearts__h {
+  position: absolute;
+  font-size: 1.8rem;
+  animation: wHeartRise 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  user-select: none;
+}
+@keyframes wHeartRise {
+  0%   { transform: translate(-50%, 0) scale(0.6) rotate(-10deg); opacity: 1; }
+  50%  { transform: translate(-50%, -90px) scale(1.2) rotate(8deg); opacity: 1; }
+  100% { transform: translate(-50%, -180px) scale(0.9) rotate(-6deg); opacity: 0; }
+}
+
 /* ---------- A & A monogram ---------- */
 .w-monogram {
   display: inline-flex;
@@ -984,29 +1027,5 @@ button { font: inherit; cursor: pointer; }
   font-size: clamp(2.4rem, 6vw, 3.1rem);
 }
 
-/* Drag-scroll on the multi-line w-strip — turn off the wrap, make it horizontal */
-.w-strip[data-drag-scroll] {
-  display: flex;
-  gap: 0.8rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 0.5rem;
-  -webkit-overflow-scrolling: touch;
-  grid-template-columns: none !important;
-}
-.w-strip[data-drag-scroll] .w-strip__item {
-  flex: 0 0 auto;
-  width: clamp(140px, 28vw, 220px);
-  scroll-snap-align: start;
-}
-.w-strip[data-drag-scroll]::-webkit-scrollbar {
-  height: 6px;
-}
-.w-strip[data-drag-scroll]::-webkit-scrollbar-thumb {
-  background: rgba(200, 167, 102, 0.4);
-  border-radius: 6px;
-}
-.w-strip[data-drag-scroll]::-webkit-scrollbar-track {
-  background: rgba(200, 167, 102, 0.08);
-}
+/* (Horizontal drag-scroll override removed — photo strips now use the
+   prominent grid above, so data-drag-scroll is a no-op for strips.) */

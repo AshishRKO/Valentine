@@ -95,6 +95,7 @@
     <main class="w-main">
       <section
         class="w-cover w-cover--image"
+        id="wCover"
         style="background-image: linear-gradient(180deg, rgba(20, 14, 18, 0.30) 0%, rgba(20, 14, 18, 0.10) 35%, rgba(20, 14, 18, 0.10) 65%, rgba(253, 248, 239, 0.55) 100%), url('photos/rings/DSC08827.jpg');"
         data-parallax
       >
@@ -111,13 +112,7 @@
           <span class="w-monogram__flourish w-monogram__flourish--right" aria-hidden="true"></span>
         </div>
 
-        <p class="w-cover__names" data-reveal>Akanksha &amp; Ashish</p>
-        <span class="sh-bestday" data-reveal>— and every day since.</span>
         <span class="w-ornament" aria-hidden="true"></span>
-        <p class="w-cover__sub" data-reveal>
-          A small chapter — the morning we became us,
-          and the days we've been learning how, ever since.
-        </p>
 
         <div class="sh-counter" data-counter-since="2026-05-07" data-reveal>
           <span class="sh-counter__num" data-counter-days>0</span>
@@ -131,6 +126,9 @@
         </a>
       </section>
     </main>
+
+    <!-- Hearts that float up on tap, for the cover only -->
+    <div class="w-hearts" id="wHearts" aria-hidden="true"></div>
 
     <footer class="w-foot">
       <div class="w-foot__rule" aria-hidden="true"></div>
@@ -151,6 +149,29 @@
         setTimeout(function () { tip.classList.add("is-fading"); }, 5000);
         setTimeout(function () { tip.remove(); }, 6200);
         try { localStorage.setItem(KEY, "1"); } catch (_) {}
+      })();
+
+      // Tap the cover — a heart floats up
+      (function () {
+        var cover = document.getElementById("wCover");
+        var layer = document.getElementById("wHearts");
+        if (!cover || !layer) return;
+        var glyphs = ["♥", "❤", "💖", "💕"];
+        function spawn(e) {
+          // Don't spawn when tapping the begin button — let it navigate
+          if (e.target.closest(".w-cover__begin")) return;
+          var pt = e.touches ? e.touches[0] : e;
+          var h = document.createElement("span");
+          h.className = "w-hearts__h";
+          h.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+          h.style.color = ["#d97f7f", "#a64863", "#e0a956", "#fff"][Math.floor(Math.random() * 4)];
+          h.style.left = pt.clientX + "px";
+          h.style.top  = pt.clientY + "px";
+          layer.appendChild(h);
+          setTimeout(function () { h.remove(); }, 1900);
+        }
+        cover.addEventListener("click", spawn);
+        cover.addEventListener("touchstart", spawn, { passive: true });
       })();
     </script>
   </body>
