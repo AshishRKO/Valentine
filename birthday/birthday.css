@@ -35,16 +35,25 @@ body {
   margin: 0;
   font-family: "Lora", Georgia, serif;
   color: var(--ink);
+  background: #fff8ef;
+  line-height: 1.65;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+/* The gradient lives on a single fixed, composited layer instead of
+   background-attachment:fixed (which repaints on every scroll frame). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(circle at 15% 20%, rgba(255, 217, 184, 0.55) 0%, transparent 55%),
     radial-gradient(circle at 85% 10%, rgba(230, 220, 255, 0.45) 0%, transparent 55%),
     radial-gradient(circle at 50% 100%, rgba(255, 179, 193, 0.4) 0%, transparent 60%),
     linear-gradient(180deg, #fff8ef 0%, #ffeede 35%, #ffe0e6 70%, #f5e9ff 100%);
-  background-attachment: fixed;
-  line-height: 1.65;
-  overflow-x: hidden;
-  position: relative;
-  min-height: 100vh;
 }
 
 img {
@@ -1689,3 +1698,16 @@ button {
   }
   .bday-letter__name { clip-path: none !important; }
 }
+
+/* ---------- Lightweight: don't render heavy media sections while off-screen ----------
+   The browser skips painting/decoding (and drops their layers + decoded images)
+   until they near the viewport. `auto` remembers each section's real height after
+   the first render so scrolling stays stable. */
+.bday-section--wall,
+.bday-section--pop,
+.bday-section--videos {
+  content-visibility: auto;
+}
+.bday-section--wall { contain-intrinsic-size: auto 820px; }
+.bday-section--pop { contain-intrinsic-size: auto 640px; }
+.bday-section--videos { contain-intrinsic-size: auto 380px; }
