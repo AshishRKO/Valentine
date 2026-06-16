@@ -1221,11 +1221,16 @@
     let done = false;
     let drawing = false;
     let moves = 0;
+    let painted = false;
 
+    // Paint the gold surface at the section's real size. Returns false while the
+    // section still has no layout (e.g. the page is behind the gift gate), so we
+    // never size the canvas to 1x1 — the bug that made scratching do nothing.
     function paint() {
       const r = wrap.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.round(r.width));
-      canvas.height = Math.max(1, Math.round(r.height));
+      if (r.width < 2 || r.height < 2) return false;
+      canvas.width = Math.round(r.width);
+      canvas.height = Math.round(r.height);
       const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
       g.addColorStop(0, "#e9c46a"); g.addColorStop(0.5, "#f6d97a"); g.addColorStop(1, "#d39a36");
       ctx.fillStyle = g;
@@ -1234,8 +1239,20 @@
       ctx.font = '600 22px "Caveat", cursive';
       ctx.textAlign = "center";
       ctx.fillText("Scratch here ✨", canvas.width / 2, canvas.height / 2);
+      painted = true;
+      return true;
     }
-    paint();
+    function ensurePainted() { if (!painted) paint(); }
+
+    // Paint once the section nears the viewport; also lazily on first touch.
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) ensurePainted(); });
+      }, { rootMargin: "200px 0px" });
+      io.observe(wrap);
+    }
+    // If it resizes before any scratching (e.g. rotate), re-fit the surface.
+    window.addEventListener("resize", () => { if (!done && moves === 0) { painted = false; ensurePainted(); } });
 
     function at(e) {
       const r = canvas.getBoundingClientRect();
@@ -1243,6 +1260,7 @@
       return { x: p.clientX - r.left, y: p.clientY - r.top };
     }
     function scratch(x, y) {
+      if (!painted && !paint()) return;
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
       ctx.arc(x, y, 26, 0, Math.PI * 2);
@@ -1250,6 +1268,7 @@
       ctx.globalCompositeOperation = "source-over";
     }
     function check() {
+      if (!painted) return;
       try {
         const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
         let cleared = 0;
@@ -1259,10 +1278,10 @@
       } catch (_) { /* ignore */ }
     }
 
-    canvas.addEventListener("pointerdown", (e) => { if (done) return; drawing = true; const p = at(e); scratch(p.x, p.y); });
+    canvas.addEventListener("pointerdown", (e) => { if (done) return; ensurePainted(); drawing = true; const p = at(e); scratch(p.x, p.y); });
     canvas.addEventListener("pointermove", (e) => { if (!drawing || done) return; const p = at(e); scratch(p.x, p.y); if (++moves % 6 === 0) check(); });
     window.addEventListener("pointerup", () => { if (drawing) { drawing = false; check(); } });
-    canvas.addEventListener("touchmove", (e) => { if (done) return; e.preventDefault(); const p = at(e); scratch(p.x, p.y); if (++moves % 6 === 0) check(); }, { passive: false });
+    canvas.addEventListener("touchmove", (e) => { if (done) return; e.preventDefault(); ensurePainted(); const p = at(e); scratch(p.x, p.y); if (++moves % 6 === 0) check(); }, { passive: false });
     revealBtn?.addEventListener("click", () => { done = true; reveal(); });
   }
 
