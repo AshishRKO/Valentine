@@ -170,4 +170,170 @@ describe("birthday — pure helpers", () => {
       expect(next).toBe(initialWishState);
     });
   });
+
+  describe("nextCakePhase", () => {
+    it("stays unlit until every candle is lit", () => {
+      const { nextCakePhase } = api();
+      expect(nextCakePhase("unlit", 2, 3)).toBe("unlit");
+    });
+
+    it("moves into the blow phase once all candles are lit", () => {
+      const { nextCakePhase } = api();
+      expect(nextCakePhase("unlit", 3, 3)).toBe("lit");
+    });
+
+    it("stays in the blow phase while any candle is still lit", () => {
+      const { nextCakePhase } = api();
+      expect(nextCakePhase("lit", 1, 3)).toBe("lit");
+    });
+
+    it("becomes blown when the last candle goes out", () => {
+      const { nextCakePhase } = api();
+      expect(nextCakePhase("lit", 0, 3)).toBe("blown");
+    });
+
+    it("relights from blown so the cake is replayable", () => {
+      const { nextCakePhase } = api();
+      expect(nextCakePhase("blown", 3, 3)).toBe("lit");
+    });
+
+    it("is a no-op when there are no candles", () => {
+      const { nextCakePhase } = api();
+      expect(nextCakePhase("unlit", 0, 0)).toBe("unlit");
+    });
+  });
+
+  describe("effectiveConfetti", () => {
+    it("suppresses every particle when reduced motion is requested", () => {
+      const { effectiveConfetti } = api();
+      expect(effectiveConfetti(80, true)).toBe(0);
+    });
+
+    it("passes the requested count through when motion is allowed", () => {
+      const { effectiveConfetti } = api();
+      expect(effectiveConfetti(80, false)).toBe(80);
+    });
+  });
+
+  describe("balloonPhotoIndices", () => {
+    it("returns an empty array when there are no photos or no balloons", () => {
+      const { balloonPhotoIndices } = api();
+      expect(balloonPhotoIndices(0, 9)).toEqual([]);
+      expect(balloonPhotoIndices(47, 0)).toEqual([]);
+    });
+
+    it("spreads the requested number of indices across the set", () => {
+      const { balloonPhotoIndices } = api();
+      const idx = balloonPhotoIndices(47, 9);
+      expect(idx).toHaveLength(9);
+      expect(idx[0]).toBe(0);
+      for (let i = 1; i < idx.length; i++) {
+        expect(idx[i]).toBeGreaterThan(idx[i - 1]);
+        expect(idx[i]).toBeLessThan(47);
+      }
+    });
+
+    it("never asks for more indices than there are photos, and keeps them unique", () => {
+      const { balloonPhotoIndices } = api();
+      const idx = balloonPhotoIndices(5, 9);
+      expect(idx).toHaveLength(5);
+      expect(new Set(idx).size).toBe(5);
+    });
+  });
+
+  describe("fireworkVector", () => {
+    it("places particles evenly around a circle", () => {
+      const { fireworkVector } = api();
+      const v0 = fireworkVector(0, 4, 100);
+      expect(v0.dx).toBeCloseTo(100, 5);
+      expect(v0.dy).toBeCloseTo(0, 5);
+      const v1 = fireworkVector(1, 4, 100);
+      expect(v1.dx).toBeCloseTo(0, 5);
+      expect(v1.dy).toBeCloseTo(100, 5);
+    });
+
+    it("scales the spread with the radius", () => {
+      const { fireworkVector } = api();
+      const v = fireworkVector(0, 8, 50);
+      expect(Math.hypot(v.dx, v.dy)).toBeCloseTo(50, 5);
+    });
+  });
+
+  describe("isTapGesture", () => {
+    it("treats a still, quick pointer as a tap", () => {
+      const { isTapGesture } = api();
+      expect(isTapGesture({ x: 100, y: 200, t: 0 }, { x: 103, y: 202, t: 120 })).toBe(true);
+    });
+
+    it("rejects a drag (moved too far) — a flick-scroll, not a tap", () => {
+      const { isTapGesture } = api();
+      expect(isTapGesture({ x: 100, y: 200, t: 0 }, { x: 100, y: 360, t: 200 })).toBe(false);
+    });
+
+    it("rejects a long press", () => {
+      const { isTapGesture } = api();
+      expect(isTapGesture({ x: 100, y: 200, t: 0 }, { x: 101, y: 201, t: 900 })).toBe(false);
+    });
+
+    it("returns false when no start point was recorded", () => {
+      const { isTapGesture } = api();
+      expect(isTapGesture(null, { x: 1, y: 1, t: 1 })).toBe(false);
+    });
+  });
+
+  describe("photoAlt", () => {
+    it("produces a 1-based, index-specific description", () => {
+      const { photoAlt } = api();
+      expect(photoAlt(0)).toBe("Photo 1 of Akanksha");
+      expect(photoAlt(46)).toBe("Photo 47 of Akanksha");
+    });
+  });
+
+  describe("shouldEmit", () => {
+    it("emits while under the cap and stops once over it", () => {
+      const { shouldEmit } = api();
+      expect(shouldEmit(100, 220, false)).toBe(true);
+      expect(shouldEmit(221, 220, false)).toBe(false);
+    });
+
+    it("forces emission past the cap for guaranteed finale bursts", () => {
+      const { shouldEmit } = api();
+      expect(shouldEmit(900, 220, true)).toBe(true);
+    });
+  });
+
+  describe("melodySchedule", () => {
+    it("lays notes end to end with cumulative start offsets", () => {
+      const { melodySchedule } = api();
+      const r = melodySchedule([[440, 0.5], [494, 0.3]], 1);
+      expect(r.notes[0]).toEqual({ freq: 440, start: 0, dur: 0.5 });
+      expect(r.notes[1]).toEqual({ freq: 494, start: 0.5, dur: 0.3 });
+      expect(r.total).toBeCloseTo(1.8, 5); // 0.5 + 0.3 + 1s gap
+    });
+
+    it("handles an empty melody", () => {
+      const { melodySchedule } = api();
+      expect(melodySchedule([], 0)).toEqual({ notes: [], total: 0 });
+    });
+  });
+
+  describe("confettiPiece", () => {
+    it("is deterministic for a given index", () => {
+      const { confettiPiece } = api();
+      expect(confettiPiece(3)).toEqual(confettiPiece(3));
+    });
+
+    it("varies shapes and always reports a shape and an emoji", () => {
+      const { confettiPiece } = api();
+      const shapes = new Set();
+      for (let i = 0; i < 8; i++) {
+        const p = confettiPiece(i);
+        shapes.add(p.shape);
+        expect(typeof p.shape).toBe("string");
+        expect(typeof p.emoji).toBe("string");
+        expect(p.emoji.length).toBeGreaterThan(0);
+      }
+      expect(shapes.size).toBeGreaterThan(1);
+    });
+  });
 });

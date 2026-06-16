@@ -12,6 +12,10 @@
   --peach: #ffd9b8;
   --peach-deep: #f6a37d;
   --coral: #ef7d6a;
+  /* Darker coral that meets WCAG AA (>=4.5:1) on the cream surfaces, for small
+     and medium copy. The brighter --coral stays on borders, the gift, and the
+     large display headings. */
+  --coral-text: #be4734;
   --rose: #ffb3c1;
   --rose-deep: #d14d72;
   --gold: #e9c46a;
@@ -281,7 +285,9 @@ button {
   width: 60px;
   height: 76px;
   border-radius: 50% 50% 48% 48% / 55% 55% 45% 45%;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+  /* Soft blur + lower peak opacity so balloons read as background bokeh
+     behind text rather than distinct shapes over the words. */
+  filter: blur(1.2px) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
   animation: balloonFloat linear infinite;
 }
 .balloon::after {
@@ -313,8 +319,8 @@ button {
 
 @keyframes balloonFloat {
   0% { transform: translateY(0) translateX(0) rotate(-2deg); opacity: 0; }
-  10% { opacity: 0.85; }
-  50% { transform: translateY(-55vh) translateX(15px) rotate(2deg); opacity: 0.9; }
+  10% { opacity: 0.5; }
+  50% { transform: translateY(-55vh) translateX(15px) rotate(2deg); opacity: 0.55; }
   100% { transform: translateY(-115vh) translateX(-15px) rotate(-3deg); opacity: 0; }
 }
 
@@ -334,10 +340,10 @@ button {
 }
 
 .bday-section--soft {
-  background: linear-gradient(180deg, rgba(255, 246, 236, 0.85) 0%, rgba(230, 220, 255, 0.5) 100%);
+  background: linear-gradient(180deg, rgba(255, 246, 236, 0.95) 0%, rgba(230, 220, 255, 0.7) 100%);
   border-radius: 28px;
   padding: 3rem clamp(1rem, 4vw, 2.5rem);
-  box-shadow: 0 12px 40px rgba(214, 137, 99, 0.08);
+  box-shadow: 0 18px 48px rgba(214, 137, 99, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
   margin: 1rem 0;
 }
 
@@ -1068,11 +1074,15 @@ button {
   padding: 1.5rem;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  /* On close, keep the box visible through the opacity fade, then hide.
+     On open (rule below) visibility flips instantly so the dialog is
+     immediately focusable for keyboard/screen-reader users. */
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
 }
 .bday-lightbox[aria-hidden="false"] {
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.25s ease;
 }
 .bday-lightbox__close {
   position: absolute;
@@ -1155,7 +1165,7 @@ button {
   border-right: 3px solid var(--gold);
   border-radius: 8px;
   text-align: center;
-  font-family: "Cormorant Garamond", "Lora", serif;
+  font-family: "Lora", Georgia, serif;
   font-style: italic;
   font-size: clamp(1.15rem, 3vw, 1.45rem) !important;
   line-height: 1.5 !important;
@@ -1180,4 +1190,301 @@ button {
 .bday-section--videos .sh-video-roll__item {
   border-radius: 14px;
   background: linear-gradient(135deg, #ffe9d2, #ffc6a6);
+}
+
+/* ---------- AA contrast: small/medium coral copy ----------
+   These come last so they override the brighter --coral set on the same
+   selectors earlier. Large display headings keep --coral on purpose. */
+.bday-hero__eyebrow,
+.bday-hero__from,
+.bday-hero__scroll,
+.bday-count__label,
+.bday-count__num,
+.bday-story__date,
+.bday-wishes__n,
+.bday-wish__lead {
+  color: var(--coral-text);
+}
+.bday-cake__hint {
+  color: var(--coral-text) !important;
+}
+
+/* Shared small handwritten caption (e.g. "Tap any of them for sound"). */
+.bday-section__hint {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-family: "Caveat", cursive;
+  font-size: 1.1rem;
+  color: var(--coral-text);
+}
+
+/* Gate copy sits on a coral gradient — lift legibility without changing the look. */
+.bday-gate__hint,
+.bday-gate__from {
+  opacity: 1;
+  text-shadow: 0 1px 3px rgba(120, 30, 50, 0.45);
+}
+.bday-gate__title {
+  text-shadow: 0 2px 12px rgba(120, 30, 50, 0.35);
+}
+
+/* ---------- Visible keyboard focus (mouse users never see these) ---------- */
+.bday-gift:focus-visible {
+  outline: none;
+  transform: translateY(-3px) rotate(-1deg);
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 0 4px rgba(255, 255, 255, 0.85));
+}
+.candle:focus-visible {
+  outline: 2px solid var(--rose-deep);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.bday-close__more:focus-visible,
+.bday-wish__seal:focus-visible,
+.bday-wish__reset:focus-visible,
+.bday-lightbox__close:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+.bday-hero__scroll:focus-visible {
+  outline: 2px solid var(--rose-deep);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* ---------- Chapter rhythm: a hairline divider between consecutive beats ---------- */
+.bday-section + .bday-section::before {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 2px;
+  margin: 0 auto 2.75rem;
+  background: linear-gradient(90deg, transparent, var(--peach-deep), var(--gold), transparent);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+/* ---------- Richer confetti shapes ---------- */
+.bday-confetti span.is-circle { border-radius: 50%; }
+.bday-confetti span.is-emoji {
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  border-radius: 0;
+  line-height: 1;
+}
+
+/* ---------- Fireworks ---------- */
+.bday-fireworks {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 95;
+  overflow: hidden;
+}
+.bday-fw {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  opacity: 1;
+  /* In-hue halo with a dark edge so sparks read on the bright background.
+     currentColor is set per-particle in JS. */
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.18), 0 0 14px currentColor;
+  animation: fwBurst var(--fw-dur, 1s) ease-out forwards;
+}
+@keyframes fwBurst {
+  0%   { transform: translate(0, 0) scale(1.6); opacity: 1; }
+  12%  { transform: translate(0, 0) scale(1); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(var(--dx, 0), var(--dy, 0)) scale(0.3); opacity: 0; }
+}
+
+/* ---------- Balloon-pop photo reveal ---------- */
+.bday-section--pop { text-align: center; }
+.bday-pop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem 0.75rem;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+@media (min-width: 560px) {
+  .bday-pop { grid-template-columns: repeat(4, 1fr); max-width: 42rem; }
+}
+.bday-pop__fallback { color: var(--ink-soft); font-style: italic; }
+.bday-pop:not(:empty) .bday-pop__fallback { display: none; }
+.bday-pop__cell {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+}
+.bday-pop__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.3);
+  box-shadow: 0 12px 30px rgba(214, 137, 99, 0.28);
+  cursor: zoom-in;
+}
+.bday-pop__cell.is-popped .bday-pop__photo { opacity: 1; transform: scale(1); }
+.bday-pop__balloon {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.bday-pop__balloon::before {
+  content: "";
+  position: absolute;
+  left: 18%;
+  top: 5%;
+  width: 64%;
+  height: 78%;
+  border-radius: 50% 50% 48% 48% / 56% 56% 44% 44%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.6), transparent 42%),
+    var(--balloon-color, #ef7d6a);
+  box-shadow: inset -6px -10px 16px rgba(0, 0, 0, 0.14), 0 12px 22px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease;
+}
+.bday-pop__balloon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 82%;
+  width: 2px;
+  height: 14%;
+  background: rgba(0, 0, 0, 0.22);
+  transform: translateX(-50%);
+}
+.bday-pop__q {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 36%;
+  text-align: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.7rem;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+.bday-pop__balloon:hover::before { transform: translateY(-4px) scale(1.03); }
+.bday-pop__balloon:focus-visible {
+  outline: 3px solid var(--rose-deep);
+  outline-offset: 3px;
+  border-radius: 16px;
+}
+.bday-pop__cell.is-popped .bday-pop__balloon {
+  pointer-events: none;
+  animation: balloonPop 0.3s cubic-bezier(0.3, 1.4, 0.5, 1) forwards;
+}
+@keyframes balloonPop {
+  0%   { transform: scale(1);    opacity: 1; }
+  25%  { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(0.2);  opacity: 0; }
+}
+.bday-pop__count {
+  margin: 1.4rem 0 0;
+  font-family: "Caveat", cursive;
+  font-size: 1.4rem;
+  color: var(--coral-text);
+}
+
+/* ---------- Festive photo wall (auto-scrolling marquee) ---------- */
+.bday-wall {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  padding: 0.5rem 0;
+}
+.bday-wall__row {
+  display: flex;
+  gap: 0.8rem;
+  width: max-content;
+  margin-bottom: 0.8rem;
+  will-change: transform;
+}
+.bday-wall__row:last-child { margin-bottom: 0; }
+.bday-wall__row--a { animation: wallScrollA 34s linear infinite; }
+.bday-wall__row--b { animation: wallScrollB 42s linear infinite; }
+.bday-wall:hover .bday-wall__row,
+.bday-wall:focus-within .bday-wall__row,
+.bday-wall.is-paused .bday-wall__row { animation-play-state: paused; }
+.bday-wall__item {
+  flex: 0 0 auto;
+  width: 240px;
+  height: 320px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(214, 137, 99, 0.2);
+  cursor: zoom-in;
+  background: #fff;
+  transform: rotate(var(--tilt, 0deg));
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: inherit;
+  display: block;
+}
+.bday-wall__item:focus-visible {
+  outline: 3px solid var(--rose-deep);
+  outline-offset: 3px;
+}
+.bday-wall__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bday-wall__item:hover img { transform: scale(1.07); }
+@keyframes wallScrollA {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes wallScrollB {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@media (min-width: 560px) {
+  .bday-wall__item { width: 300px; height: 400px; }
+}
+
+/* Reduced motion: no marquee, no fireworks — show the wall as a calm grid. */
+@media (prefers-reduced-motion: reduce) {
+  .bday-wall__row {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    animation: none;
+  }
+  /* In the static grid, the marquee's duplicate tiles would show each photo
+     twice — hide them (they're already aria-hidden). */
+  .bday-wall__item[aria-hidden="true"] { display: none; }
+  .bday-fireworks { display: none; }
+}
+
+/* The two most energetic sections arrive with a little more pop than the
+   calm default reveal. */
+.bday-section--pop.reveal,
+.bday-section--wall.reveal {
+  transform: translateY(12px) scale(0.97);
+}
+.bday-section--pop.reveal.is-visible,
+.bday-section--wall.reveal.is-visible {
+  transform: translateY(0) scale(1);
 }

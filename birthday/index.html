@@ -29,6 +29,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png" />
     <link rel="manifest" href="../manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Aku &amp; Ashish" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -39,7 +40,7 @@
       href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="birthday.css" />
+    <link rel="stylesheet" href="birthday.css?v=10" />
     <link rel="stylesheet" href="../shared/shared.css" />
   </head>
   <body id="page-birthday" data-music-mood="birthday">
@@ -59,7 +60,7 @@
         <span></span><span></span><span></span><span></span><span></span>
       </div>
       <div class="bday-gate__content">
-        <p class="bday-gate__hint">Psst… there's a surprise for you</p>
+        <p class="bday-gate__hint">I made you something.</p>
         <h1 class="bday-gate__title" id="bdayGateTitle">Tap to unwrap</h1>
         <button
           type="button"
@@ -102,16 +103,16 @@
           <span class="bday-hero__name">Akanksha</span>
         </h1>
         <p class="bday-hero__sub">
-          My wife. My Aku. My favourite reason to wake up smiling.
+          My wife. My Aku. The best thing I never saw coming.
         </p>
         <p class="bday-hero__from">
-          From the boy who got the luckiest <em>yes</em> on the 7th of May.
+          From the man who got the luckiest <em>yes</em> on the 7th of May.
         </p>
 
         <!-- Countdown -->
-        <div class="bday-count" id="bdayCount" data-state="future" aria-live="polite">
-          <p class="bday-count__label" id="bdayCountLabel">Counting down to your day</p>
-          <div class="bday-count__grid">
+        <div class="bday-count" id="bdayCount" data-state="future">
+          <p class="bday-count__label" id="bdayCountLabel" aria-live="polite">Counting down to your day</p>
+          <div class="bday-count__grid" aria-hidden="true">
             <div class="bday-count__card">
               <span class="bday-count__num" id="bdayCountDays">--</span>
               <span class="bday-count__unit">days</span>
@@ -142,8 +143,8 @@
       <!-- Story: engagement to today -->
       <section class="bday-section bday-section--story" id="bday-story">
         <header class="bday-section__head">
-          <h2>From the 7th of May to the 17th of June</h2>
-          <p>A short story in 40 days.</p>
+          <h2>From the first hello to your first birthday</h2>
+          <p>Seven months. One impossible-to-believe arc.</p>
         </header>
 
         <ol class="bday-story" role="list">
@@ -188,16 +189,16 @@
           <li class="bday-story__item bday-story__item--big">
             <span class="bday-story__date">Thu, May 7, 2026</span>
             <p>
-              A cab at 4:34 in the morning. Lipstick done in the back seat.
-              A ring. A paper. <strong>You became my wife.</strong>
-              <em class="bday-bestday-mark">The best day of my life.</em>
+              We got married that day in court in Thane.
+              <strong>You became my wife.</strong>
+              <em class="bday-bestday-mark">I have never been so sure of anything.</em>
             </p>
           </li>
-          <li class="bday-story__item">
-            <span class="bday-story__date">Fri–Sun, May 8–10, 2026</span>
+          <li class="bday-story__item bday-story__item--big">
+            <span class="bday-story__date">Fri, May 8, 2026</span>
             <p>
-              Slow mornings. Neither of us quite sure which side of the
-              bed was ours yet. We figured it out.
+              You slid a ring onto my finger. The court made it legal the day
+              before — <strong>this is the part that was just ours.</strong>
             </p>
           </li>
           <li class="bday-story__item bday-story__item--big">
@@ -210,66 +211,26 @@
         </ol>
       </section>
 
-      <!-- Gallery: ring ceremony -->
-      <section class="bday-section bday-section--gallery">
+      <!-- Balloon-pop photo reveal -->
+      <section class="bday-section bday-section--pop" id="bdayPopSection" aria-labelledby="popTitle">
         <header class="bday-section__head">
-          <h2>The day you said yes</h2>
-          <p>7 May, 2026 — our ring ceremony.</p>
+          <h2 id="popTitle">Pop a balloon, find a you</h2>
+          <p>Every balloon is hiding a picture I love. Go on — pop them all. 🎈</p>
+          <span class="bday-section__hint">Tip: tap the empty space for fireworks. ✨</span>
         </header>
-        <div class="bday-gallery" data-gallery>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/rings/DSC08782.jpg" alt="Akanksha and Ashish at the ring ceremony" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/rings/DSC08807.jpg" alt="Ring exchange moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/rings/DSC08812.jpg" alt="A smile from Akanksha" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/rings/DSC08827.jpg" alt="Ring ceremony — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/rings/DSC08843.jpg" alt="A candid moment" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/rings/DSC08872.jpg" alt="A frame to keep forever" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
+        <div class="bday-pop" id="bdayBalloonPop" role="group" aria-label="Tap the balloons to pop them and reveal photos">
+          <p class="bday-pop__fallback">Loading your surprises…</p>
         </div>
+        <p class="bday-pop__count" id="bdayPopCount" aria-live="polite" aria-atomic="true"></p>
       </section>
 
-      <!-- Gallery: first days together -->
-      <section class="bday-section bday-section--gallery bday-section--soft">
+      <!-- Festive photo wall: all of her -->
+      <section class="bday-section bday-section--wall bday-section--soft" aria-labelledby="wallTitle">
         <header class="bday-section__head">
-          <h2>Our first days</h2>
-          <p>The week we started being us, full-time.</p>
+          <h2 id="wallTitle">Forty-seven reasons to throw a party</h2>
+          <p>Every single face you make is my favourite. Tap any one to make it big.</p>
         </header>
-        <div class="bday-gallery bday-gallery--moments" data-gallery>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260507_090443595_HDR.jpg" alt="Morning of May 7" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260507_092215334_HDR.jpg" alt="Together on the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260507_211615786.jpg" alt="Evening of the 7th" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260508_205320687_HDR.jpg" alt="May 8 — together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260508_205718512.jpg" alt="May 8 — smiles" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260508_221511223_HDR.jpg" alt="Late May 8" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260509_191250408.jpg" alt="May 9 — out together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-          <div class="bday-gallery__item">
-            <img src="../wedding/photos/days/IMG_20260510_172239784_HDR.jpg" alt="May 10" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('bday-gallery__item--empty')" />
-          </div>
-        </div>
+        <div class="bday-wall" id="bdayPhotoWall" aria-label="A wall of photos of Akanksha"></div>
       </section>
 
       <!-- Video roll: a few moving frames from us -->
@@ -277,7 +238,7 @@
         <header class="bday-section__head">
           <h2>A few moving frames</h2>
           <p>Of us — because still photos can only carry so much of you.<br />
-            <em style="font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--coral);">
+            <em class="bday-section__hint">
               Tap any of them for sound.
             </em>
           </p>
@@ -313,7 +274,7 @@
       </section>
 
       <!-- 17 wishes -->
-      <section class="bday-section bday-section--wishes">
+      <section class="bday-section bday-section--wishes bday-section--soft">
         <header class="bday-section__head">
           <h2>17 little wishes for the 17th</h2>
           <p>One for every candle I'd light if I could.</p>
@@ -416,9 +377,10 @@
             unbelievably right it feels.
           </p>
           <p>
-            On the 7th of May, you put a ring on my finger and a paper got signed,
-            and for a second it felt like the world held its breath. I didn't.
-            I just looked at you and thought: <em>this is it. This is my person.</em>
+            On the 7th of May, a paper got signed in court. The next day, you
+            put a ring on my finger — and for a second it felt like the world
+            held its breath. I didn't. I just looked at you and thought:
+            <em>this is it. This is my person.</em>
           </p>
 
           <p class="bday-letter__bestday">
@@ -456,16 +418,17 @@
           One more burst of confetti 🎉
         </button>
         <p class="bday-close__hidden" id="bdayHiddenMsg" hidden>
-          17 taps. 17 reasons to keep being yours. — A
+          17 taps. 17 reasons to keep being yours. — Ashish
         </p>
       </section>
     </main>
 
-    <!-- Confetti layer -->
+    <!-- Celebration layers -->
+    <div class="bday-fireworks" id="bdayFireworks" aria-hidden="true"></div>
     <div class="bday-confetti" id="bdayConfetti" aria-hidden="true"></div>
 
     <!-- Lightbox -->
-    <div class="bday-lightbox" id="bdayLightbox" aria-hidden="true">
+    <div class="bday-lightbox" id="bdayLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photo">
       <button
         type="button"
         class="bday-lightbox__close"
@@ -478,7 +441,6 @@
     </div>
 
     <script src="../shared/interactive.js"></script>
-    <script src="../shared/music.js"></script>
-    <script src="birthday.js"></script>
+    <script src="birthday.js?v=10"></script>
   </body>
 </html>
