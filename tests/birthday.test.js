@@ -336,4 +336,64 @@ describe("birthday — pure helpers", () => {
       expect(shapes.size).toBeGreaterThan(1);
     });
   });
+
+  describe("blowDetected", () => {
+    it("fires on a sustained run above the threshold", () => {
+      const { blowDetected } = api();
+      expect(blowDetected([0.1, 0.5, 0.6, 0.7], 0.4, 3)).toBe(true);
+    });
+
+    it("ignores a brief spike", () => {
+      const { blowDetected } = api();
+      expect(blowDetected([0.5, 0.1, 0.5], 0.4, 2)).toBe(false);
+    });
+
+    it("is false for no samples", () => {
+      const { blowDetected } = api();
+      expect(blowDetected([], 0.4, 2)).toBe(false);
+    });
+  });
+
+  describe("daysSince", () => {
+    it("counts whole days from a past date", () => {
+      const { daysSince } = api();
+      expect(daysSince("2026-05-07", new Date(2026, 5, 17))).toBe(41); // May 7 -> Jun 17
+    });
+
+    it("clamps to zero for future dates", () => {
+      const { daysSince } = api();
+      expect(daysSince("2026-05-07", new Date(2026, 4, 1))).toBe(0);
+    });
+  });
+
+  describe("tweenValue", () => {
+    it("starts at zero and lands exactly on target", () => {
+      const { tweenValue } = api();
+      expect(tweenValue(0, 1000, 100)).toBe(0);
+      expect(tweenValue(1000, 1000, 100)).toBe(100);
+    });
+
+    it("eases (further than linear) partway through", () => {
+      const { tweenValue } = api();
+      expect(tweenValue(500, 1000, 100)).toBe(88); // easeOutCubic(0.5) = 0.875
+    });
+
+    it("returns the target immediately for zero duration", () => {
+      const { tweenValue } = api();
+      expect(tweenValue(0, 0, 42)).toBe(42);
+    });
+  });
+
+  describe("isScratchedEnough", () => {
+    it("is true once the cleared fraction meets the threshold", () => {
+      const { isScratchedEnough } = api();
+      expect(isScratchedEnough(50, 100, 0.5)).toBe(true);
+      expect(isScratchedEnough(40, 100, 0.5)).toBe(false);
+    });
+
+    it("is false when nothing can be scratched", () => {
+      const { isScratchedEnough } = api();
+      expect(isScratchedEnough(1, 0, 0.5)).toBe(false);
+    });
+  });
 });

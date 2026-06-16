@@ -40,7 +40,7 @@
       href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="birthday.css?v=10" />
+    <link rel="stylesheet" href="birthday.css?v=12" />
     <link rel="stylesheet" href="../shared/shared.css" />
   </head>
   <body id="page-birthday" data-music-mood="birthday">
@@ -95,6 +95,22 @@
         <span class="balloon balloon--7"></span>
       </div>
 
+      <!-- Drifting rose petals (hidden under reduced motion) -->
+      <div class="petals" aria-hidden="true">
+        <span class="petal petal--1"></span>
+        <span class="petal petal--2"></span>
+        <span class="petal petal--3"></span>
+        <span class="petal petal--4"></span>
+        <span class="petal petal--5"></span>
+        <span class="petal petal--6"></span>
+        <span class="petal petal--7"></span>
+        <span class="petal petal--8"></span>
+        <span class="petal petal--9"></span>
+        <span class="petal petal--10"></span>
+        <span class="petal petal--11"></span>
+        <span class="petal petal--12"></span>
+      </div>
+
       <!-- Hero -->
       <section class="bday-hero" aria-labelledby="bdayHeroTitle">
         <p class="bday-hero__eyebrow">17 June, 2026</p>
@@ -134,6 +150,10 @@
             …until the world celebrates the day you arrived in it.
           </p>
         </div>
+
+        <p class="bday-daystogether" data-since="2026-05-07">
+          and <span class="bday-daystogether__num">0</span> days as your husband 💛
+        </p>
 
         <a href="#bday-story" class="bday-hero__scroll" aria-label="Scroll for more">
           <span></span>
@@ -337,6 +357,10 @@
           <div class="bday-cake__plate" aria-hidden="true"></div>
         </div>
 
+        <button type="button" class="bday-cake__mic" id="bdayCakeMic" hidden>
+          🎤 Blow them out
+        </button>
+
         <p class="bday-cake__status" id="cakeStatus" aria-live="polite"></p>
 
         <!-- Wish capsule -->
@@ -407,6 +431,24 @@
         </article>
       </section>
 
+      <!-- Scratch-to-reveal secret -->
+      <section class="bday-section bday-section--scratch" aria-labelledby="scratchTitle">
+        <header class="bday-section__head">
+          <h2 id="scratchTitle">A little secret</h2>
+          <p>Scratch the gold off to read it.</p>
+        </header>
+        <div class="bday-scratch" id="bdayScratch">
+          <div class="bday-scratch__prize">
+            <p>
+              You are the best thing that has ever been mine.
+              <span>I love you, Aku. — Your Boo</span>
+            </p>
+          </div>
+          <canvas class="bday-scratch__canvas" id="bdayScratchCanvas" aria-hidden="true"></canvas>
+        </div>
+        <button type="button" class="bday-scratch__reveal" id="bdayScratchReveal">Reveal it</button>
+      </section>
+
       <!-- Closing -->
       <section class="bday-section bday-section--close" id="bdayClose">
         <p class="bday-close__deco" aria-hidden="true">🎂 · 💐 · 🌷 · ✨ · 🎈</p>
@@ -417,6 +459,12 @@
         <button type="button" class="bday-close__more" id="bdayMoreConfetti">
           One more burst of confetti 🎉
         </button>
+        <div class="bday-keepsake">
+          <button type="button" class="bday-keepsake__btn" id="bdayKeepsake">
+            💌 Save this as a card
+          </button>
+          <p class="bday-keepsake__status" id="bdayKeepsakeStatus" aria-live="polite"></p>
+        </div>
         <p class="bday-close__hidden" id="bdayHiddenMsg" hidden>
           17 taps. 17 reasons to keep being yours. — Ashish
         </p>
@@ -441,6 +489,6 @@
     </div>
 
     <script src="../shared/interactive.js"></script>
-    <script src="birthday.js?v=10"></script>
+    <script src="birthday.js?v=14"></script>
   </body>
 </html>

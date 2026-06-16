@@ -143,6 +143,41 @@
     return { notes: out, total: t + (gap || 0) };
   }
 
+  // Mic blow-out: true if at least `minHold` of the recent loudness samples run
+  // consecutively above `threshold` (a sustained blow, not a brief spike).
+  function blowDetected(samples, threshold, minHold) {
+    if (!samples || !samples.length) return false;
+    let run = 0;
+    for (let i = 0; i < samples.length; i++) {
+      if (samples[i] >= threshold) {
+        run += 1;
+        if (run >= minHold) return true;
+      } else {
+        run = 0;
+      }
+    }
+    return false;
+  }
+
+  // Whole days from a past "YYYY-MM-DD" to `now`, clamped at 0.
+  function daysSince(ymd, now) {
+    const p = String(ymd).split("-");
+    const from = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    return Math.max(0, Math.floor((now.getTime() - from.getTime()) / 86400000));
+  }
+
+  // Eased (easeOutCubic) integer value of a count-up tween at `elapsed` ms.
+  function tweenValue(elapsed, duration, target) {
+    if (duration <= 0) return target;
+    const t = Math.min(1, Math.max(0, elapsed / duration));
+    return Math.round((1 - Math.pow(1 - t, 3)) * target);
+  }
+
+  // Scratch reveal: true once the cleared fraction reaches `threshold` (0..1).
+  function isScratchedEnough(cleared, total, threshold) {
+    return total > 0 && cleared / total >= threshold;
+  }
+
   // Expose pure helpers for tests
   window.__bday = {
     getBirthdayTarget,
@@ -159,6 +194,10 @@
     photoAlt,
     shouldEmit,
     melodySchedule,
+    blowDetected,
+    daysSince,
+    tweenValue,
+    isScratchedEnough,
   };
 
   // Whether the viewer asked the OS to reduce motion. Read once at load.
@@ -318,6 +357,9 @@
           hero.setAttribute("tabindex", "-1");
           hero.focus({ preventScroll: true });
         }
+        // Spell her name out, letter by letter.
+        const heroName = $(".bday-hero__name");
+        if (heroName) heroName.classList.add("is-spelling");
       }, 650);
       setTimeout(() => {
         gate.remove();
@@ -430,6 +472,7 @@
     if (!cake) return;
 
     const candles = $$(".candle", cake);
+    const micBtn = $("#bdayCakeMic");
     let phase = "unlit"; // unlit → lit → blown → (relight) lit …
 
     function litCount() {
@@ -439,12 +482,37 @@
     function refreshHint() {
       if (!hint) return;
       if (phase === "unlit") hint.textContent = "Tap a candle to light it.";
-      else if (phase === "lit") hint.textContent = "Now tap each flame to blow it out.";
+      else if (phase === "lit") hint.textContent = "Now blow them out — tap each flame, or use the mic.";
       else hint.textContent = "All blown. Make a wish ✨";
     }
 
     function setStatus(text) {
       if (status) status.textContent = text;
+    }
+    function showMic(show) {
+      if (micBtn) micBtn.hidden = !show;
+    }
+
+    // Side effects when the cake goes dark — shared by tap and mic.
+    function onBlownOut() {
+      refreshHint();
+      showMic(false);
+      stopMic();
+      burstConfetti(50);
+      launchFireworksShow(3);
+      setStatus("Beautiful. Now — make a wish.");
+      if (wish) wish.hidden = false;
+      setTimeout(() => {
+        wish && wish.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 200);
+    }
+
+    // Blow every candle out at once (microphone path).
+    function blowAllOut() {
+      if (phase !== "lit") return;
+      candles.forEach((c) => c.classList.remove("candle--lit"));
+      phase = nextCakePhase("lit", 0, candles.length); // → "blown"
+      onBlownOut();
     }
 
     candles.forEach((c) => {
@@ -465,21 +533,14 @@
         if (prev !== "lit" && phase === "lit") {
           // Finished lighting (from unlit) or relit the cake (from blown).
           refreshHint();
+          showMic(true);
           setStatus(
             prev === "blown"
               ? "Lit again — blow them out and make another wish."
               : "All lit ✨ Now blow them out."
           );
         } else if (prev === "lit" && phase === "blown") {
-          refreshHint();
-          burstConfetti(50);
-          launchFireworksShow(3);
-          setStatus("Beautiful. Now — make a wish.");
-          if (wish) wish.hidden = false;
-          // Bring the wish capsule gently into view.
-          setTimeout(() => {
-            wish && wish.scrollIntoView({ behavior: "smooth", block: "center" });
-          }, 200);
+          onBlownOut();
         } else if (phase === "unlit") {
           setStatus("Light them all…");
         } else if (phase === "lit") {
@@ -487,6 +548,63 @@
         }
       });
     });
+
+    // ---- Microphone blow-out (optional; tapping always works) ----
+    let micStream = null;
+    let micCtx = null;
+    let micRAF = null;
+
+    function stopMic() {
+      if (micRAF) { cancelAnimationFrame(micRAF); micRAF = null; }
+      if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micStream = null; }
+      if (micCtx) { micCtx.close().catch(() => {}); micCtx = null; }
+      if (micBtn) micBtn.classList.remove("is-listening");
+    }
+
+    async function startMicListen() {
+      if (phase !== "lit") return;
+      if (micStream) { stopMic(); setStatus("Mic off — tap the flames, or try the mic again."); return; }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setStatus("No mic here — just tap the flames."); return;
+      }
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (_) {
+        setStatus("No mic access — tap the flames instead."); return;
+      }
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        micCtx = new AC();
+        const srcNode = micCtx.createMediaStreamSource(micStream);
+        const analyser = micCtx.createAnalyser();
+        analyser.fftSize = 1024;
+        srcNode.connect(analyser);
+        const buf = new Uint8Array(analyser.fftSize);
+        const recent = [];
+        if (micBtn) micBtn.classList.add("is-listening");
+        setStatus("Listening… take a breath and blow 🎤");
+        const sample = () => {
+          if (!micCtx) return;
+          analyser.getByteTimeDomainData(buf);
+          let sum = 0;
+          for (let i = 0; i < buf.length; i++) {
+            const v = (buf[i] - 128) / 128;
+            sum += v * v;
+          }
+          const rms = Math.sqrt(sum / buf.length);
+          recent.push(rms);
+          if (recent.length > 10) recent.shift();
+          if (blowDetected(recent, 0.18, 5)) { blowAllOut(); return; }
+          micRAF = requestAnimationFrame(sample);
+        };
+        micRAF = requestAnimationFrame(sample);
+      } catch (_) {
+        stopMic();
+        setStatus("Mic trouble — tap the flames instead.");
+      }
+    }
+
+    if (micBtn) micBtn.addEventListener("click", startMicListen);
 
     refreshHint();
   }
@@ -1025,16 +1143,255 @@
     }
   }
 
+  // ---------- Hero name: letter-by-letter reveal ----------
+
+  function buildHeroName() {
+    const el = $(".bday-hero__name");
+    if (!el) return;
+    const text = el.textContent;
+    el.setAttribute("aria-label", text);
+    el.textContent = "";
+    Array.prototype.forEach.call(text, (ch, i) => {
+      const s = document.createElement("span");
+      s.className = "bday-hero__letter";
+      s.textContent = ch;
+      s.style.setProperty("--i", String(i));
+      s.setAttribute("aria-hidden", "true");
+      el.appendChild(s);
+    });
+  }
+
+  // ---------- Signature: draw the letter's name on as it scrolls in ----------
+
+  function bindSignature() {
+    const name = $(".bday-letter__name");
+    if (!name) return;
+    if (reduceMotion) return; // leave the name fully visible
+    // Arm the hidden start state. The existing scroll-reveal adds .is-visible to
+    // the parent .bday-letter; the CSS keys the ink-on animation off that, so we
+    // don't observe the clipped name directly (its clip collapses the IO ratio).
+    name.classList.add("is-armed");
+  }
+
+  // ---------- "Days since you said yes" count-up ----------
+
+  function bindDaysTogether() {
+    const el = $(".bday-daystogether");
+    if (!el) return;
+    const numEl = $(".bday-daystogether__num", el);
+    const target = daysSince(el.getAttribute("data-since") || "2026-05-07", new Date());
+    function set(v) { if (numEl) numEl.textContent = String(v); }
+    if (reduceMotion || !("IntersectionObserver" in window)) { set(target); return; }
+    let done = false;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting || done) return;
+        done = true; io.unobserve(e.target);
+        const dur = 1200;
+        let t0 = null;
+        const step = (ts) => {
+          if (t0 === null) t0 = ts;
+          const elapsed = ts - t0;
+          set(tweenValue(elapsed, dur, target));
+          if (elapsed < dur) requestAnimationFrame(step); else set(target);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.5 });
+    io.observe(el);
+  }
+
+  // ---------- Scratch-to-reveal ----------
+
+  function bindScratch() {
+    const wrap = $("#bdayScratch");
+    if (!wrap) return;
+    const canvas = $("#bdayScratchCanvas");
+    const revealBtn = $("#bdayScratchReveal");
+
+    function reveal() { wrap.classList.add("is-revealed"); }
+
+    if (!canvas || !canvas.getContext || reduceMotion) {
+      reveal();
+      if (revealBtn) revealBtn.hidden = true; // already shown; no need
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    let done = false;
+    let drawing = false;
+    let moves = 0;
+
+    function paint() {
+      const r = wrap.getBoundingClientRect();
+      canvas.width = Math.max(1, Math.round(r.width));
+      canvas.height = Math.max(1, Math.round(r.height));
+      const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      g.addColorStop(0, "#e9c46a"); g.addColorStop(0.5, "#f6d97a"); g.addColorStop(1, "#d39a36");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(120, 80, 20, 0.7)";
+      ctx.font = '600 22px "Caveat", cursive';
+      ctx.textAlign = "center";
+      ctx.fillText("Scratch here ✨", canvas.width / 2, canvas.height / 2);
+    }
+    paint();
+
+    function at(e) {
+      const r = canvas.getBoundingClientRect();
+      const p = (e.touches && e.touches[0]) || e;
+      return { x: p.clientX - r.left, y: p.clientY - r.top };
+    }
+    function scratch(x, y) {
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 26, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over";
+    }
+    function check() {
+      try {
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let cleared = 0;
+        const total = canvas.width * canvas.height;
+        for (let i = 3; i < data.length; i += 4) { if (data[i] === 0) cleared++; }
+        if (isScratchedEnough(cleared, total, 0.5)) { done = true; reveal(); }
+      } catch (_) { /* ignore */ }
+    }
+
+    canvas.addEventListener("pointerdown", (e) => { if (done) return; drawing = true; const p = at(e); scratch(p.x, p.y); });
+    canvas.addEventListener("pointermove", (e) => { if (!drawing || done) return; const p = at(e); scratch(p.x, p.y); if (++moves % 6 === 0) check(); });
+    window.addEventListener("pointerup", () => { if (drawing) { drawing = false; check(); } });
+    canvas.addEventListener("touchmove", (e) => { if (done) return; e.preventDefault(); const p = at(e); scratch(p.x, p.y); if (++moves % 6 === 0) check(); }, { passive: false });
+    revealBtn?.addEventListener("click", () => { done = true; reveal(); });
+  }
+
+  // ---------- Keepsake card (save / share) ----------
+
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  async function buildKeepsakeBlob() {
+    const W = 1080, H = 1350;
+    const canvas = document.createElement("canvas");
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d");
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, "#fff6ec"); g.addColorStop(1, "#ffd9e0");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    try {
+      await document.fonts.load('700 120px "Dancing Script"');
+      await document.fonts.load('400 40px "Lora"');
+    } catch (_) { /* fall back to system fonts */ }
+    try {
+      const img = await loadImage(PHOTOS_FULL[0]);
+      const pad = 90, pw = W - pad * 2, ph = 620, px = pad, py = 320;
+      roundRect(ctx, px, py, pw, ph, 28); ctx.save(); ctx.clip();
+      const far = pw / ph, ar = img.width / img.height;
+      let sw, sh, sx, sy;
+      if (ar > far) { sh = img.height; sw = sh * far; sx = (img.width - sw) / 2; sy = 0; }
+      else { sw = img.width; sh = sw / far; sx = 0; sy = (img.height - sh) / 2; }
+      ctx.drawImage(img, sx, sy, sw, sh, px, py, pw, ph);
+      ctx.restore();
+    } catch (_) { /* card still works without the photo */ }
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#be4734";
+    ctx.font = '700 72px "Dancing Script", cursive';
+    ctx.fillText("Happy Birthday,", W / 2, 175);
+    ctx.fillStyle = "#d14d72";
+    ctx.font = '700 130px "Dancing Script", cursive';
+    ctx.fillText("Akanksha", W / 2, 290);
+    ctx.fillStyle = "#6b5a63";
+    ctx.font = '400 40px "Lora", serif';
+    ctx.fillText("17 June 2026", W / 2, 1030);
+    ctx.fillStyle = "#3a2e36";
+    ctx.font = 'italic 400 42px "Lora", serif';
+    ctx.fillText("— from Ashish, with all my love", W / 2, 1230);
+    const dots = ["#ef7d6a", "#e9c46a", "#7a5cff", "#d14d72", "#3fae7a"];
+    for (let i = 0; i < 14; i++) {
+      ctx.fillStyle = dots[i % dots.length];
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.arc(50 + Math.random() * (W - 100), 40 + Math.random() * 120, 5 + Math.random() * 7, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    return await new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
+  }
+  function bindKeepsake() {
+    const btn = $("#bdayKeepsake");
+    if (!btn) return;
+    const status = $("#bdayKeepsakeStatus");
+    function say(t) { if (status) status.textContent = t; }
+    function download(blob) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "happy-birthday-akanksha.png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      say("Saved to your downloads 💛");
+    }
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      say("Making your card…");
+      let blob;
+      try {
+        blob = await buildKeepsakeBlob();
+      } catch (_) {
+        say("Couldn't make the card — try again?");
+        btn.disabled = false;
+        return;
+      }
+      const file = new File([blob], "happy-birthday-akanksha.png", { type: "image/png" });
+      // Prefer the native share sheet on mobile; fall back to a download.
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: "Happy Birthday, Akanksha" });
+          say("Shared 💛");
+          btn.disabled = false;
+          return;
+        } catch (err) {
+          if (err && err.name === "AbortError") { say(""); btn.disabled = false; return; }
+          // otherwise fall through to download
+        }
+      }
+      try { download(blob); } catch (_) { say("Couldn't save — try again?"); }
+      btn.disabled = false;
+    });
+  }
+
   // ---------- Boot ----------
 
   whenReady(() => {
+    buildHeroName();
     bindGate();
     bindCountdown();
+    bindDaysTogether();
     bindCake();
     bindWish();
     bindLightbox();
     buildBalloonPop();
     buildPhotoWall();
+    bindSignature();
+    bindScratch();
+    bindKeepsake();
     bindReveal();
     bindClosing();
     bindCelebrationTaps();

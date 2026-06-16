@@ -1488,3 +1488,204 @@ button {
 .bday-section--wall.reveal.is-visible {
   transform: translateY(0) scale(1);
 }
+
+/* ---------- Drifting rose petals ---------- */
+.petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.petal {
+  position: absolute;
+  top: -6%;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 32% 28%, #ffd9e2, #ff9fb6 70%);
+  border-radius: 50% 0 55% 55%;
+  opacity: 0;
+  animation: petalFall linear infinite;
+}
+@keyframes petalFall {
+  0%   { transform: translateY(-12vh) translateX(0) rotate(0deg); opacity: 0; }
+  12%  { opacity: 0.8; }
+  88%  { opacity: 0.8; }
+  100% { transform: translateY(112vh) translateX(48px) rotate(420deg); opacity: 0; }
+}
+.petal--1  { left: 6%;  width: 12px; height: 12px; animation-duration: 13s; animation-delay: 0s; }
+.petal--2  { left: 16%; animation-duration: 16s; animation-delay: 3s; }
+.petal--3  { left: 27%; width: 16px; height: 16px; animation-duration: 12s; animation-delay: 6s; }
+.petal--4  { left: 38%; animation-duration: 15s; animation-delay: 1.5s; }
+.petal--5  { left: 48%; width: 11px; height: 11px; animation-duration: 18s; animation-delay: 4.5s; }
+.petal--6  { left: 58%; animation-duration: 14s; animation-delay: 8s; }
+.petal--7  { left: 67%; width: 15px; height: 15px; animation-duration: 13s; animation-delay: 2.5s; }
+.petal--8  { left: 76%; animation-duration: 17s; animation-delay: 5.5s; }
+.petal--9  { left: 84%; width: 12px; height: 12px; animation-duration: 12s; animation-delay: 9s; }
+.petal--10 { left: 91%; animation-duration: 15s; animation-delay: 3.5s; }
+.petal--11 { left: 33%; width: 10px; height: 10px; animation-duration: 19s; animation-delay: 7s; }
+.petal--12 { left: 72%; width: 13px; height: 13px; animation-duration: 16s; animation-delay: 10.5s; }
+
+/* ---------- Hero name: letter-by-letter reveal ---------- */
+.bday-hero__letter {
+  display: inline-block;
+  background: linear-gradient(90deg, #ef7d6a 0%, #d14d72 50%, #b83b5e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: translateY(0.5em) rotate(-6deg);
+}
+.bday-hero__name.is-spelling .bday-hero__letter {
+  animation: heroLetter 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.3) forwards;
+  animation-delay: calc(var(--i) * 60ms);
+}
+@keyframes heroLetter {
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+/* ---------- "Days since you said yes" ---------- */
+.bday-daystogether {
+  margin: 1.1rem auto 0;
+  text-align: center;
+  font-family: "Caveat", cursive;
+  font-size: 1.35rem;
+  color: var(--coral-text);
+}
+.bday-daystogether__num {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 1.5em;
+  color: var(--rose-deep);
+}
+
+/* ---------- Letter signature: ink-on draw ---------- */
+.bday-letter__name.is-armed { clip-path: inset(0 100% 0 0); }
+.bday-letter.is-visible .bday-letter__name.is-armed { animation: inkReveal 1.1s ease forwards; }
+@keyframes inkReveal { to { clip-path: inset(0 0 0 0); } }
+.bday-letter__name.is-armed::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0;
+  margin-top: 2px;
+  background: linear-gradient(90deg, var(--rose-deep), var(--peach-deep));
+  border-radius: 2px;
+}
+.bday-letter.is-visible .bday-letter__name.is-armed::after {
+  animation: inkUnderline 0.6s ease 0.7s forwards;
+}
+@keyframes inkUnderline { to { width: 55%; } }
+
+/* ---------- Cake: microphone blow-out button ---------- */
+.bday-cake__mic {
+  display: inline-block;
+  margin: 0.35rem auto 0;
+  background: linear-gradient(135deg, var(--coral), var(--rose-deep));
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  box-shadow: 0 10px 22px rgba(209, 77, 114, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.bday-cake__mic[hidden] { display: none; }
+.bday-cake__mic:hover { transform: translateY(-2px); }
+.bday-cake__mic:focus-visible { outline: 3px solid var(--rose-deep); outline-offset: 3px; }
+.bday-cake__mic.is-listening { animation: micPulse 1s ease-in-out infinite; }
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 10px 22px rgba(209, 77, 114, 0.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(239, 125, 106, 0.25), 0 10px 22px rgba(209, 77, 114, 0.3); }
+}
+
+/* ---------- Scratch-to-reveal ---------- */
+.bday-section--scratch { text-align: center; }
+.bday-scratch {
+  position: relative;
+  max-width: 30rem;
+  margin: 0 auto;
+  aspect-ratio: 3 / 2;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 14px 36px rgba(214, 137, 99, 0.2);
+}
+.bday-scratch__prize {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(160deg, #fff6ec, #ffe1e7);
+}
+.bday-scratch__prize p {
+  margin: 0;
+  font-family: "Lora", serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.bday-scratch__prize span {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.9rem;
+  color: var(--rose-deep);
+}
+.bday-scratch__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 0.5s ease;
+}
+.bday-scratch.is-revealed .bday-scratch__canvas { opacity: 0; pointer-events: none; }
+.bday-scratch__reveal {
+  margin-top: 1rem;
+  background: transparent;
+  border: 1.5px solid var(--coral);
+  color: var(--coral-text);
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+}
+.bday-scratch__reveal:hover { background: var(--coral); color: #fff; }
+.bday-scratch__reveal:focus-visible { outline: 2px solid var(--rose-deep); outline-offset: 3px; }
+.bday-scratch.is-revealed .bday-scratch__reveal { display: none; }
+
+/* ---------- Keepsake card button ---------- */
+.bday-keepsake { margin-top: 1rem; }
+.bday-keepsake__btn {
+  background: transparent;
+  border: 1.5px solid var(--coral);
+  color: var(--coral-text);
+  border-radius: 999px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.bday-keepsake__btn:hover { background: var(--coral); color: #fff; transform: translateY(-2px); }
+.bday-keepsake__btn:focus-visible { outline: 3px solid rgba(255, 255, 255, 0.9); outline-offset: 3px; }
+.bday-keepsake__btn[disabled] { opacity: 0.6; cursor: default; }
+.bday-keepsake__status {
+  margin: 0.6rem 0 0;
+  font-family: "Caveat", cursive;
+  font-size: 1.2rem;
+  color: var(--rose-deep);
+  min-height: 1.2em;
+}
+
+/* ---------- Reduced motion: the new ambient/reveal effects ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .petals { display: none; }
+  .bday-hero__letter {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .bday-letter__name { clip-path: none !important; }
+}
