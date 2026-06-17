@@ -89,6 +89,21 @@
     return out;
   }
 
+  // `count` distinct random indices from [0, total), via a partial Fisher–Yates
+  // shuffle. `rng` defaults to Math.random; injectable for tests. Pure given rng.
+  function pickRandomIndices(total, count, rng) {
+    if (total <= 0 || count <= 0) return [];
+    const rand = rng || Math.random;
+    const n = Math.min(count, total);
+    const pool = [];
+    for (let i = 0; i < total; i++) pool.push(i);
+    for (let i = 0; i < n; i++) {
+      const j = i + Math.floor(rand() * (total - i));
+      const t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+    }
+    return pool.slice(0, n);
+  }
+
   // A firework particle's offset vector: particle `i` of `count`, evenly placed
   // around a circle of the given radius. Pure + testable.
   function fireworkVector(i, count, radius) {
@@ -188,6 +203,7 @@
     nextCakePhase,
     effectiveConfetti,
     balloonPhotoIndices,
+    pickRandomIndices,
     fireworkVector,
     confettiPiece,
     isTapGesture,
@@ -1317,16 +1333,27 @@
       await document.fonts.load('400 40px "Lora"');
     } catch (_) { /* fall back to system fonts */ }
     try {
-      const img = await loadImage(PHOTOS_FULL[0]);
-      const pad = 90, pw = W - pad * 2, ph = 620, px = pad, py = 320;
-      roundRect(ctx, px, py, pw, ph, 28); ctx.save(); ctx.clip();
-      const far = pw / ph, ar = img.width / img.height;
-      let sw, sh, sx, sy;
-      if (ar > far) { sh = img.height; sw = sh * far; sx = (img.width - sw) / 2; sy = 0; }
-      else { sw = img.width; sh = sw / far; sx = 0; sy = (img.height - sh) / 2; }
-      ctx.drawImage(img, sx, sy, sw, sh, px, py, pw, ph);
-      ctx.restore();
-    } catch (_) { /* card still works without the photo */ }
+      // A 3x3 grid of 9 random photos (square cells).
+      const pad = 96, py = 320, gap = 10, cols = 3, rows = 3;
+      const cellW = (W - pad * 2 - gap * (cols - 1)) / cols;
+      const cellH = cellW;
+      const idxs = pickRandomIndices(PHOTOS_THUMB.length, cols * rows);
+      const imgs = await Promise.all(
+        idxs.map((i) => loadImage(PHOTOS_THUMB[i]).catch(() => null))
+      );
+      imgs.forEach((img, k) => {
+        if (!img) return;
+        const cx = pad + (k % cols) * (cellW + gap);
+        const cy = py + Math.floor(k / cols) * (cellH + gap);
+        roundRect(ctx, cx, cy, cellW, cellH, 14); ctx.save(); ctx.clip();
+        const far = cellW / cellH, ar = img.width / img.height;
+        let sw, sh, sx, sy;
+        if (ar > far) { sh = img.height; sw = sh * far; sx = (img.width - sw) / 2; sy = 0; }
+        else { sw = img.width; sh = sw / far; sx = 0; sy = (img.height - sh) / 2; }
+        ctx.drawImage(img, sx, sy, sw, sh, cx, cy, cellW, cellH);
+        ctx.restore();
+      });
+    } catch (_) { /* card still works without the photos */ }
     ctx.textAlign = "center";
     ctx.fillStyle = "#be4734";
     ctx.font = '700 72px "Dancing Script", cursive';
@@ -1336,10 +1363,10 @@
     ctx.fillText("Akanksha", W / 2, 290);
     ctx.fillStyle = "#6b5a63";
     ctx.font = '400 40px "Lora", serif';
-    ctx.fillText("17 June 2026", W / 2, 1030);
+    ctx.fillText("17 June 2026", W / 2, 1258);
     ctx.fillStyle = "#3a2e36";
-    ctx.font = 'italic 400 42px "Lora", serif';
-    ctx.fillText("— from Ashish, with all my love", W / 2, 1230);
+    ctx.font = 'italic 400 40px "Lora", serif';
+    ctx.fillText("— from Ashish, with all my love", W / 2, 1316);
     const dots = ["#ef7d6a", "#e9c46a", "#7a5cff", "#d14d72", "#3fae7a"];
     for (let i = 0; i < 14; i++) {
       ctx.fillStyle = dots[i % dots.length];

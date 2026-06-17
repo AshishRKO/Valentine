@@ -396,4 +396,31 @@ describe("birthday — pure helpers", () => {
       expect(isScratchedEnough(1, 0, 0.5)).toBe(false);
     });
   });
+
+  describe("pickRandomIndices", () => {
+    it("returns the requested count of distinct, in-range indices", () => {
+      const { pickRandomIndices } = api();
+      let s = 0;
+      const rng = () => { s += 0.37; return s % 1; };
+      const idx = pickRandomIndices(47, 9, rng);
+      expect(idx).toHaveLength(9);
+      expect(new Set(idx).size).toBe(9);
+      idx.forEach((i) => {
+        expect(i).toBeGreaterThanOrEqual(0);
+        expect(i).toBeLessThan(47);
+      });
+    });
+
+    it("caps at the number available and keeps them unique", () => {
+      const { pickRandomIndices } = api();
+      const idx = pickRandomIndices(5, 9, () => 0.5);
+      expect(idx).toHaveLength(5);
+      expect(new Set(idx).size).toBe(5);
+    });
+
+    it("is empty when there are no photos", () => {
+      const { pickRandomIndices } = api();
+      expect(pickRandomIndices(0, 9, () => 0)).toEqual([]);
+    });
+  });
 });
