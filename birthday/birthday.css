@@ -1711,3 +1711,57 @@ button {
 .bday-section--wall { contain-intrinsic-size: auto 820px; }
 .bday-section--pop { contain-intrinsic-size: auto 640px; }
 .bday-section--videos { contain-intrinsic-size: auto 380px; }
+
+/* ---------- Handwritten letter (inside the letter card) ---------- */
+.bday-letter__hand {
+  margin: 1.75rem 0 0.5rem;
+  text-align: center;
+}
+/* When only the handwritten letter remains, drop the outer cream card chrome so
+   it isn't a small framed photo floating in a big empty box — let the framed
+   letter stand on its own. */
+.bday-letter--handonly {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  max-width: 500px;
+}
+.bday-letter--handonly::before { display: none; }
+.bday-letter--handonly .bday-letter__hand { margin: 0; }
+.bday-letter--handonly .bday-letter__hand img { max-width: 440px; }
+.bday-letter__handbtn {
+  display: inline-block;
+  max-width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: zoom-in;
+  box-shadow: 0 14px 34px rgba(214, 137, 99, 0.22);
+  transform: rotate(-1.2deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.bday-letter__handbtn:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 0 18px 42px rgba(214, 137, 99, 0.3);
+}
+.bday-letter__handbtn:focus-visible {
+  outline: 3px solid var(--rose-deep);
+  outline-offset: 3px;
+}
+.bday-letter__hand img {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 3px;
+}
+.bday-letter__hand figcaption {
+  margin-top: 0.85rem;
+  font-family: "Caveat", cursive;
+  font-size: 1.2rem;
+  color: var(--coral-text);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bday-letter__handbtn { transform: none; }
+}

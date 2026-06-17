@@ -40,7 +40,7 @@
       href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="birthday.css?v=13" />
+    <link rel="stylesheet" href="birthday.css?v=16" />
     <link rel="stylesheet" href="../shared/shared.css" />
   </head>
   <body id="page-birthday" data-music-mood="birthday">
@@ -173,7 +173,7 @@
           <li class="bday-story__item">
             <span class="bday-story__date">Sat, Nov 8, 2025</span>
             <p>
-              Our calendars wouldn't line up to meet. Yours was Uttarakhand,
+              Our calendars wouldn't line up to meet. Yours was Mumbai,
               mine was Germany. I told you: <em>we'll find a way.</em>
             </p>
           </li>
@@ -183,13 +183,6 @@
               Vashi station. A train you'd taken a thousand times, a stranger
               you'd never met. Marine Drive at sunset. You leaned on my
               shoulder, realised what you'd done, and pulled back. I noticed.
-            </p>
-          </li>
-          <li class="bday-story__item">
-            <span class="bday-story__date">Mon, Jan 12, 2026</span>
-            <p>
-              You asked what we were now. I called you my long-distance
-              girlfriend and told you I wanted to marry you — same breath.
             </p>
           </li>
           <li class="bday-story__item">
@@ -219,7 +212,7 @@
             <span class="bday-story__date">Wed, June 17, 2026</span>
             <p>
               <strong>Your first birthday as my wife.</strong>
-              The first of many — if I get my way.
+              The first of many.
             </p>
           </li>
         </ol>
@@ -383,42 +376,26 @@
 
       <!-- Letter -->
       <section class="bday-section bday-section--letter">
-        <article class="bday-letter">
-          <p class="bday-letter__date">17 June, 2026</p>
-          <p class="bday-letter__greet">My Aku,</p>
-          <p>
-            A few months ago, your name was a name. Now it's the first thought of my morning
-            and the last word of my night. Strange how quickly that happens — and how
-            unbelievably right it feels.
-          </p>
-          <p>
-            On the 7th of May, a paper got signed in court. The next day, you
-            put a ring on my finger — and for a second it felt like the world
-            held its breath. I didn't. I just looked at you and thought:
-            <em>this is it. This is my person.</em>
-          </p>
-
-          <p class="bday-letter__bestday">
-            7 May, 2026 was — and will always be —
-            <strong>the best day of my life.</strong>
-          </p>
-          <p>
-            I don't have a grand thing for your birthday. Just this small corner
-            of the internet, the way I made one for Valentine's — because the only
-            language I know to give you something that lasts is to <em>build</em> it.
-            So this is what I built today. A page of all of us. A page that says
-            <em>I see you</em> on every line.
-          </p>
-          <p>
-            May 17 always be your kindest day of the year. May this year be the easiest
-            one yet, and let next year find us still standing here together, a little
-            older, a lot more in love.
-          </p>
-          <p class="bday-letter__sign">Yours, on the 17th and every day —</p>
-          <p class="bday-letter__name">Ashish</p>
-          <p class="bday-letter__ps">
-            P.S. Still 5'8". You're still 5'5". Still perfect.
-          </p>
+        <article class="bday-letter bday-letter--handonly">
+          <figure class="bday-letter__hand">
+            <button
+              type="button"
+              class="bday-letter__handbtn"
+              id="bdayLetterImgBtn"
+              aria-label="Open the handwritten letter to read it full size"
+            >
+              <img
+                id="bdayLetterImg"
+                src="photos/love-letter-card.jpg"
+                alt="A handwritten birthday letter from Ashish to Akanksha"
+                loading="lazy"
+                decoding="async"
+                width="450"
+                height="600"
+              />
+            </button>
+            <figcaption>Tap to read it.</figcaption>
+          </figure>
         </article>
       </section>
 
@@ -480,6 +457,6 @@
     </div>
 
     <script src="../shared/interactive.js"></script>
-    <script src="birthday.js?v=15"></script>
+    <script src="birthday.js?v=16"></script>
   </body>
 </html>
