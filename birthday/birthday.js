@@ -1404,7 +1404,7 @@
     if (!btn || !img) return;
     // The card shows a small version; the lightbox opens the larger, legible one.
     btn.addEventListener("click", () => {
-      if (openLightbox) openLightbox(btn, "photos/love-letter.jpg", img.alt);
+      if (openLightbox) openLightbox(btn, "photos/love-letter.jpg?v=2", img.alt);
     });
   }
 

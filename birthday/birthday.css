@@ -41,19 +41,75 @@ body {
   position: relative;
   min-height: 100vh;
 }
-/* The gradient lives on a single fixed, composited layer instead of
-   background-attachment:fixed (which repaints on every scroll frame). */
+/* A soft collage of all our photos, fixed behind everything (one composited
+   image, so it's decoded once and composited as a single static layer). */
 body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: url("photos/collage.jpg") center center / cover no-repeat;
+  filter: blur(0.5px) saturate(1.05);
+  transform: scale(1.02); /* hide the blur's soft edges */
+}
+/* A brand-coloured veil over the photos: dense in the middle (behind the
+   content column) for readability, lighter at the edges so the photos show
+   through in the margins that used to look empty. */
+body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255, 217, 184, 0.55) 0%, transparent 55%),
-    radial-gradient(circle at 85% 10%, rgba(230, 220, 255, 0.45) 0%, transparent 55%),
-    radial-gradient(circle at 50% 100%, rgba(255, 179, 193, 0.4) 0%, transparent 60%),
-    linear-gradient(180deg, #fff8ef 0%, #ffeede 35%, #ffe0e6 70%, #f5e9ff 100%);
+    radial-gradient(ellipse 88% 72% at 50% 40%,
+      rgba(255, 248, 239, 0.58) 0%,
+      rgba(255, 243, 236, 0.42) 42%,
+      rgba(255, 235, 240, 0.16) 74%,
+      rgba(248, 236, 250, 0.08) 100%),
+    linear-gradient(180deg,
+      rgba(255, 246, 236, 0.16) 0%,
+      rgba(255, 226, 232, 0.12) 60%,
+      rgba(245, 233, 255, 0.2) 100%);
+}
+
+/* The photo background is visible now, so give the open text (the bits not on a
+   card) a soft cream halo to keep it readable over the photos. */
+.bday-hero__eyebrow,
+.bday-hero__sub,
+.bday-hero__from,
+.bday-section__head p,
+.bday-section__hint,
+.bday-close__sub,
+.bday-daystogether,
+.bday-pop__count,
+.bday-story__date,
+.bday-story__item p {
+  text-shadow: 0 0 4px #fff7ee, 0 0 8px #fff7ee, 0 1px 2px #fff7ee;
+}
+.bday-section__head h2,
+.bday-hero__title {
+  text-shadow: 0 0 10px rgba(255, 248, 238, 0.88), 0 2px 14px rgba(255, 248, 238, 0.7);
+}
+/* The hero name is gradient (clipped) text, so a drop-shadow halo keeps the
+   centerpiece crisp over the photos where a text-shadow reads faint. */
+.bday-hero__name {
+  filter: drop-shadow(0 1px 2px rgba(255, 248, 238, 0.95))
+    drop-shadow(0 0 7px rgba(255, 248, 238, 0.8));
+}
+
+/* The timeline is the one dense block of small text on the open background —
+   give it a soft frosted backing so it stays readable over the photos. */
+.bday-story::after {
+  content: "";
+  position: absolute;
+  inset: -1.25rem -1.5rem;
+  z-index: -1;
+  background: rgba(255, 247, 238, 0.78);
+  border-radius: 22px;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
 }
 
 img {
@@ -1724,11 +1780,11 @@ button {
   background: none;
   box-shadow: none;
   padding: 0;
-  max-width: 500px;
+  max-width: 760px;
 }
 .bday-letter--handonly::before { display: none; }
 .bday-letter--handonly .bday-letter__hand { margin: 0; }
-.bday-letter--handonly .bday-letter__hand img { max-width: 440px; }
+.bday-letter--handonly .bday-letter__hand img { max-width: 700px; }
 .bday-letter__handbtn {
   display: inline-block;
   max-width: 100%;
