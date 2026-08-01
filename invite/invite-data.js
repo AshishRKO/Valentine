@@ -128,10 +128,12 @@ window.INVITE = {
     name: "Ambience Garden Resort & Wedding Point",
     address:
       "Badrinath Marg, Chandar Singh Colony, near Ginvai Srot Pul, Kotdwar 246149, Pauri Garhwal, Uttarakhand",
-    // A Maps search on the printed address. Replace with the exact share link
-    // (open the venue in Google Maps → Share → Copy link) for a precise pin.
-    mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Ambience%20Garden%20Resort%20Badrinath%20Marg%20Chandar%20Singh%20Colony%20Kotdwar%20246149",
+    // What the embedded map and the button look up. A short query pins more
+    // reliably than the full postal address above.
+    mapQuery: "Ambience Garden Resort, Badrinath Marg, Kotdwar, Uttarakhand 246149",
+    // Optional. Paste the exact share link (Google Maps → Share → Copy link) to
+    // point the button at a precise pin; otherwise it searches mapQuery.
+    mapsUrl: "",
     mapsLabel: "View on Google Maps",
   },
 
@@ -177,26 +179,6 @@ window.INVITE = {
   gifts: {
     heading: "Gifts",
     body: "Your love, blessings, and presence are the greatest gifts we could ever ask for.",
-  },
-
-  /* ---------- RSVP ---------- */
-  rsvp: {
-    heading: "Send a Message",
-    // Your WhatsApp number with country code, digits only. Until this is a real
-    // number the form tells guests to reach you directly instead of failing.
-    whatsapp: "91XXXXXXXXXX",
-    fallbackNote: "RSVP is not open yet — please message us directly.",
-    successNote: "Opening WhatsApp — press send and we'll have your RSVP.",
-    labels: {
-      name: "Your Name",
-      namePlaceholder: "Your full name",
-      guests: "How many of you?",
-      guestsPlaceholder: "e.g. 2",
-      attending: "Will you be attending?",
-      message: "Your Message",
-      messagePlaceholder: "Write your wishes...",
-      submit: "Send Message",
-    },
   },
 
   /* ---------- Sign-off ---------- */

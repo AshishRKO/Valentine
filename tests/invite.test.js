@@ -141,124 +141,7 @@ describe("invite — countdown", () => {
   });
 });
 
-describe("invite — RSVP validation", () => {
-  const good = { name: "Rohit Sharma", guests: "2", attending: "yes", message: "See you there!" };
 
-  it("accepts a fully filled form", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors(good)).toEqual([]);
-  });
-
-  it("flags a blank or whitespace-only name", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ ...good, name: "" })).toEqual(["name"]);
-    expect(rsvpErrors({ ...good, name: "   " })).toEqual(["name"]);
-  });
-
-  it("flags a missing attendance choice", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ ...good, attending: "" })).toEqual(["attending"]);
-  });
-
-  it("flags an attendance value it does not recognise", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ ...good, attending: "perhaps" })).toEqual(["attending"]);
-  });
-
-  it("flags a guest count that is not a whole number from 1 to 20", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ ...good, guests: "0" })).toEqual(["guests"]);
-    expect(rsvpErrors({ ...good, guests: "21" })).toEqual(["guests"]);
-    expect(rsvpErrors({ ...good, guests: "2.5" })).toEqual(["guests"]);
-    expect(rsvpErrors({ ...good, guests: "two" })).toEqual(["guests"]);
-    expect(rsvpErrors({ ...good, guests: "" })).toEqual(["guests"]);
-  });
-
-  it("accepts the boundary guest counts", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ ...good, guests: "1" })).toEqual([]);
-    expect(rsvpErrors({ ...good, guests: "20" })).toEqual([]);
-  });
-
-  it("flags a blank message", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ ...good, message: "  " })).toEqual(["message"]);
-  });
-
-  it("reports every problem at once, in field order", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors({ name: "", guests: "", attending: "", message: "" })).toEqual([
-      "name",
-      "guests",
-      "attending",
-      "message",
-    ]);
-  });
-
-  it("survives a missing fields object", () => {
-    const { rsvpErrors } = api();
-    expect(rsvpErrors(undefined)).toEqual(["name", "guests", "attending", "message"]);
-  });
-});
-
-describe("invite — RSVP message", () => {
-  const fields = { name: "Rohit Sharma", guests: "2", attending: "yes", message: "See you there!" };
-
-  it("writes a readable message a phone can show", () => {
-    const { rsvpMessage } = api();
-    expect(rsvpMessage(fields, "Ashish & Akanksha")).toBe(
-      [
-        "RSVP — Ashish & Akanksha",
-        "Name: Rohit Sharma",
-        "Guests: 2",
-        "Attending: Yes, I'll be there",
-        "Message: See you there!",
-      ].join("\n")
-    );
-  });
-
-  it("spells out each attendance choice", () => {
-    const { rsvpMessage } = api();
-    expect(rsvpMessage({ ...fields, attending: "no" }, "A & B")).toContain(
-      "Attending: Sorry, I can't make it"
-    );
-    expect(rsvpMessage({ ...fields, attending: "maybe" }, "A & B")).toContain(
-      "Attending: I'll try my best"
-    );
-  });
-
-  it("trims the values it is given", () => {
-    const { rsvpMessage } = api();
-    expect(rsvpMessage({ ...fields, name: "  Rohit  " }, "A & B")).toContain("Name: Rohit");
-  });
-});
-
-describe("invite — WhatsApp link", () => {
-  it("builds a wa.me link with the text percent-encoded", () => {
-    const { whatsappUrl } = api();
-    expect(whatsappUrl("+91 98765 43210", "Hi there")).toBe(
-      "https://wa.me/919876543210?text=Hi%20there"
-    );
-  });
-
-  it("encodes newlines and ampersands so the message arrives whole", () => {
-    const { whatsappUrl } = api();
-    const url = whatsappUrl("919876543210", "A\nB & C");
-    expect(url).toBe("https://wa.me/919876543210?text=A%0AB%20%26%20C");
-  });
-
-  it("refuses a number that is too short to be real", () => {
-    const { whatsappUrl } = api();
-    expect(whatsappUrl("12345", "Hi")).toBeNull();
-    expect(whatsappUrl("", "Hi")).toBeNull();
-    expect(whatsappUrl(null, "Hi")).toBeNull();
-  });
-
-  it("refuses a placeholder number that was never filled in", () => {
-    const { whatsappUrl } = api();
-    expect(whatsappUrl("91XXXXXXXXXX", "Hi")).toBeNull();
-  });
-});
 
 describe("invite — scratch reveal", () => {
   it("reveals once the cleared fraction reaches the threshold", () => {
@@ -394,5 +277,74 @@ describe("invite — background music", () => {
     const { fadeVolume } = api();
     expect(fadeVolume(500, 0, 0.5)).toBe(0.5);
     expect(fadeVolume(500, -1, 0.5)).toBe(0.5);
+  });
+});
+
+describe("invite — venue map", () => {
+  const venue = {
+    name: "Ambience Garden Resort & Wedding Point",
+    address: "Badrinath Marg, Kotdwar 246149, Uttarakhand",
+  };
+
+  it("builds a map query from the venue name and address", () => {
+    const { mapQuery } = api();
+    expect(mapQuery(venue)).toBe(
+      "Ambience Garden Resort & Wedding Point, Badrinath Marg, Kotdwar 246149, Uttarakhand"
+    );
+  });
+
+  it("prefers an explicit query, which pins better than a long address", () => {
+    const { mapQuery } = api();
+    expect(mapQuery({ ...venue, mapQuery: "Ambience Garden Resort, Kotdwar" })).toBe(
+      "Ambience Garden Resort, Kotdwar"
+    );
+  });
+
+  it("skips whichever parts are missing", () => {
+    const { mapQuery } = api();
+    expect(mapQuery({ name: "Only A Name" })).toBe("Only A Name");
+    expect(mapQuery({ address: "Only An Address" })).toBe("Only An Address");
+    expect(mapQuery({ name: "TODO — venue name", address: "Kotdwar" })).toBe("Kotdwar");
+  });
+
+  it("returns an empty query when there is nothing to map", () => {
+    const { mapQuery } = api();
+    expect(mapQuery({})).toBe("");
+    expect(mapQuery(undefined)).toBe("");
+    expect(mapQuery({ name: "TODO", address: "TODO" })).toBe("");
+  });
+
+  it("builds a keyless embed URL, so no API key is needed", () => {
+    const { mapEmbedUrl } = api();
+    expect(mapEmbedUrl("Ambience Garden Resort, Kotdwar")).toBe(
+      "https://maps.google.com/maps?q=Ambience%20Garden%20Resort%2C%20Kotdwar&t=m&z=15&output=embed"
+    );
+  });
+
+  it("has no embed URL when there is no query", () => {
+    const { mapEmbedUrl } = api();
+    expect(mapEmbedUrl("")).toBeNull();
+    expect(mapEmbedUrl(null)).toBeNull();
+    expect(mapEmbedUrl("TODO — venue name")).toBeNull();
+  });
+
+  it("uses an exact share link for the button when one is given", () => {
+    const { mapLinkUrl } = api();
+    expect(mapLinkUrl({ ...venue, mapsUrl: "https://maps.app.goo.gl/abc123" })).toBe(
+      "https://maps.app.goo.gl/abc123"
+    );
+  });
+
+  it("falls back to a Maps search when no share link is given", () => {
+    const { mapLinkUrl } = api();
+    expect(mapLinkUrl({ name: "Hotel X", address: "Kotdwar" })).toBe(
+      "https://www.google.com/maps/search/?api=1&query=Hotel%20X%2C%20Kotdwar"
+    );
+  });
+
+  it("has no button link when there is nothing to search for", () => {
+    const { mapLinkUrl } = api();
+    expect(mapLinkUrl({})).toBeNull();
+    expect(mapLinkUrl({ mapsUrl: "TODO — paste the share link" })).toBeNull();
   });
 });
