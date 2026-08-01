@@ -160,15 +160,6 @@
     );
   }
 
-  // Where the button goes: an exact share link if there is one, else a search.
-  function mapLinkUrl(venue) {
-    const v = venue || {};
-    if (!isPlaceholder(v.mapsUrl)) return String(v.mapsUrl).trim();
-    const query = mapQuery(v);
-    if (!query) return null;
-    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
-  }
-
   // Music plays unless the guest has turned it off on an earlier visit.
   function musicPreference(stored) {
     return stored !== "0";
@@ -197,7 +188,6 @@
     slideFromDrag,
     mapQuery,
     mapEmbedUrl,
-    mapLinkUrl,
     musicPreference,
     fadeVolume,
   };
@@ -372,17 +362,6 @@
     setText($("#venueHeading"), v.heading);
     const hasName = setText($("#venueName"), v.name);
     const hasAddress = setText($("#venueAddress"), v.address);
-    const link = $("#venueMapLink");
-    const buttonUrl = mapLinkUrl(v);
-    if (link) {
-      if (!buttonUrl) {
-        link.hidden = true;
-      } else {
-        link.href = buttonUrl;
-        setText($("#venueMapLabel"), v.mapsLabel || "View on Google Maps");
-      }
-    }
-
     /* The embedded map. src is set here rather than in the markup so the iframe
      * makes no request at all when there is no venue to show yet. */
     const mapWrap = $("#venueMapWrap");

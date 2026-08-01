@@ -142,7 +142,6 @@ describe("invite — countdown", () => {
 });
 
 
-
 describe("invite — scratch reveal", () => {
   it("reveals once the cleared fraction reaches the threshold", () => {
     const { isScratchedEnough } = api();
@@ -328,23 +327,5 @@ describe("invite — venue map", () => {
     expect(mapEmbedUrl("TODO — venue name")).toBeNull();
   });
 
-  it("uses an exact share link for the button when one is given", () => {
-    const { mapLinkUrl } = api();
-    expect(mapLinkUrl({ ...venue, mapsUrl: "https://maps.app.goo.gl/abc123" })).toBe(
-      "https://maps.app.goo.gl/abc123"
-    );
-  });
 
-  it("falls back to a Maps search when no share link is given", () => {
-    const { mapLinkUrl } = api();
-    expect(mapLinkUrl({ name: "Hotel X", address: "Kotdwar" })).toBe(
-      "https://www.google.com/maps/search/?api=1&query=Hotel%20X%2C%20Kotdwar"
-    );
-  });
-
-  it("has no button link when there is nothing to search for", () => {
-    const { mapLinkUrl } = api();
-    expect(mapLinkUrl({})).toBeNull();
-    expect(mapLinkUrl({ mapsUrl: "TODO — paste the share link" })).toBeNull();
-  });
 });
