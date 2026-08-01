@@ -910,27 +910,6 @@ body#page-invite {
   opacity: 0.2;
 }
 
-.inv-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 2.5rem;
-  padding: 0 1rem;
-  border: 0;
-  border-radius: 0.375rem;
-  background: var(--inv-primary);
-  color: #fdf7f8;
-  font-family: var(--inv-font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-.inv-button:hover {
-  opacity: 0.9;
-}
 
 /* ---------- Dress code ---------- */
 

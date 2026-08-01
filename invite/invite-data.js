@@ -37,8 +37,8 @@ window.INVITE = {
   first: {
     name: "Akanksha",
     lines: [
-      "Daughter of Smt. Malti Dhulia & Shri Yugalkishore Dhulia",
-      "Granddaughter of the late Smt. Manorama Devi & Shri Sarveshwar Prasad Dhulia",
+      "Daughter of Smt. Malti Dhuliya & Shri Yugalkishore Dhuliya",
+      "Granddaughter of the late Smt. Manorama Devi & Shri Sarveshwar Prasad Dhuliya",
     ],
   },
 
@@ -128,13 +128,9 @@ window.INVITE = {
     name: "Ambience Garden Resort & Wedding Point",
     address:
       "Badrinath Marg, Chandar Singh Colony, near Ginvai Srot Pul, Kotdwar 246149, Pauri Garhwal, Uttarakhand",
-    // What the embedded map and the button look up. A short query pins more
-    // reliably than the full postal address above.
+    // What the embedded map looks up. A short query pins more reliably than the
+    // full postal address above. Guests open Maps from the map itself.
     mapQuery: "Ambience Garden Resort, Badrinath Marg, Kotdwar, Uttarakhand 246149",
-    // Optional. Paste the exact share link (Google Maps → Share → Copy link) to
-    // point the button at a precise pin; otherwise it searches mapQuery.
-    mapsUrl: "",
-    mapsLabel: "View on Google Maps",
   },
 
   /* ---------- What to wear ---------- */
@@ -189,7 +185,7 @@ window.INVITE = {
   footer: {
     // दर्शनाभिलाषी / विनीत, as the card signs off.
     note:
-      "Awaiting your presence — the Dhulia family and well-wishers · " +
-      "Smt. Malti, Shri Yugalkishore Dhulia, Devansh Dhulia",
+      "Awaiting your presence — the Dhuliya family and well-wishers · " +
+      "Smt. Malti, Shri Yugalkishore Dhuliya, Devansh Dhuliya",
   },
 };
