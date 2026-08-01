@@ -135,6 +135,40 @@
     return (current + (dx < 0 ? 1 : -1) + total) % total;
   }
 
+  /* What to look the venue up by. An explicit mapQuery pins more reliably than
+   * a long postal address, so it wins when given. */
+  function mapQuery(venue) {
+    const v = venue || {};
+    if (!isPlaceholder(v.mapQuery)) return String(v.mapQuery).trim();
+    return [v.name, v.address]
+      .filter(function (part) {
+        return !isPlaceholder(part);
+      })
+      .map(function (part) {
+        return String(part).trim();
+      })
+      .join(", ");
+  }
+
+  // Google's output=embed form needs no API key.
+  function mapEmbedUrl(query) {
+    if (isPlaceholder(query)) return null;
+    return (
+      "https://maps.google.com/maps?q=" +
+      encodeURIComponent(String(query).trim()) +
+      "&t=m&z=15&output=embed"
+    );
+  }
+
+  // Where the button goes: an exact share link if there is one, else a search.
+  function mapLinkUrl(venue) {
+    const v = venue || {};
+    if (!isPlaceholder(v.mapsUrl)) return String(v.mapsUrl).trim();
+    const query = mapQuery(v);
+    if (!query) return null;
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+  }
+
   // Music plays unless the guest has turned it off on an earlier visit.
   function musicPreference(stored) {
     return stored !== "0";
@@ -161,6 +195,9 @@
     isScratchedEnough,
     nextSlide,
     slideFromDrag,
+    mapQuery,
+    mapEmbedUrl,
+    mapLinkUrl,
     musicPreference,
     fadeVolume,
   };
@@ -336,14 +373,30 @@
     const hasName = setText($("#venueName"), v.name);
     const hasAddress = setText($("#venueAddress"), v.address);
     const link = $("#venueMapLink");
+    const buttonUrl = mapLinkUrl(v);
     if (link) {
-      if (isPlaceholder(v.mapsUrl)) {
+      if (!buttonUrl) {
         link.hidden = true;
       } else {
-        link.href = v.mapsUrl;
+        link.href = buttonUrl;
         setText($("#venueMapLabel"), v.mapsLabel || "View on Google Maps");
       }
     }
+
+    /* The embedded map. src is set here rather than in the markup so the iframe
+     * makes no request at all when there is no venue to show yet. */
+    const mapWrap = $("#venueMapWrap");
+    const frame = $("#venueMap");
+    const embed = mapEmbedUrl(mapQuery(v));
+    if (mapWrap && frame) {
+      if (embed) {
+        frame.src = embed;
+        frame.title = isPlaceholder(v.name) ? "Map of the venue" : "Map of " + String(v.name).trim();
+      } else {
+        mapWrap.hidden = true;
+      }
+    }
+
     hideIfEmpty($("#sectionVenue"), hasName || hasAddress);
   }
 

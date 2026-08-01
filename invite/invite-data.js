@@ -128,10 +128,12 @@ window.INVITE = {
     name: "Ambience Garden Resort & Wedding Point",
     address:
       "Badrinath Marg, Chandar Singh Colony, near Ginvai Srot Pul, Kotdwar 246149, Pauri Garhwal, Uttarakhand",
-    // A Maps search on the printed address. Replace with the exact share link
-    // (open the venue in Google Maps → Share → Copy link) for a precise pin.
-    mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Ambience%20Garden%20Resort%20Badrinath%20Marg%20Chandar%20Singh%20Colony%20Kotdwar%20246149",
+    // What the embedded map and the button look up. A short query pins more
+    // reliably than the full postal address above.
+    mapQuery: "Ambience Garden Resort, Badrinath Marg, Kotdwar, Uttarakhand 246149",
+    // Optional. Paste the exact share link (Google Maps → Share → Copy link) to
+    // point the button at a precise pin; otherwise it searches mapQuery.
+    mapsUrl: "",
     mapsLabel: "View on Google Maps",
   },
 

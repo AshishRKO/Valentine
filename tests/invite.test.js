@@ -279,3 +279,72 @@ describe("invite — background music", () => {
     expect(fadeVolume(500, -1, 0.5)).toBe(0.5);
   });
 });
+
+describe("invite — venue map", () => {
+  const venue = {
+    name: "Ambience Garden Resort & Wedding Point",
+    address: "Badrinath Marg, Kotdwar 246149, Uttarakhand",
+  };
+
+  it("builds a map query from the venue name and address", () => {
+    const { mapQuery } = api();
+    expect(mapQuery(venue)).toBe(
+      "Ambience Garden Resort & Wedding Point, Badrinath Marg, Kotdwar 246149, Uttarakhand"
+    );
+  });
+
+  it("prefers an explicit query, which pins better than a long address", () => {
+    const { mapQuery } = api();
+    expect(mapQuery({ ...venue, mapQuery: "Ambience Garden Resort, Kotdwar" })).toBe(
+      "Ambience Garden Resort, Kotdwar"
+    );
+  });
+
+  it("skips whichever parts are missing", () => {
+    const { mapQuery } = api();
+    expect(mapQuery({ name: "Only A Name" })).toBe("Only A Name");
+    expect(mapQuery({ address: "Only An Address" })).toBe("Only An Address");
+    expect(mapQuery({ name: "TODO — venue name", address: "Kotdwar" })).toBe("Kotdwar");
+  });
+
+  it("returns an empty query when there is nothing to map", () => {
+    const { mapQuery } = api();
+    expect(mapQuery({})).toBe("");
+    expect(mapQuery(undefined)).toBe("");
+    expect(mapQuery({ name: "TODO", address: "TODO" })).toBe("");
+  });
+
+  it("builds a keyless embed URL, so no API key is needed", () => {
+    const { mapEmbedUrl } = api();
+    expect(mapEmbedUrl("Ambience Garden Resort, Kotdwar")).toBe(
+      "https://maps.google.com/maps?q=Ambience%20Garden%20Resort%2C%20Kotdwar&t=m&z=15&output=embed"
+    );
+  });
+
+  it("has no embed URL when there is no query", () => {
+    const { mapEmbedUrl } = api();
+    expect(mapEmbedUrl("")).toBeNull();
+    expect(mapEmbedUrl(null)).toBeNull();
+    expect(mapEmbedUrl("TODO — venue name")).toBeNull();
+  });
+
+  it("uses an exact share link for the button when one is given", () => {
+    const { mapLinkUrl } = api();
+    expect(mapLinkUrl({ ...venue, mapsUrl: "https://maps.app.goo.gl/abc123" })).toBe(
+      "https://maps.app.goo.gl/abc123"
+    );
+  });
+
+  it("falls back to a Maps search when no share link is given", () => {
+    const { mapLinkUrl } = api();
+    expect(mapLinkUrl({ name: "Hotel X", address: "Kotdwar" })).toBe(
+      "https://www.google.com/maps/search/?api=1&query=Hotel%20X%2C%20Kotdwar"
+    );
+  });
+
+  it("has no button link when there is nothing to search for", () => {
+    const { mapLinkUrl } = api();
+    expect(mapLinkUrl({})).toBeNull();
+    expect(mapLinkUrl({ mapsUrl: "TODO — paste the share link" })).toBeNull();
+  });
+});
