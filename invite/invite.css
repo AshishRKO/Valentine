@@ -1,0 +1,1204 @@
+/* invite/invite.css — wedding invitation, blush-and-maroon royal styling.
+ * Self-contained: nothing here is shared with the other pages in this repo.
+ * Class prefix `inv-` so it can never collide with `w-`, `bday-` or `sh-`. */
+
+:root {
+  --inv-bg: #fdf7f8;
+  --inv-cream: #f5e5e8;
+  --inv-card: #f9eced;
+  --inv-ink: #3b161e;
+  --inv-primary: #9b273a;
+  --inv-heading: #8b2337;
+  --inv-muted: #764c54;
+  --inv-border: #e8ced3;
+  --inv-gold: #c9a24a;
+  --inv-gold-light: #e3b483;
+  --inv-gold-deep: #8f5d2b;
+  --inv-on-photo: #f5e6e0;
+
+  --inv-paper: #f2b9bb;
+  --inv-paper-light: #f9c5c6;
+  --inv-paper-shade: #dea8a2;
+  --inv-paper-deep: #e3adab;
+
+  --inv-font-name: "Great Vibes", "Dancing Script", cursive;
+  --inv-font-script: "Italianno", "Dancing Script", cursive;
+  --inv-font-heading: "Dancing Script", cursive;
+  --inv-font-display: "Playfair Display", serif;
+  --inv-font-sub: "Cormorant Garamond", serif;
+  --inv-font-body: "Lora", Georgia, serif;
+  /* Devanagari for the invocation and the shloka. The Latin fonts above carry
+   * no Devanagari glyphs, so those runs need a face of their own. */
+  --inv-font-deva: "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+
+  --inv-shadow-soft: 0 10px 40px -10px rgba(59, 22, 30, 0.18);
+  --inv-shadow-gold: 0 4px 20px -4px rgba(201, 162, 74, 0.45);
+
+  /* The embossed vine, in two passes: a raised white one and a rose shadow one
+   * offset a pixel below it. Held in variables so the flap can reuse them. */
+  --inv-vine-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg stroke='%23ffffff' stroke-opacity='0.4' stroke-width='1' stroke-linecap='round' fill='none'%3E%3Cpath d='M6 60 C14 44 20 32 32 22 C40 15 48 11 58 6'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='0.26'%3E%3Cpath d='M19 42 C13 39 11 33 13 27 C19 30 22 36 19 42Z'/%3E%3Cpath d='M24 34 C27 27 34 24 40 25 C37 33 30 36 24 34Z'/%3E%3Cpath d='M33 22 C30 16 32 9 37 6 C41 12 40 19 33 22Z'/%3E%3Cpath d='M44 14 C48 9 55 7 61 9 C57 16 50 18 44 14Z'/%3E%3C/g%3E%3C/svg%3E");
+  --inv-vine-rose: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg stroke='%23a8636a' stroke-opacity='0.22' stroke-width='1' stroke-linecap='round' fill='none'%3E%3Cpath d='M6 60 C14 44 20 32 32 22 C40 15 48 11 58 6'/%3E%3C/g%3E%3Cg fill='%23a8636a' fill-opacity='0.13'%3E%3Cpath d='M19 42 C13 39 11 33 13 27 C19 30 22 36 19 42Z'/%3E%3Cpath d='M24 34 C27 27 34 24 40 25 C37 33 30 36 24 34Z'/%3E%3Cpath d='M33 22 C30 16 32 9 37 6 C41 12 40 19 33 22Z'/%3E%3Cpath d='M44 14 C48 9 55 7 61 9 C57 16 50 18 44 14Z'/%3E%3C/g%3E%3C/svg%3E");
+  --inv-vignette: radial-gradient(
+    ellipse at 50% 42%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(150, 88, 94, 0.26) 100%
+  );
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body#page-invite {
+  margin: 0;
+  background: var(--inv-bg);
+  color: var(--inv-ink);
+  font-family: var(--inv-font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* The faint diamond tile that sits under everything. */
+.inv-texture {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a96e' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+#inviteRoot {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Reveal on scroll (driven by shared/interactive.js) ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Hero ---------- */
+
+.inv-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1b1015;
+}
+
+/* No photo behind the names: a dusk sky in the invitation's own colours,
+ * with gold motes drifting through it. */
+.inv-hero--plain {
+  background-color: #2a1420;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='190' height='190' viewBox='0 0 190 190'%3E%3Cg fill='%23f0d9a8'%3E%3Ccircle cx='22' cy='31' r='1.2' opacity='0.55'/%3E%3Ccircle cx='101' cy='15' r='0.9' opacity='0.4'/%3E%3Ccircle cx='158' cy='55' r='1.3' opacity='0.5'/%3E%3Ccircle cx='45' cy='101' r='0.8' opacity='0.35'/%3E%3Ccircle cx='127' cy='126' r='1.1' opacity='0.45'/%3E%3Ccircle cx='74' cy='168' r='0.9' opacity='0.4'/%3E%3Ccircle cx='177' cy='147' r='0.7' opacity='0.3'/%3E%3Ccircle cx='9' cy='158' r='1' opacity='0.35'/%3E%3Ccircle cx='88' cy='72' r='0.7' opacity='0.28'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(ellipse 75% 45% at 50% 12%, rgba(201, 162, 74, 0.22), transparent 72%),
+    radial-gradient(ellipse 95% 55% at 50% 104%, rgba(155, 39, 58, 0.42), transparent 72%),
+    linear-gradient(180deg, #2b1421 0%, #431c2c 44%, #22101a 100%);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+}
+/* The veil exists to hold text off a busy photo — barely needed over a gradient. */
+.inv-hero--plain .inv-hero__veil {
+  background: radial-gradient(
+    ellipse at 50% 44%,
+    rgba(20, 10, 16, 0) 0%,
+    rgba(20, 10, 16, 0.34) 100%
+  );
+}
+
+.inv-hero__photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  /* Softened so it reads as a backdrop and the calligraphy stays legible.
+   * Scaled past the edges so the blur never shows a border. */
+  transform: scale(1.14);
+  filter: blur(3px) saturate(0.82) brightness(0.9);
+}
+.inv-hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(20, 10, 16, 0) 0%, rgba(20, 10, 16, 0.55) 100%),
+    linear-gradient(180deg, rgba(34, 18, 26, 0.62) 0%, rgba(70, 34, 44, 0.32) 45%, rgba(22, 12, 18, 0.7) 100%);
+}
+
+.inv-hero__content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 0 1.5rem;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.1s ease 0.9s, transform 1.1s ease 0.9s;
+}
+.inv-hero.is-open .inv-hero__content {
+  opacity: 1;
+  transform: none;
+}
+.inv-hero.is-instant .inv-hero__content {
+  transition: none;
+}
+
+.inv-hero__invocation {
+  margin: 0 0 0.875rem;
+  font-family: var(--inv-font-deva);
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  color: #f0d9a8;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+.inv-hero__invocation[hidden] {
+  display: none;
+}
+
+.inv-hero__heart {
+  color: var(--inv-on-photo);
+  margin-bottom: 0.75rem;
+}
+
+.inv-hero__message {
+  margin: 0 0 0.75rem;
+  font-family: var(--inv-font-script);
+  font-size: 1.5rem;
+  line-height: 1.25;
+  white-space: pre-line;
+  color: var(--inv-on-photo);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+}
+
+.inv-couple__name {
+  margin: 0;
+  font-family: var(--inv-font-name);
+  font-weight: 400;
+  font-size: 3.75rem;
+  line-height: 1;
+  color: var(--inv-on-photo);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
+}
+.inv-couple__lines {
+  display: block;
+  margin: 0.25rem auto 0.75rem;
+  max-width: 28rem;
+  padding: 0 1rem;
+}
+.inv-couple__line {
+  display: block;
+  font-family: var(--inv-font-sub);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: rgba(245, 230, 224, 0.9);
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+}
+.inv-couple__amp {
+  margin: 0.5rem 0;
+  font-family: var(--inv-font-name);
+  font-size: 1.875rem;
+  color: rgba(245, 230, 224, 0.8);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.inv-hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--inv-font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 230, 224, 0.85);
+  opacity: 0;
+  transition: opacity 0.8s ease 1.8s;
+  pointer-events: none;
+}
+.inv-hero.is-open .inv-hero__scroll {
+  opacity: 1;
+}
+.inv-hero__scroll svg {
+  animation: inv-bob 1.8s ease-in-out infinite;
+}
+@keyframes inv-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ---------- The envelope ---------- */
+
+.inv-env {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1400px;
+  transition: opacity 0.9s ease 0.6s, transform 1.5s ease 0.35s;
+}
+.inv-hero.is-open .inv-env {
+  opacity: 0;
+  transform: scale(1.07);
+}
+.inv-hero.is-instant .inv-env {
+  display: none;
+}
+
+.inv-env__paper {
+  position: absolute;
+  inset: 0;
+  background-color: var(--inv-paper);
+  /* Two passes at different scales, so the repeat never reads as a grid. */
+  background-image:
+    var(--inv-vignette),
+    var(--inv-vine-light),
+    var(--inv-vine-rose),
+    var(--inv-vine-light),
+    var(--inv-vine-rose);
+  background-position: 0 0, 0 0, 0 2px, 27px 41px, 27px 43px;
+  background-repeat: no-repeat, repeat, repeat, repeat, repeat;
+  background-size: cover, 52px 52px, 52px 52px, 84px 84px, 84px 84px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Double gold rule, inset like a printed card. */
+.inv-env__frame {
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(201, 162, 74, 0.5);
+  border-radius: 3px;
+}
+.inv-env__frame::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(201, 162, 74, 0.28);
+  border-radius: 2px;
+}
+
+/* The two creases: flap fold on top, pocket fold at the bottom. */
+.inv-env__folds {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.inv-env__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 46%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 1s cubic-bezier(0.45, -0.15, 0.35, 1.1);
+  /* The flap is the same sheet of paper, just caught a little less light. */
+  background-color: var(--inv-paper-shade);
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(150, 88, 94, 0.05)),
+    var(--inv-vine-light),
+    var(--inv-vine-rose),
+    var(--inv-vine-light),
+    var(--inv-vine-rose);
+  background-position: 0 0, 0 0, 0 2px, 27px 41px, 27px 43px;
+  background-repeat: no-repeat, repeat, repeat, repeat, repeat;
+  background-size: cover, 52px 52px, 52px 52px, 84px 84px, 84px 84px;
+  filter: drop-shadow(0 5px 10px rgba(120, 70, 76, 0.2));
+}
+.inv-hero.is-open .inv-env__flap {
+  transform: rotateX(-174deg);
+}
+
+.inv-env__seal {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  width: 104px;
+  height: 104px;
+  border-radius: 47% 53% 50% 50% / 52% 48% 53% 47%;
+  display: grid;
+  place-items: center;
+  /* Matte wax, not a shiny coin: a soft top-left light and a deep rim. */
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255, 245, 214, 0.5) 0%, rgba(255, 245, 214, 0) 42%),
+    radial-gradient(circle at 50% 50%, #cfa855 0%, #bb9345 62%, #8f5d2b 100%);
+  box-shadow:
+    0 7px 14px rgba(80, 42, 20, 0.34),
+    inset 0 -3px 8px rgba(110, 63, 18, 0.42),
+    inset 0 2px 5px rgba(255, 238, 196, 0.35);
+  transition: transform 0.55s ease, opacity 0.5s ease;
+}
+/* Two impressed rings, the way a wax stamp leaves them. */
+.inv-env__seal::before,
+.inv-env__seal::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.inv-env__seal::before {
+  inset: 7px;
+  border: 1px solid rgba(94, 58, 18, 0.4);
+  box-shadow: 0 1px 0 rgba(255, 240, 200, 0.35);
+}
+.inv-env__seal::after {
+  inset: 11px;
+  border: 1px solid rgba(94, 58, 18, 0.22);
+}
+.inv-hero.is-open .inv-env__seal {
+  transform: translate(-50%, -50%) scale(1.55);
+  opacity: 0;
+}
+.inv-env__sealText {
+  position: relative;
+  font-family: var(--inv-font-display);
+  font-size: 0.8125rem;
+  line-height: 1.15;
+  font-style: italic;
+  white-space: pre-line;
+  color: #5e3a12;
+  text-shadow: 0 1px 0 rgba(255, 240, 205, 0.5);
+}
+
+.inv-env__caption {
+  position: absolute;
+  left: 50%;
+  bottom: 19%;
+  transform: translateX(-50%);
+  width: min(80%, 22rem);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transition: opacity 0.5s ease;
+}
+.inv-hero.is-open .inv-env__caption {
+  opacity: 0;
+}
+.inv-env__caption svg {
+  width: 100%;
+  max-width: 13rem;
+  color: var(--inv-gold-deep);
+  opacity: 0.85;
+}
+.inv-env__captionText {
+  font-family: var(--inv-font-display);
+  font-size: 0.9375rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #9a6b2c;
+  text-shadow: 0 1px 0 rgba(255, 244, 214, 0.6);
+}
+.inv-env__underline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 11rem;
+  color: var(--inv-gold-deep);
+  opacity: 0.8;
+}
+.inv-env__rule {
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+.inv-env__underline svg {
+  flex: none;
+  width: 9px;
+  max-width: none;
+}
+
+/* Gentle nudge so it is obvious the seal wants tapping. */
+.inv-env__hint {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 162, 74, 0.45);
+  animation: inv-seal-pulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+.inv-hero.is-open .inv-env__hint {
+  display: none;
+}
+@keyframes inv-seal-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.75; }
+  100% { transform: translate(-50%, -50%) scale(1.7); opacity: 0; }
+}
+
+/* ---------- Welcome, on a dusk gradient ---------- */
+
+.inv-welcome {
+  position: relative;
+  padding: 6rem 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #282e39 0%,
+    #282e39 18%,
+    #8e8990 55%,
+    var(--inv-cream) 100%
+  );
+}
+.inv-welcome__inner {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+/* Upright, not italic — synthesised slanting mangles Devanagari. */
+.inv-welcome__shloka {
+  margin: 0 0 1.5rem;
+  font-family: var(--inv-font-deva);
+  font-size: 1rem;
+  line-height: 1.9;
+  white-space: pre-line;
+  color: #f0d9a8;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+.inv-welcome__shloka[hidden],
+.inv-welcome__text[hidden] {
+  display: none;
+}
+
+.inv-welcome__text {
+  margin: 0;
+  font-family: var(--inv-font-script);
+  font-size: 1.5rem;
+  line-height: 1.45;
+  font-style: italic;
+  white-space: pre-line;
+  color: #fbe6ea;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Section shell ---------- */
+
+.inv-section {
+  position: relative;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+}
+.inv-section--cream {
+  background-color: var(--inv-cream);
+}
+.inv-section[hidden] {
+  display: none;
+}
+
+.inv-section__icon {
+  display: block;
+  margin: 0 auto 0.75rem;
+  color: var(--inv-primary);
+}
+
+.inv-section__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--inv-font-heading);
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--inv-heading);
+}
+
+.inv-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+.inv-divider__rule {
+  width: 4rem;
+  height: 1px;
+  background: rgba(155, 39, 58, 0.3);
+}
+.inv-divider svg {
+  color: var(--inv-primary);
+  opacity: 0.5;
+}
+
+/* Over the hero photo the divider has to be cream, not maroon. */
+.inv-hero .inv-divider {
+  margin: 0.75rem 0;
+}
+.inv-divider__rule--light {
+  width: 4rem;
+  background: rgba(245, 230, 224, 0.45);
+}
+.inv-hero .inv-divider svg {
+  color: var(--inv-on-photo);
+  opacity: 1;
+}
+
+/* On the dusk gradient it sits between the two, a soft rose. */
+.inv-divider__rule--rose {
+  width: 5rem;
+  background: #c98a98;
+}
+.inv-welcome .inv-divider svg {
+  color: #c98a98;
+  opacity: 1;
+}
+.inv-welcome .inv-divider:first-child {
+  margin: 0 0 2rem;
+}
+.inv-welcome .inv-divider:last-child {
+  margin: 2rem 0 0;
+}
+
+/* ---------- Scratch to reveal ---------- */
+
+.inv-scratch {
+  position: relative;
+  width: 260px;
+  height: 240px;
+  margin: 0 auto;
+}
+.inv-scratch__card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: url(#inv-heart-clip);
+}
+.inv-scratch__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  text-align: center;
+  background-color: var(--inv-card);
+  background-image:
+    radial-gradient(rgba(253, 247, 248, 0.9) 0%, rgba(240, 219, 223, 0.5) 70%, rgba(228, 200, 206, 0.6) 100%),
+    radial-gradient(circle at 1px 1px, rgba(99, 29, 43, 0.1) 1px, transparent 1.5px),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.04) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.03) 0 1px, transparent 1px 10px);
+  background-size: auto, 12px 12px, auto, auto;
+}
+.inv-scratch__kicker {
+  margin: 0 0 0.25rem;
+  font-family: var(--inv-font-sub);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #913041;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.inv-scratch.is-revealed .inv-scratch__kicker {
+  opacity: 1;
+  transform: none;
+}
+.inv-scratch__date {
+  margin: 0;
+  font-family: var(--inv-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--inv-ink);
+}
+.inv-scratch__day {
+  margin: 0;
+  font-family: var(--inv-font-sub);
+  font-size: 0.875rem;
+  color: #91273c;
+}
+.inv-scratch__time {
+  margin: 0.25rem 0 0;
+  font-size: 0.625rem;
+  color: #644047;
+}
+.inv-scratch__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  touch-action: none;
+}
+.inv-scratch.is-revealed .inv-scratch__canvas {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.inv-scratch__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(rgba(0, 0, 0, 0) 78%, rgba(20, 8, 0, 0.5) 92%, rgba(10, 4, 0, 0.8) 100%);
+  mix-blend-mode: multiply;
+}
+.inv-scratch__outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- Photo carousel ---------- */
+
+.inv-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 48rem;
+  height: 16rem;
+  margin: 0 auto;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--inv-shadow-soft);
+  user-select: none;
+}
+.inv-carousel__track {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.inv-carousel__track:active {
+  cursor: grabbing;
+}
+.inv-carousel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+.inv-carousel__img.is-active {
+  opacity: 1;
+}
+.inv-carousel__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgba(253, 247, 248, 0.3), transparent);
+}
+.inv-carousel__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+.inv-carousel__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(59, 22, 30, 0.3);
+  cursor: pointer;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+.inv-carousel__dot.is-active {
+  width: 1rem;
+  background: var(--inv-primary);
+}
+
+/* ---------- Countdown ---------- */
+
+.inv-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.inv-countdown__cell {
+  text-align: center;
+}
+.inv-countdown__box {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid rgba(155, 39, 58, 0.2);
+  border-radius: 0.5rem;
+  background: rgba(155, 39, 58, 0.1);
+  backdrop-filter: blur(4px);
+}
+.inv-countdown__num {
+  font-family: var(--inv-font-display);
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 1.1;
+  color: var(--inv-ink);
+  font-variant-numeric: tabular-nums;
+}
+.inv-countdown__label {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--inv-muted);
+}
+.inv-countdown__note {
+  margin: 0;
+  text-align: center;
+  font-family: var(--inv-font-heading);
+  font-size: 2rem;
+  color: var(--inv-primary);
+}
+
+.inv-confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: hidden;
+}
+.inv-confetti__bit {
+  position: absolute;
+  top: -6vh;
+  width: 8px;
+  height: 12px;
+  animation: inv-fall linear forwards;
+}
+@keyframes inv-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(112vh) rotate(720deg); opacity: 0; }
+}
+
+/* ---------- Programme timeline ---------- */
+
+.inv-timeline {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+.inv-timeline__row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.inv-timeline__row:last-child {
+  margin-bottom: 0;
+}
+.inv-timeline__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.375rem;
+}
+.inv-timeline__dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: var(--inv-primary);
+  box-shadow: var(--inv-shadow-gold);
+}
+.inv-timeline__line {
+  flex: 1;
+  width: 1px;
+  margin-top: 0.25rem;
+  background: rgba(155, 39, 58, 0.3);
+}
+.inv-timeline__row:last-child .inv-timeline__line {
+  display: none;
+}
+.inv-timeline__body {
+  flex: 1;
+  padding-bottom: 1rem;
+}
+.inv-timeline__title {
+  margin: 0;
+  font-family: var(--inv-font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  color: var(--inv-primary);
+}
+.inv-timeline__when {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--inv-ink);
+}
+.inv-timeline__note {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--inv-muted);
+}
+
+/* ---------- Venue ---------- */
+
+.inv-venue {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.inv-venue__name {
+  margin: 0 0 0.5rem;
+  font-family: var(--inv-font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+.inv-venue__address {
+  margin: 0;
+  color: var(--inv-muted);
+}
+.inv-venue__art {
+  max-width: 24rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.inv-venue__art svg {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: var(--inv-primary);
+  opacity: 0.2;
+}
+
+.inv-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: var(--inv-primary);
+  color: #fdf7f8;
+  font-family: var(--inv-font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.inv-button:hover {
+  opacity: 0.9;
+}
+
+/* ---------- Dress code ---------- */
+
+.inv-dress {
+  display: grid;
+  gap: 2rem;
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.inv-dress__label {
+  margin: 0 0 0.5rem;
+  font-family: var(--inv-font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--inv-primary);
+}
+.inv-dress__rule {
+  width: 2rem;
+  height: 1px;
+  margin: 0 auto 0.75rem;
+  background: rgba(155, 39, 58, 0.3);
+}
+.inv-dress__body {
+  margin: 0;
+  color: var(--inv-muted);
+}
+
+/* ---------- Pre-wedding events ---------- */
+
+.inv-pre {
+  max-width: 28rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.inv-pre__row {
+  margin-bottom: 1.75rem;
+}
+.inv-pre__row:last-child {
+  margin-bottom: 0;
+}
+.inv-pre__title {
+  margin: 0;
+  font-family: var(--inv-font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--inv-primary);
+}
+.inv-pre__when {
+  margin: 0.25rem 0 0;
+  color: var(--inv-ink);
+}
+.inv-pre__place {
+  margin: 0.25rem 0 0;
+  color: var(--inv-muted);
+}
+.inv-pre__note {
+  margin: 0.375rem auto 0;
+  max-width: 22rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--inv-muted);
+}
+
+/* ---------- Plain note sections ---------- */
+
+.inv-note {
+  max-width: 28rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.inv-note p {
+  margin: 0;
+  color: var(--inv-muted);
+}
+
+/* ---------- RSVP ---------- */
+
+.inv-rsvp {
+  max-width: 28rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+.inv-rsvp__field {
+  display: grid;
+  gap: 0.375rem;
+}
+.inv-rsvp__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--inv-ink);
+}
+.inv-rsvp input,
+.inv-rsvp select,
+.inv-rsvp textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--inv-border);
+  border-radius: 0.5rem;
+  background: #fffdfd;
+  color: var(--inv-ink);
+  font-family: var(--inv-font-body);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.inv-rsvp textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+.inv-rsvp input:focus,
+.inv-rsvp select:focus,
+.inv-rsvp textarea:focus {
+  outline: none;
+  border-color: var(--inv-primary);
+  box-shadow: 0 0 0 3px rgba(155, 39, 58, 0.12);
+}
+.inv-rsvp .is-invalid {
+  border-color: #b5344b;
+  box-shadow: 0 0 0 3px rgba(181, 52, 75, 0.14);
+}
+.inv-rsvp__submit {
+  width: 100%;
+  height: 2.75rem;
+}
+.inv-rsvp__status {
+  margin: 0;
+  text-align: center;
+  font-size: 0.875rem;
+}
+.inv-rsvp__status.is-error {
+  color: #b5344b;
+}
+.inv-rsvp__status.is-ok {
+  color: #2f6b46;
+}
+
+.inv-corner {
+  position: absolute;
+  width: 4.5rem;
+  height: 4.5rem;
+  color: var(--inv-primary);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.inv-corner--bl {
+  bottom: 0.5rem;
+  left: 0.5rem;
+}
+.inv-corner--br {
+  bottom: 0.5rem;
+  right: 0.5rem;
+  transform: scaleX(-1);
+}
+.inv-corner--tl {
+  top: 0.5rem;
+  left: 0.5rem;
+}
+.inv-corner--tr {
+  top: 0.5rem;
+  right: 0.5rem;
+  transform: scaleX(-1);
+}
+
+/* ---------- Sign-off and footer ---------- */
+
+.inv-signoff {
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.inv-signoff__wave {
+  width: 100%;
+  color: var(--inv-primary);
+  opacity: 0.35;
+}
+.inv-signoff__line {
+  margin: 1.5rem 0 0.5rem;
+  font-family: var(--inv-font-heading);
+  font-size: 2.25rem;
+  line-height: 1.2;
+  color: var(--inv-heading);
+}
+.inv-signoff__couple {
+  margin: 0 0 1.5rem;
+  font-family: var(--inv-font-name);
+  font-size: 1.75rem;
+  color: var(--inv-primary);
+  /* Great Vibes sets very tight — the two names need air around the ampersand. */
+  word-spacing: 0.18em;
+}
+
+.inv-footer {
+  position: relative;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--inv-border);
+}
+.inv-footer__couple {
+  margin: 0;
+  font-family: var(--inv-font-name);
+  font-size: 1.5rem;
+  color: var(--inv-primary);
+  word-spacing: 0.18em;
+}
+.inv-footer__note {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--inv-muted);
+}
+
+/* ---------- Larger screens ---------- */
+
+@media (min-width: 768px) {
+  .inv-hero__message {
+    font-size: 1.8125rem;
+  }
+  .inv-couple__name {
+    font-size: 6rem;
+  }
+  .inv-couple__line {
+    font-size: 1.125rem;
+  }
+  .inv-couple__amp {
+    font-size: 2.25rem;
+  }
+  .inv-env__seal,
+  .inv-env__hint {
+    width: 116px;
+    height: 116px;
+  }
+  .inv-env__sealText {
+    font-size: 1rem;
+  }
+  .inv-welcome {
+    padding: 8rem 1.5rem;
+  }
+  .inv-welcome__text {
+    font-size: 1.875rem;
+  }
+  .inv-section {
+    padding: 5rem 1.5rem;
+  }
+  .inv-section__title {
+    font-size: 3rem;
+  }
+  .inv-carousel {
+    height: 24rem;
+  }
+  .inv-countdown {
+    gap: 2rem;
+  }
+  .inv-countdown__box {
+    padding: 1rem 1.5rem;
+  }
+  .inv-countdown__num {
+    font-size: 3rem;
+  }
+  .inv-countdown__label {
+    font-size: 0.875rem;
+  }
+  .inv-dress {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .inv-hero__scroll svg,
+  .inv-env__hint {
+    animation: none;
+  }
+  .inv-hero__content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .inv-hero__scroll {
+    opacity: 1;
+    transition: none;
+  }
+}
