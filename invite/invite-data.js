@@ -75,10 +75,36 @@ window.INVITE = {
     pastLabel: "Married ❤",
   },
 
-  /* ---------- Photo carousel ----------
-   * Empty, so the whole carousel section is left out. Add paths here to bring
-   * it back and it reappears with its dots and swipe. */
-  photos: [],
+  /* ---------- Photo gallery ----------
+   * `thumb` fills the grid, `full` loads only when a guest taps to enlarge.
+   * `shape` is "tall" or "wide" — on a wide screen the tall one stands beside
+   * the two wide ones. Both sizes are required; an entry missing either is
+   * skipped. Empty the list and the whole section disappears.
+   *
+   * The files under photos/ were resized from images/Ring Ceremony (40 MB of
+   * originals down to 520 KB on the page). Re-run that step if you swap them. */
+  gallery: {
+    photos: [
+      {
+        thumb: "photos/couple-thumb.jpg",
+        full: "photos/couple-full.jpg",
+        shape: "tall",
+        alt: "Akanksha and Ashish at their ring ceremony",
+      },
+      {
+        thumb: "photos/moment-thumb.jpg",
+        full: "photos/moment-full.jpg",
+        shape: "wide",
+        alt: "Ashish kissing Akanksha on the cheek",
+      },
+      {
+        thumb: "photos/rings-thumb.jpg",
+        full: "photos/rings-full.jpg",
+        shape: "wide",
+        alt: "Their rings, on henna-painted hands",
+      },
+    ],
+  },
 
   /* ---------- Sunday 18 October, and the vidai on the 19th ---------- */
   timeline: {

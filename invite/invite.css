@@ -680,66 +680,103 @@ body#page-invite {
   pointer-events: none;
 }
 
-/* ---------- Photo carousel ---------- */
+/* ---------- Photo gallery ---------- */
 
-.inv-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 48rem;
-  height: 16rem;
+.inv-gallery {
+  display: grid;
+  gap: 0.625rem;
+  max-width: 42rem;
   margin: 0 auto;
-  border-radius: 0.75rem;
+}
+
+.inv-gallery__item {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  margin: 0;
   overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--inv-card);
+  cursor: zoom-in;
   box-shadow: var(--inv-shadow-soft);
-  user-select: none;
+  /* A hairline of gold over the photo edge, echoing the envelope's rule. */
+  outline: 1px solid rgba(201, 162, 74, 0.55);
+  outline-offset: -1px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
-.inv-carousel__track {
-  position: absolute;
-  inset: 0;
-  cursor: grab;
-  touch-action: pan-y;
+.inv-gallery__item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 44px -12px rgba(59, 22, 30, 0.32);
 }
-.inv-carousel__track:active {
-  cursor: grabbing;
+.inv-gallery__item:focus-visible {
+  outline: 2px solid var(--inv-primary);
+  outline-offset: 2px;
 }
-.inv-carousel__img {
-  position: absolute;
-  inset: 0;
+.inv-gallery__item img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.9s ease;
-  pointer-events: none;
+  /* The couple sit high in the portrait, so bias the crop upward. */
+  object-position: center 32%;
+  transition: transform 0.7s ease;
 }
-.inv-carousel__img.is-active {
-  opacity: 1;
+.inv-gallery__item:hover img {
+  transform: scale(1.03);
 }
-.inv-carousel__scrim {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(0deg, rgba(253, 247, 248, 0.3), transparent);
+
+/* Cropped a little squarer than 2:3 on a phone, so it does not eat the screen. */
+.inv-gallery__item--tall {
+  aspect-ratio: 4 / 5;
 }
-.inv-carousel__dots {
-  position: absolute;
-  left: 50%;
-  bottom: 1rem;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 0.5rem;
+.inv-gallery__item--wide {
+  aspect-ratio: 3 / 2;
 }
-.inv-carousel__dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 999px;
-  background: rgba(59, 22, 30, 0.3);
+.inv-gallery__item--wide img {
+  object-position: center center;
+}
+
+/* ---------- Lightbox ---------- */
+
+.inv-lightbox {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+.inv-lightbox::backdrop {
+  background: rgba(24, 10, 16, 0.92);
+  backdrop-filter: blur(4px);
+}
+.inv-lightbox[open] {
+  display: grid;
+  place-items: center;
+}
+.inv-lightbox__img {
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 5rem);
+  border-radius: 0.5rem;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+  cursor: zoom-out;
+}
+.inv-lightbox__close {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top, 1rem));
+  right: max(1rem, env(safe-area-inset-right, 1rem));
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 162, 74, 0.5);
+  background: rgba(253, 247, 248, 0.92);
+  color: var(--inv-heading);
   cursor: pointer;
-  transition: width 0.3s ease, background 0.3s ease;
-}
-.inv-carousel__dot.is-active {
-  width: 1rem;
-  background: var(--inv-primary);
 }
 
 /* ---------- Countdown ---------- */
@@ -1086,8 +1123,14 @@ body#page-invite {
   .inv-section__title {
     font-size: 3rem;
   }
-  .inv-carousel {
-    height: 24rem;
+  .inv-gallery {
+    grid-template-columns: 0.94fr 1fr;
+    gap: 0.75rem;
+  }
+  .inv-gallery__item--tall {
+    grid-row: span 2;
+    aspect-ratio: auto;
+    height: 100%;
   }
   .inv-venue__map iframe {
     height: 360px;
@@ -1121,6 +1164,16 @@ body#page-invite {
   .inv-hero__scroll svg,
   .inv-env__hint {
     animation: none;
+  }
+  .inv-gallery__item,
+  .inv-gallery__item img {
+    transition: none;
+  }
+  .inv-gallery__item:hover {
+    transform: none;
+  }
+  .inv-gallery__item:hover img {
+    transform: none;
   }
   .inv-hero__content {
     opacity: 1;

@@ -70,6 +70,17 @@
 
     <div class="inv-confetti" id="confetti" aria-hidden="true"></div>
 
+    <!-- Tap a photo to see it large. A native dialog, so Escape and the
+         backdrop work without any focus-trapping code of our own. -->
+    <dialog class="inv-lightbox" id="lightbox">
+      <button class="inv-lightbox__close" id="lightboxClose" type="button" aria-label="Close photo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <img class="inv-lightbox__img" id="lightboxImg" alt="" />
+    </dialog>
+
     <div id="inviteRoot">
       <!-- ================= Hero: the envelope, then the names ================= -->
       <section class="inv-hero" id="inviteHero">
@@ -260,7 +271,7 @@
         </div>
       </section>
 
-      <!-- ================= Photo carousel ================= -->
+      <!-- ================= Photo gallery ================= -->
       <section class="inv-section" id="sectionPhotos" data-reveal>
         <div class="inv-divider" aria-hidden="true">
           <span class="inv-divider__rule"></span>
@@ -271,11 +282,8 @@
           </svg>
           <span class="inv-divider__rule"></span>
         </div>
-        <div class="inv-carousel">
-          <div class="inv-carousel__track" id="carouselTrack"></div>
-          <div class="inv-carousel__scrim" aria-hidden="true"></div>
-          <div class="inv-carousel__dots" id="carouselDots"></div>
-        </div>
+        <!-- Cells are built by invite.js from the gallery config. -->
+        <div class="inv-gallery" id="galleryGrid"></div>
       </section>
 
       <!-- ================= Countdown ================= -->
