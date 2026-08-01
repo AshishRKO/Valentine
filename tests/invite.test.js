@@ -141,7 +141,6 @@ describe("invite — countdown", () => {
   });
 });
 
-
 describe("invite — scratch reveal", () => {
   it("reveals once the cleared fraction reaches the threshold", () => {
     const { isScratchedEnough } = api();
@@ -172,38 +171,6 @@ describe("invite — placeholder handling", () => {
     expect(isPlaceholder("The Grand Bhagwati")).toBe(false);
     // A real word that merely starts with those four letters is not a placeholder.
     expect(isPlaceholder("Todorov Hall")).toBe(false);
-  });
-});
-
-describe("invite — photo carousel", () => {
-  it("advances and wraps around", () => {
-    const { nextSlide } = api();
-    expect(nextSlide(0, 4)).toBe(1);
-    expect(nextSlide(3, 4)).toBe(0);
-  });
-
-  it("stays put when there is nothing to advance to", () => {
-    const { nextSlide } = api();
-    expect(nextSlide(0, 1)).toBe(0);
-    expect(nextSlide(0, 0)).toBe(0);
-  });
-
-  it("ignores a drag shorter than the threshold", () => {
-    const { slideFromDrag } = api();
-    expect(slideFromDrag(-20, 50, 1, 4)).toBe(1);
-    expect(slideFromDrag(20, 50, 1, 4)).toBe(1);
-  });
-
-  it("goes forward on a left drag and back on a right drag", () => {
-    const { slideFromDrag } = api();
-    expect(slideFromDrag(-80, 50, 1, 4)).toBe(2);
-    expect(slideFromDrag(80, 50, 1, 4)).toBe(0);
-  });
-
-  it("wraps at both ends", () => {
-    const { slideFromDrag } = api();
-    expect(slideFromDrag(-80, 50, 3, 4)).toBe(0);
-    expect(slideFromDrag(80, 50, 0, 4)).toBe(3);
   });
 });
 
@@ -327,5 +294,57 @@ describe("invite — venue map", () => {
     expect(mapEmbedUrl("TODO — venue name")).toBeNull();
   });
 
+});
 
+describe("invite — photo gallery", () => {
+  const photo = {
+    thumb: " photos/couple-thumb.jpg ",
+    full: "photos/couple-full.jpg",
+    shape: "tall",
+    alt: " Akanksha and Ashish ",
+  };
+
+  it("normalises a complete entry", () => {
+    const { galleryPhotos } = api();
+    expect(galleryPhotos({ photos: [photo] })).toEqual([
+      {
+        thumb: "photos/couple-thumb.jpg",
+        full: "photos/couple-full.jpg",
+        shape: "tall",
+        alt: "Akanksha and Ashish",
+      },
+    ]);
+  });
+
+  it("treats any shape but tall as wide, so a typo cannot break the grid", () => {
+    const { galleryPhotos } = api();
+    expect(galleryPhotos({ photos: [{ ...photo, shape: "wide" }] })[0].shape).toBe("wide");
+    expect(galleryPhotos({ photos: [{ ...photo, shape: "portrait" }] })[0].shape).toBe("wide");
+    expect(galleryPhotos({ photos: [{ ...photo, shape: undefined }] })[0].shape).toBe("wide");
+  });
+
+  it("drops an entry missing either size, since both are needed", () => {
+    const { galleryPhotos } = api();
+    expect(galleryPhotos({ photos: [{ full: "a.jpg" }] })).toEqual([]);
+    expect(galleryPhotos({ photos: [{ thumb: "a.jpg" }] })).toEqual([]);
+    expect(galleryPhotos({ photos: [{ thumb: "TODO", full: "a.jpg" }] })).toEqual([]);
+  });
+
+  it("keeps the good entries and drops only the broken ones", () => {
+    const { galleryPhotos } = api();
+    const out = galleryPhotos({ photos: [photo, null, { thumb: "b.jpg" }, { ...photo, alt: "" }] });
+    expect(out.length).toBe(2);
+    expect(out[1].alt).toBe("");
+  });
+
+  it("falls back to an empty alt rather than printing a placeholder", () => {
+    const { galleryPhotos } = api();
+    expect(galleryPhotos({ photos: [{ ...photo, alt: "TODO — describe" }] })[0].alt).toBe("");
+  });
+
+  it("survives a missing config", () => {
+    const { galleryPhotos } = api();
+    expect(galleryPhotos(undefined)).toEqual([]);
+    expect(galleryPhotos({})).toEqual([]);
+  });
 });

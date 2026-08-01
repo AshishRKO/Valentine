@@ -124,15 +124,24 @@
     return total > 0 && cleared / total >= threshold;
   }
 
-  function nextSlide(current, total) {
-    if (!(total > 1)) return 0;
-    return (current + 1) % total;
-  }
-
-  function slideFromDrag(dx, threshold, current, total) {
-    if (!(total > 1)) return 0;
-    if (Math.abs(dx) < threshold) return current;
-    return (current + (dx < 0 ? 1 : -1) + total) % total;
+  /* Gallery entries, cleaned up. Both sizes are required — the grid shows the
+   * thumb, the lightbox loads the full one — so an entry missing either is
+   * dropped rather than rendered broken. Any shape but "tall" becomes "wide",
+   * so a typo in the config cannot derail the grid. */
+  function galleryPhotos(cfg) {
+    const list = (cfg && cfg.photos) || [];
+    return list
+      .filter(function (p) {
+        return p && !isPlaceholder(p.thumb) && !isPlaceholder(p.full);
+      })
+      .map(function (p) {
+        return {
+          thumb: String(p.thumb).trim(),
+          full: String(p.full).trim(),
+          shape: p.shape === "tall" ? "tall" : "wide",
+          alt: isPlaceholder(p.alt) ? "" : String(p.alt).trim(),
+        };
+      });
   }
 
   /* What to look the venue up by. An explicit mapQuery pins more reliably than
@@ -184,8 +193,7 @@
     weekdayName,
     countdown,
     isScratchedEnough,
-    nextSlide,
-    slideFromDrag,
+    galleryPhotos,
     mapQuery,
     mapEmbedUrl,
     musicPreference,
@@ -282,35 +290,37 @@
     setText($("#scratchTime"), formatTime(CFG.weddingDate));
   }
 
-  function renderPhotos() {
-    const strip = $("#carouselTrack");
-    const dots = $("#carouselDots");
+  /* The gallery. Each photo is a button so it is reachable by keyboard and
+   * announces itself as something you can open. */
+  function renderGallery() {
+    const grid = $("#galleryGrid");
     const section = $("#sectionPhotos");
-    const photos = (CFG.photos || []).filter(function (src) {
-      return !isPlaceholder(src);
-    });
-    if (!strip || !dots) return photos.length;
-    strip.textContent = "";
-    dots.textContent = "";
+    const photos = galleryPhotos(CFG.gallery);
+    if (!grid) return photos;
+    grid.textContent = "";
     if (photos.length === 0) {
       if (section) section.hidden = true;
-      return 0;
+      return photos;
     }
-    photos.forEach(function (src, i) {
-      const img = document.createElement("img");
-      img.className = "inv-carousel__img";
-      img.src = src;
-      img.alt = "";
-      img.draggable = false;
-      if (i > 0) img.loading = "lazy";
-      if (i === 0) img.classList.add("is-active");
-      strip.appendChild(img);
+    photos.forEach(function (photo, i) {
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "inv-gallery__item inv-gallery__item--" + photo.shape;
+      cell.setAttribute("data-full", photo.full);
+      cell.setAttribute("aria-label", photo.alt ? "Open photo: " + photo.alt : "Open photo");
 
-      const dot = document.createElement("span");
-      dot.className = "inv-carousel__dot" + (i === 0 ? " is-active" : "");
-      dots.appendChild(dot);
+      const img = document.createElement("img");
+      img.src = photo.thumb;
+      img.alt = photo.alt;
+      img.draggable = false;
+      // The first one is usually on screen already; the rest can wait.
+      if (i > 0) img.loading = "lazy";
+      img.decoding = "async";
+
+      cell.appendChild(img);
+      grid.appendChild(cell);
     });
-    return photos.length;
+    return photos;
   }
 
   function renderTimeline() {
@@ -785,75 +795,53 @@
     );
   }
 
-  // ---------- Photo carousel ----------
-
-  function bindCarousel(total) {
-    const track = $("#carouselTrack");
-    if (!track || total < 1) return;
-    const slides = $$(".inv-carousel__img", track);
-    const dots = $$(".inv-carousel__dot", $("#carouselDots"));
-    let current = 0;
-    let timer = 0;
-
-    function show(index) {
-      current = index;
-      slides.forEach(function (img, i) {
-        img.classList.toggle("is-active", i === index);
-      });
-      dots.forEach(function (dot, i) {
-        dot.classList.toggle("is-active", i === index);
-      });
-    }
-
-    function play() {
-      if (reduceMotion || total < 2) return;
-      timer = window.setInterval(function () {
-        show(nextSlide(current, total));
-      }, 4200);
-    }
-    function pause() {
-      window.clearInterval(timer);
-    }
-
-    let startX = null;
-    track.addEventListener("pointerdown", function (e) {
-      startX = e.clientX;
-      pause();
+  /* The map only becomes interactive once a guest taps it, so scrolling the
+   * page past it on a phone never turns into panning the map by accident. */
+  function bindMapUnlock() {
+    const wrap = $("#venueMapWrap");
+    const unlock = $("#venueMapUnlock");
+    if (!wrap || !unlock) return;
+    unlock.addEventListener("click", function () {
+      wrap.classList.add("is-live");
     });
-    window.addEventListener("pointerup", function (e) {
-      if (startX == null) return;
-      show(slideFromDrag(e.clientX - startX, 45, current, total));
-      startX = null;
-      play();
-    });
-    track.addEventListener(
-      "touchstart",
-      function (e) {
-        startX = e.touches[0].clientX;
-        pause();
-      },
-      { passive: true }
-    );
-    track.addEventListener(
-      "touchend",
-      function (e) {
-        if (startX == null) return;
-        const end = (e.changedTouches && e.changedTouches[0]) || null;
-        if (end) show(slideFromDrag(end.clientX - startX, 45, current, total));
-        startX = null;
-        play();
-      },
-      { passive: true }
-    );
-    dots.forEach(function (dot, i) {
-      dot.addEventListener("click", function () {
-        pause();
-        show(i);
-        play();
-      });
+  }
+
+  // ---------- Lightbox ----------
+
+  /* A native <dialog>, so Escape-to-close, the backdrop and focus trapping all
+   * come for free. Full-size images are fetched only when one is opened. */
+  function bindLightbox() {
+    const dialog = $("#lightbox");
+    const img = $("#lightboxImg");
+    const grid = $("#galleryGrid");
+    if (!dialog || !img || !grid || !dialog.showModal) return;
+
+    grid.addEventListener("click", function (e) {
+      const cell = e.target.closest(".inv-gallery__item");
+      if (!cell) return;
+      const full = cell.getAttribute("data-full");
+      const thumb = cell.querySelector("img");
+      if (!full) return;
+      img.src = full;
+      img.alt = thumb ? thumb.alt : "";
+      dialog.showModal();
     });
 
-    play();
+    function close() {
+      dialog.close();
+    }
+    const closeBtn = $("#lightboxClose");
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    // Clicking the backdrop — anywhere that is not the image — closes it.
+    dialog.addEventListener("click", function (e) {
+      if (e.target === img) return;
+      close();
+    });
+    // Drop the source on close so a reopen of a different photo never flashes
+    // the previous one.
+    dialog.addEventListener("close", function () {
+      img.removeAttribute("src");
+    });
   }
 
   // ---------- Boot ----------
@@ -864,7 +852,7 @@
     renderHero();
     renderWelcome();
     renderScratch();
-    const photoCount = renderPhotos();
+    renderGallery();
     renderTimeline();
     renderVenue();
     renderDressCode();
@@ -874,10 +862,11 @@
     renderNoteSection("sectionGifts", "giftsHeading", "giftsBody", CFG.gifts);
     renderSignoff();
 
+    bindMapUnlock();
     bindEnvelope(bindMusic());
     bindCountdown();
     bindScratch();
-    bindCarousel(photoCount);
+    bindLightbox();
 
     // Alternate the cream / blush section backgrounds over whatever survived,
     // so hiding a block never leaves two of the same shade side by side.
