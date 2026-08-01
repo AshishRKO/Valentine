@@ -179,26 +179,6 @@ window.INVITE = {
     body: "Your love, blessings, and presence are the greatest gifts we could ever ask for.",
   },
 
-  /* ---------- RSVP ---------- */
-  rsvp: {
-    heading: "Send a Message",
-    // Your WhatsApp number with country code, digits only. Until this is a real
-    // number the form tells guests to reach you directly instead of failing.
-    whatsapp: "91XXXXXXXXXX",
-    fallbackNote: "RSVP is not open yet — please message us directly.",
-    successNote: "Opening WhatsApp — press send and we'll have your RSVP.",
-    labels: {
-      name: "Your Name",
-      namePlaceholder: "Your full name",
-      guests: "How many of you?",
-      guestsPlaceholder: "e.g. 2",
-      attending: "Will you be attending?",
-      message: "Your Message",
-      messagePlaceholder: "Write your wishes...",
-      submit: "Send Message",
-    },
-  },
-
   /* ---------- Sign-off ---------- */
   signoff: {
     line: "We can't wait to celebrate with you!",

@@ -21,12 +21,6 @@
   ];
   const DAY_MS = 86400000;
 
-  const ATTENDING = {
-    yes: "Yes, I'll be there",
-    no: "Sorry, I can't make it",
-    maybe: "I'll try my best",
-  };
-
   function pad2(n) {
     return String(n).padStart(2, "0");
   }
@@ -126,41 +120,6 @@
     };
   }
 
-  function rsvpErrors(fields) {
-    const f = fields || {};
-    const errors = [];
-    const str = (v) => String(v == null ? "" : v).trim();
-    if (!str(f.name)) errors.push("name");
-    const guests = str(f.guests);
-    if (!/^\d+$/.test(guests) || Number(guests) < 1 || Number(guests) > 20) {
-      errors.push("guests");
-    }
-    if (!Object.prototype.hasOwnProperty.call(ATTENDING, str(f.attending))) {
-      errors.push("attending");
-    }
-    if (!str(f.message)) errors.push("message");
-    return errors;
-  }
-
-  function rsvpMessage(fields, coupleLabel) {
-    const f = fields || {};
-    const str = (v) => String(v == null ? "" : v).trim();
-    return [
-      "RSVP — " + str(coupleLabel),
-      "Name: " + str(f.name),
-      "Guests: " + str(f.guests),
-      "Attending: " + (ATTENDING[str(f.attending)] || str(f.attending)),
-      "Message: " + str(f.message),
-    ].join("\n");
-  }
-
-  // wa.me needs digits only. Too few digits means the number is a placeholder.
-  function whatsappUrl(phone, text) {
-    const digits = String(phone == null ? "" : phone).replace(/\D+/g, "");
-    if (digits.length < 8) return null;
-    return "https://wa.me/" + digits + "?text=" + encodeURIComponent(String(text == null ? "" : text));
-  }
-
   function isScratchedEnough(cleared, total, threshold) {
     return total > 0 && cleared / total >= threshold;
   }
@@ -199,9 +158,6 @@
     formatLongDate,
     weekdayName,
     countdown,
-    rsvpErrors,
-    rsvpMessage,
-    whatsappUrl,
     isScratchedEnough,
     nextSlide,
     slideFromDrag,
@@ -443,23 +399,6 @@
     const c = cfg || {};
     setText($("#" + headingId), c.heading);
     hideIfEmpty($("#" + sectionId), setText($("#" + bodyId), c.body));
-  }
-
-  function renderRsvpLabels() {
-    const r = CFG.rsvp || {};
-    const l = r.labels || {};
-    setText($("#rsvpHeading"), r.heading);
-    setText($("#labelName"), l.name);
-    setText($("#labelGuests"), l.guests);
-    setText($("#labelAttending"), l.attending);
-    setText($("#labelMessage"), l.message);
-    setText($("#rsvpSubmit"), l.submit);
-    const name = $("#rsvpName");
-    const guests = $("#rsvpGuests");
-    const message = $("#rsvpMessage");
-    if (name && !isPlaceholder(l.namePlaceholder)) name.placeholder = l.namePlaceholder;
-    if (guests && !isPlaceholder(l.guestsPlaceholder)) guests.placeholder = l.guestsPlaceholder;
-    if (message && !isPlaceholder(l.messagePlaceholder)) message.placeholder = l.messagePlaceholder;
   }
 
   function renderSignoff() {
@@ -885,66 +824,6 @@
     play();
   }
 
-  // ---------- RSVP ----------
-
-  function bindRsvp() {
-    const form = $("#rsvpForm");
-    if (!form) return;
-    const status = $("#rsvpStatus");
-    const cfg = CFG.rsvp || {};
-
-    function fieldEl(key) {
-      return $("#rsvp" + key.charAt(0).toUpperCase() + key.slice(1));
-    }
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const fields = {
-        name: ($("#rsvpName") || {}).value,
-        guests: ($("#rsvpGuests") || {}).value,
-        attending: ($("#rsvpAttending") || {}).value,
-        message: ($("#rsvpMessage") || {}).value,
-      };
-
-      ["name", "guests", "attending", "message"].forEach(function (key) {
-        const el = fieldEl(key);
-        if (el) el.classList.remove("is-invalid");
-      });
-
-      const errors = rsvpErrors(fields);
-      if (errors.length) {
-        errors.forEach(function (key) {
-          const el = fieldEl(key);
-          if (el) el.classList.add("is-invalid");
-        });
-        const first = fieldEl(errors[0]);
-        if (first && first.focus) first.focus();
-        if (status) {
-          status.hidden = false;
-          status.className = "inv-rsvp__status is-error";
-          status.textContent = "Please complete the highlighted fields.";
-        }
-        return;
-      }
-
-      const url = whatsappUrl(cfg.whatsapp, rsvpMessage(fields, CFG.coupleLabel));
-      if (!url) {
-        if (status) {
-          status.hidden = false;
-          status.className = "inv-rsvp__status is-error";
-          status.textContent = cfg.fallbackNote || "RSVP is not open yet.";
-        }
-        return;
-      }
-      if (status) {
-        status.hidden = false;
-        status.className = "inv-rsvp__status is-ok";
-        status.textContent = cfg.successNote || "Opening WhatsApp…";
-      }
-      window.open(url, "_blank", "noopener");
-    });
-  }
-
   // ---------- Boot ----------
 
   function start() {
@@ -961,14 +840,12 @@
     renderNoteSection("sectionTransport", "transportHeading", "transportBody", CFG.transport);
     renderNoteSection("sectionAccommodation", "accommodationHeading", "accommodationBody", CFG.accommodation);
     renderNoteSection("sectionGifts", "giftsHeading", "giftsBody", CFG.gifts);
-    renderRsvpLabels();
     renderSignoff();
 
     bindEnvelope(bindMusic());
     bindCountdown();
     bindScratch();
     bindCarousel(photoCount);
-    bindRsvp();
 
     // Alternate the cream / blush section backgrounds over whatever survived,
     // so hiding a block never leaves two of the same shade side by side.
