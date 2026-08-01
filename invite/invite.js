@@ -795,6 +795,17 @@
     );
   }
 
+  /* The map only becomes interactive once a guest taps it, so scrolling the
+   * page past it on a phone never turns into panning the map by accident. */
+  function bindMapUnlock() {
+    const wrap = $("#venueMapWrap");
+    const unlock = $("#venueMapUnlock");
+    if (!wrap || !unlock) return;
+    unlock.addEventListener("click", function () {
+      wrap.classList.add("is-live");
+    });
+  }
+
   // ---------- Lightbox ----------
 
   /* A native <dialog>, so Escape-to-close, the backdrop and focus trapping all
@@ -851,6 +862,7 @@
     renderNoteSection("sectionGifts", "giftsHeading", "giftsBody", CFG.gifts);
     renderSignoff();
 
+    bindMapUnlock();
     bindEnvelope(bindMusic());
     bindCountdown();
     bindScratch();

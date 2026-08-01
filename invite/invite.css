@@ -474,11 +474,14 @@ body#page-invite {
   position: relative;
   padding: 6rem 1.5rem;
   overflow: hidden;
+  /* The welcome text runs from 44% to 72% of this section, so the dark has to
+   * hold that far down — otherwise the last lines are cream on pale grey. */
   background: linear-gradient(
     180deg,
     #282e39 0%,
-    #282e39 18%,
-    #8e8990 55%,
+    #282e39 34%,
+    #443f4b 66%,
+    #7c757e 82%,
     var(--inv-cream) 100%
   );
 }
@@ -649,7 +652,7 @@ body#page-invite {
 }
 .inv-scratch__time {
   margin: 0.25rem 0 0;
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   color: #644047;
 }
 .inv-scratch__canvas {
@@ -705,9 +708,18 @@ body#page-invite {
   outline-offset: -1px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
-.inv-gallery__item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 44px -12px rgba(59, 22, 30, 0.32);
+@media (hover: hover) {
+  .inv-gallery__item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 44px -12px rgba(59, 22, 30, 0.32);
+  }
+  .inv-gallery__item:hover img {
+    transform: scale(1.03);
+  }
+}
+/* Touch gets a press state instead, which cannot get stuck on. */
+.inv-gallery__item:active {
+  transform: scale(0.985);
 }
 .inv-gallery__item:focus-visible {
   outline: 2px solid var(--inv-primary);
@@ -722,10 +734,6 @@ body#page-invite {
   object-position: center 32%;
   transition: transform 0.7s ease;
 }
-.inv-gallery__item:hover img {
-  transform: scale(1.03);
-}
-
 /* Cropped a little squarer than 2:3 on a phone, so it does not eat the screen. */
 .inv-gallery__item--tall {
   aspect-ratio: 4 / 5;
@@ -916,6 +924,7 @@ body#page-invite {
   color: var(--inv-muted);
 }
 .inv-venue__map {
+  position: relative;
   max-width: 42rem;
   margin: 0 auto 2rem;
   border-radius: 0.75rem;
@@ -933,6 +942,44 @@ body#page-invite {
   width: 100%;
   height: 300px;
   border: 0;
+}
+
+/* On a touch screen a live map under a scrolling thumb hijacks the page, so it
+ * stays inert until it is deliberately tapped. A mouse has no such problem. */
+.inv-venue__unlock {
+  display: none;
+}
+@media (hover: none) {
+  .inv-venue__map iframe {
+    pointer-events: none;
+  }
+  .inv-venue__map.is-live iframe {
+    pointer-events: auto;
+  }
+  .inv-venue__unlock {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .inv-venue__map.is-live .inv-venue__unlock {
+    display: none;
+  }
+  .inv-venue__unlock span {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 162, 74, 0.55);
+    background: rgba(253, 247, 248, 0.94);
+    color: var(--inv-heading);
+    font-family: var(--inv-font-body);
+    font-size: 0.8125rem;
+    box-shadow: 0 6px 18px rgba(59, 22, 30, 0.22);
+  }
 }
 
 .inv-venue__art {
