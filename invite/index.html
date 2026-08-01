@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f5e5e8" />
+    <title>Akanksha &amp; Ashish — Wedding Invitation</title>
+    <meta
+      name="description"
+      content="Akanksha &amp; Ashish invite you to their wedding — 17 to 19 October 2026, Kotdwar."
+    />
+
+    <!-- Link preview (Open Graph + Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Akanksha &amp; Ashish" />
+    <meta property="og:title" content="Akanksha &amp; Ashish — Wedding Invitation" />
+    <meta property="og:description" content="17–19 October 2026 · Ambience Garden Resort, Kotdwar. We would be honoured by your presence." />
+    <meta property="og:url" content="https://ashishrko.github.io/Valentine/invite/" />
+    <meta property="og:image" content="https://ashishrko.github.io/Valentine/icons/og-wedding.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Akanksha &amp; Ashish — Wedding Invitation" />
+    <meta name="twitter:description" content="17–19 October 2026 · Ambience Garden Resort, Kotdwar. We would be honoured by your presence." />
+    <meta name="twitter:image" content="https://ashishrko.github.io/Valentine/icons/og-wedding.jpg" />
+
+    <!-- Favicons + Add to Home Screen -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Akanksha &amp; Ashish" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italianno&family=Dancing+Script:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../shared/shared.css" />
+    <link rel="stylesheet" href="invite.css" />
+  </head>
+  <body id="page-invite">
+    <div class="inv-texture" aria-hidden="true"></div>
+
+    <!-- Background music, instrumental. Starts on the tap that opens the
+         envelope, since autoplay needs a gesture. Re-encoded to 96 kbps so it
+         is kind to mobile data. -->
+    <audio id="inviteAudio" src="music/background.mp3" loop preload="metadata"></audio>
+
+    <button
+      id="musicToggle"
+      class="sh-music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      title="Play music"
+    ><span class="sh-music-toggle__icon" aria-hidden="true"></span></button>
+
+    <!-- Heart outline used to clip the scratch card. -->
+    <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+      <defs>
+        <clipPath id="inv-heart-clip" clipPathUnits="objectBoundingBox">
+          <path
+            d="M0.5,0.96 C0.5,0.96 0.06,0.70 0.06,0.36 C0.06,0.18 0.20,0.06 0.32,0.06 C0.42,0.06 0.48,0.14 0.5,0.24 C0.52,0.14 0.58,0.06 0.68,0.06 C0.80,0.06 0.94,0.18 0.94,0.36 C0.94,0.70 0.5,0.96 0.5,0.96 Z"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+
+    <div class="inv-confetti" id="confetti" aria-hidden="true"></div>
+
+    <div id="inviteRoot">
+      <!-- ================= Hero: the envelope, then the names ================= -->
+      <section class="inv-hero" id="inviteHero">
+        <div class="inv-hero__photo" id="heroPhoto" aria-hidden="true"></div>
+        <div class="inv-hero__veil" aria-hidden="true"></div>
+
+        <div class="inv-hero__content">
+          <p class="inv-hero__invocation" id="heroInvocation" lang="hi"></p>
+
+          <svg
+            class="inv-hero__heart"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+
+          <p class="inv-hero__message" id="heroMessage"></p>
+
+          <div class="inv-divider" aria-hidden="true">
+            <span class="inv-divider__rule inv-divider__rule--light"></span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              />
+            </svg>
+            <span class="inv-divider__rule inv-divider__rule--light"></span>
+          </div>
+
+          <h1 class="inv-couple__name" id="firstName"></h1>
+          <span class="inv-couple__lines" id="firstLines"></span>
+
+          <p class="inv-couple__amp" aria-hidden="true">&amp;</p>
+
+          <h1 class="inv-couple__name" id="secondName"></h1>
+          <span class="inv-couple__lines" id="secondLines"></span>
+        </div>
+
+        <div class="inv-hero__scroll" aria-hidden="true">
+          <span id="heroScroll"></span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </div>
+
+        <!-- The envelope sits on top until it is tapped. -->
+        <button
+          class="inv-env"
+          id="envelope"
+          type="button"
+          aria-label="Tap to open the invitation"
+        >
+          <span class="inv-env__paper" aria-hidden="true"></span>
+          <span class="inv-env__frame" aria-hidden="true"></span>
+
+          <svg
+            class="inv-env__folds"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M0 0 L50 46 L100 0"
+              fill="none"
+              stroke="rgba(201,162,74,0.55)"
+              stroke-width="1"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+
+          <span class="inv-env__flap" aria-hidden="true"></span>
+          <span class="inv-env__hint" aria-hidden="true"></span>
+          <span class="inv-env__seal" aria-hidden="true">
+            <span class="inv-env__sealText" id="envSeal"></span>
+          </span>
+
+          <span class="inv-env__caption" aria-hidden="true">
+            <svg class="inv-env__flourish" viewBox="0 0 200 26" fill="none">
+              <path
+                d="M100 7 C92 7 88 13 80 13 C70 13 64 7 54 9 C44 11 40 19 30 19 C22 19 18 15 14 11"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="round"
+              />
+              <path
+                d="M100 7 C108 7 112 13 120 13 C130 13 136 7 146 9 C156 11 160 19 170 19 C178 19 182 15 186 11"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="round"
+              />
+              <path d="M100 2 L104 7 L100 12 L96 7 Z" fill="currentColor" />
+              <circle cx="14" cy="11" r="1.7" fill="currentColor" />
+              <circle cx="186" cy="11" r="1.7" fill="currentColor" />
+            </svg>
+            <span class="inv-env__captionText" id="envCaption"></span>
+            <span class="inv-env__underline">
+              <span class="inv-env__rule"></span>
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                />
+              </svg>
+              <span class="inv-env__rule"></span>
+            </span>
+          </span>
+        </button>
+      </section>
+
+      <!-- ================= Welcome ================= -->
+      <section class="inv-welcome" id="sectionWelcome">
+        <div class="inv-welcome__inner">
+          <div class="inv-divider" aria-hidden="true">
+            <span class="inv-divider__rule inv-divider__rule--rose"></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              />
+            </svg>
+            <span class="inv-divider__rule inv-divider__rule--rose"></span>
+          </div>
+          <p class="inv-welcome__shloka" id="welcomeShloka" lang="hi" data-reveal></p>
+          <p class="inv-welcome__text" id="welcomeText" data-reveal></p>
+          <div class="inv-divider" aria-hidden="true">
+            <span class="inv-divider__rule inv-divider__rule--rose"></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              />
+            </svg>
+            <span class="inv-divider__rule inv-divider__rule--rose"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Scratch to reveal ================= -->
+      <section class="inv-section" id="sectionScratch" data-reveal>
+        <h2 class="inv-section__title" id="scratchHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+
+        <div class="inv-scratch" id="scratchCard">
+          <div class="inv-scratch__card">
+            <div class="inv-scratch__face">
+              <p class="inv-scratch__kicker" id="scratchKicker"></p>
+              <p class="inv-scratch__date" id="scratchDate"></p>
+              <p class="inv-scratch__day" id="scratchDay"></p>
+              <p class="inv-scratch__time" id="scratchTime"></p>
+            </div>
+            <canvas class="inv-scratch__canvas" id="scratchCanvas" width="260" height="240"></canvas>
+            <div class="inv-scratch__vignette" aria-hidden="true"></div>
+          </div>
+          <svg
+            class="inv-scratch__outline"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M50,96 C50,96 6,70 6,36 C6,18 20,6 32,6 C42,6 48,14 50,24 C52,14 58,6 68,6 C80,6 94,18 94,36 C94,70 50,96 50,96 Z"
+              fill="none"
+              stroke="#8b2337"
+              stroke-width="1.2"
+              vector-effect="non-scaling-stroke"
+              opacity="0.7"
+            />
+          </svg>
+        </div>
+      </section>
+
+      <!-- ================= Photo carousel ================= -->
+      <section class="inv-section" id="sectionPhotos" data-reveal>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-carousel">
+          <div class="inv-carousel__track" id="carouselTrack"></div>
+          <div class="inv-carousel__scrim" aria-hidden="true"></div>
+          <div class="inv-carousel__dots" id="carouselDots"></div>
+        </div>
+      </section>
+
+      <!-- ================= Countdown ================= -->
+      <section class="inv-section" id="sectionCountdown" data-reveal>
+        <h2 class="inv-section__title" id="countdownHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+
+        <div class="inv-countdown" id="countdownGrid" role="timer" aria-live="off">
+          <div class="inv-countdown__cell">
+            <div class="inv-countdown__box"><div class="inv-countdown__num" id="cdDays">00</div></div>
+            <p class="inv-countdown__label">Days</p>
+          </div>
+          <div class="inv-countdown__cell">
+            <div class="inv-countdown__box"><div class="inv-countdown__num" id="cdHours">00</div></div>
+            <p class="inv-countdown__label">Hours</p>
+          </div>
+          <div class="inv-countdown__cell">
+            <div class="inv-countdown__box"><div class="inv-countdown__num" id="cdMinutes">00</div></div>
+            <p class="inv-countdown__label">Minutes</p>
+          </div>
+          <div class="inv-countdown__cell">
+            <div class="inv-countdown__box"><div class="inv-countdown__num" id="cdSeconds">00</div></div>
+            <p class="inv-countdown__label">Seconds</p>
+          </div>
+        </div>
+        <p class="inv-countdown__note" id="countdownNote" hidden></p>
+      </section>
+
+      <!-- ================= Programme ================= -->
+      <section class="inv-section" id="sectionTimeline" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <h2 class="inv-section__title" id="timelineHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-timeline" id="timelineList"></div>
+      </section>
+
+      <!-- ================= Venue ================= -->
+      <section class="inv-section" id="sectionVenue" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        <h2 class="inv-section__title" id="venueHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+
+        <div class="inv-venue">
+          <p class="inv-venue__name" id="venueName"></p>
+          <p class="inv-venue__address" id="venueAddress"></p>
+        </div>
+
+        <div class="inv-venue__art">
+          <!-- A mandap in outline: three arches under a canopy. -->
+          <svg viewBox="0 0 800 300" fill="none" aria-hidden="true">
+            <rect x="90" y="252" width="620" height="9" rx="2" stroke="currentColor" stroke-width="1.5" />
+            <path d="M320 252 V150 Q320 74 400 52 Q480 74 480 150 V252" stroke="currentColor" stroke-width="1.5" />
+            <path d="M360 252 V176 Q360 142 400 134 Q440 142 440 176 V252" stroke="currentColor" stroke-width="1.5" />
+            <path d="M400 52 V34" stroke="currentColor" stroke-width="1.5" />
+            <circle cx="400" cy="28" r="6" stroke="currentColor" stroke-width="1.5" />
+            <path d="M160 252 V178 Q160 130 224 118 Q288 130 288 178 V252" stroke="currentColor" stroke-width="1.3" />
+            <path d="M512 252 V178 Q512 130 576 118 Q640 130 640 178 V252" stroke="currentColor" stroke-width="1.3" />
+            <circle cx="224" cy="110" r="4" stroke="currentColor" stroke-width="1.3" />
+            <circle cx="576" cy="110" r="4" stroke="currentColor" stroke-width="1.3" />
+            <rect x="112" y="160" width="18" height="92" stroke="currentColor" stroke-width="1.3" />
+            <path d="M107 160 L121 132 L135 160" stroke="currentColor" stroke-width="1.3" />
+            <rect x="670" y="160" width="18" height="92" stroke="currentColor" stroke-width="1.3" />
+            <path d="M665 160 L679 132 L693 160" stroke="currentColor" stroke-width="1.3" />
+            <path d="M300 118 Q400 92 500 118" stroke="currentColor" stroke-width="1" />
+            <path d="M300 118 Q320 134 340 118 Q360 134 380 118 Q400 134 420 118 Q440 134 460 118 Q480 134 500 118" stroke="currentColor" stroke-width="0.9" />
+            <circle cx="140" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+            <circle cx="220" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+            <circle cx="300" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+            <circle cx="380" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+            <circle cx="460" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+            <circle cx="540" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+            <circle cx="620" cy="268" r="1.6" fill="currentColor" opacity="0.4" />
+          </svg>
+          <a class="inv-button" id="venueMapLink" href="#" target="_blank" rel="noopener noreferrer">
+            <span id="venueMapLabel">View on Google Maps</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ================= Dress code ================= -->
+      <section class="inv-section" id="sectionDress" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+        </svg>
+        <h2 class="inv-section__title" id="dressHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-dress">
+          <div id="dressWomenBlock">
+            <h3 class="inv-dress__label">Women</h3>
+            <div class="inv-dress__rule" aria-hidden="true"></div>
+            <p class="inv-dress__body" id="dressWomen"></p>
+          </div>
+          <div id="dressMenBlock">
+            <h3 class="inv-dress__label">Men</h3>
+            <div class="inv-dress__rule" aria-hidden="true"></div>
+            <p class="inv-dress__body" id="dressMen"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Pre-wedding events ================= -->
+      <section class="inv-section" id="sectionPre" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5.8 11.3 2 22l10.7-3.79" />
+          <path d="M4 3h.01" />
+          <path d="M22 8h.01" />
+          <path d="M15 2h.01" />
+          <path d="M22 20h.01" />
+          <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10" />
+          <path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17" />
+          <path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7" />
+          <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z" />
+        </svg>
+        <h2 class="inv-section__title" id="preHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-pre" id="preList"></div>
+      </section>
+
+      <!-- ================= Transportation ================= -->
+      <section class="inv-section" id="sectionTransport" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+          <circle cx="7" cy="17" r="2" />
+          <path d="M9 17h6" />
+          <circle cx="17" cy="17" r="2" />
+        </svg>
+        <h2 class="inv-section__title" id="transportHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-note"><p id="transportBody"></p></div>
+      </section>
+
+      <!-- ================= Accommodation ================= -->
+      <section class="inv-section" id="sectionAccommodation" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M10 22v-6.57" />
+          <path d="M12 11h.01" />
+          <path d="M12 7h.01" />
+          <path d="M14 15.43V22" />
+          <path d="M15 16a5 5 0 0 0-6 0" />
+          <path d="M16 11h.01" />
+          <path d="M16 7h.01" />
+          <path d="M8 11h.01" />
+          <path d="M8 7h.01" />
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+        </svg>
+        <h2 class="inv-section__title" id="accommodationHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-note"><p id="accommodationBody"></p></div>
+      </section>
+
+      <!-- ================= Gifts ================= -->
+      <section class="inv-section" id="sectionGifts" data-reveal>
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="8" width="18" height="4" rx="1" />
+          <path d="M12 8v13" />
+          <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" />
+          <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" />
+        </svg>
+        <h2 class="inv-section__title" id="giftsHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+        <div class="inv-note"><p id="giftsBody"></p></div>
+      </section>
+
+      <!-- ================= RSVP ================= -->
+      <section class="inv-section" id="sectionRsvp" data-reveal>
+        <svg class="inv-corner inv-corner--bl" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M6 94 C22 82 30 66 28 50 C27 40 20 34 13 36 C7 38 6 46 12 50 C20 55 30 50 34 42" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
+          <path d="M6 94 C18 88 26 78 30 66" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.6" />
+          <circle cx="28" cy="50" r="2" fill="currentColor" opacity="0.5" />
+          <circle cx="34" cy="42" r="1.5" fill="currentColor" opacity="0.4" />
+        </svg>
+        <svg class="inv-corner inv-corner--br" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M6 94 C22 82 30 66 28 50 C27 40 20 34 13 36 C7 38 6 46 12 50 C20 55 30 50 34 42" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
+          <path d="M6 94 C18 88 26 78 30 66" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.6" />
+          <circle cx="28" cy="50" r="2" fill="currentColor" opacity="0.5" />
+          <circle cx="34" cy="42" r="1.5" fill="currentColor" opacity="0.4" />
+        </svg>
+
+        <svg
+          class="inv-section__icon"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+        <h2 class="inv-section__title" id="rsvpHeading"></h2>
+        <div class="inv-divider" aria-hidden="true">
+          <span class="inv-divider__rule"></span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span class="inv-divider__rule"></span>
+        </div>
+
+        <form class="inv-rsvp" id="rsvpForm" novalidate>
+          <div class="inv-rsvp__field">
+            <label class="inv-rsvp__label" for="rsvpName"><span id="labelName">Your Name</span></label>
+            <input type="text" id="rsvpName" name="name" autocomplete="name" />
+          </div>
+
+          <div class="inv-rsvp__field">
+            <label class="inv-rsvp__label" for="rsvpGuests">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              <span id="labelGuests">How many of you?</span>
+            </label>
+            <input type="number" id="rsvpGuests" name="guests" min="1" max="20" step="1" inputmode="numeric" />
+          </div>
+
+          <div class="inv-rsvp__field">
+            <label class="inv-rsvp__label" for="rsvpAttending">
+              <span id="labelAttending">Will you be attending?</span>
+            </label>
+            <select id="rsvpAttending" name="attending">
+              <option value="">Select...</option>
+              <option value="yes">Yes, I'll be there</option>
+              <option value="no">Sorry, I can't make it</option>
+              <option value="maybe">I'll try my best</option>
+            </select>
+          </div>
+
+          <div class="inv-rsvp__field">
+            <label class="inv-rsvp__label" for="rsvpMessage"><span id="labelMessage">Your Message</span></label>
+            <textarea id="rsvpMessage" name="message" rows="4"></textarea>
+          </div>
+
+          <button class="inv-button inv-rsvp__submit" type="submit"><span id="rsvpSubmit">Send Message</span></button>
+          <p class="inv-rsvp__status" id="rsvpStatus" role="status" aria-live="polite" hidden></p>
+        </form>
+      </section>
+
+      <!-- ================= Sign-off ================= -->
+      <section class="inv-section" id="sectionSignoff" data-reveal>
+        <div class="inv-signoff">
+          <svg class="inv-signoff__wave" viewBox="0 0 400 24" fill="none" aria-hidden="true">
+            <path d="M4 16 C50 4 90 22 140 12 C190 2 230 20 280 12 C324 5 360 16 396 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            <circle cx="66" cy="10" r="1.8" fill="currentColor" />
+            <circle cx="140" cy="12" r="1.8" fill="currentColor" />
+            <circle cx="214" cy="9" r="1.8" fill="currentColor" />
+            <circle cx="288" cy="13" r="1.8" fill="currentColor" />
+            <circle cx="352" cy="11" r="1.8" fill="currentColor" />
+          </svg>
+          <p class="inv-signoff__line" id="signoffLine"></p>
+          <p class="inv-signoff__couple" id="signoffCouple"></p>
+          <svg class="inv-signoff__wave" viewBox="0 0 400 24" fill="none" aria-hidden="true">
+            <path d="M4 8 C50 20 90 2 140 12 C190 22 230 4 280 12 C324 19 360 8 396 14" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            <circle cx="66" cy="14" r="1.8" fill="currentColor" />
+            <circle cx="140" cy="12" r="1.8" fill="currentColor" />
+            <circle cx="214" cy="15" r="1.8" fill="currentColor" />
+            <circle cx="288" cy="11" r="1.8" fill="currentColor" />
+            <circle cx="352" cy="13" r="1.8" fill="currentColor" />
+          </svg>
+        </div>
+      </section>
+
+      <footer class="inv-footer">
+        <svg class="inv-corner inv-corner--tl" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M5 5 C21 17 29 33 27 49 C26 59 19 65 12 63 C6 61 5 53 11 49 C19 44 29 49 33 57" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
+          <circle cx="27" cy="49" r="2" fill="currentColor" opacity="0.5" />
+          <circle cx="33" cy="57" r="1.5" fill="currentColor" opacity="0.4" />
+        </svg>
+        <svg class="inv-corner inv-corner--tr" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M5 5 C21 17 29 33 27 49 C26 59 19 65 12 63 C6 61 5 53 11 49 C19 44 29 49 33 57" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
+          <circle cx="27" cy="49" r="2" fill="currentColor" opacity="0.5" />
+          <circle cx="33" cy="57" r="1.5" fill="currentColor" opacity="0.4" />
+        </svg>
+        <p class="inv-footer__couple" id="footerCouple"></p>
+        <p class="inv-footer__note" id="footerNote"></p>
+      </footer>
+    </div>
+
+    <script src="invite-data.js"></script>
+    <script src="../shared/interactive.js"></script>
+    <script src="invite.js"></script>
+  </body>
+</html>
