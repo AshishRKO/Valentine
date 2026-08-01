@@ -37,8 +37,8 @@ window.INVITE = {
   first: {
     name: "Akanksha",
     lines: [
-      "Daughter of Smt. Malti Dhulia & Shri Yugalkishore Dhulia",
-      "Granddaughter of the late Smt. Manorama Devi & Shri Sarveshwar Prasad Dhulia",
+      "Daughter of Smt. Malti Dhuliya & Shri Yugalkishore Dhuliya",
+      "Granddaughter of the late Smt. Manorama Devi & Shri Sarveshwar Prasad Dhuliya",
     ],
   },
 
@@ -185,7 +185,7 @@ window.INVITE = {
   footer: {
     // दर्शनाभिलाषी / विनीत, as the card signs off.
     note:
-      "Awaiting your presence — the Dhulia family and well-wishers · " +
-      "Smt. Malti, Shri Yugalkishore Dhulia, Devansh Dhulia",
+      "Awaiting your presence — the Dhuliya family and well-wishers · " +
+      "Smt. Malti, Shri Yugalkishore Dhuliya, Devansh Dhuliya",
   },
 };
