@@ -81,21 +81,29 @@ window.INVITE = {
    * the two wide ones. Both sizes are required; an entry missing either is
    * skipped. Empty the list and the whole section disappears.
    *
-   * The files under photos/ were resized from images/Ring Ceremony (40 MB of
-   * originals down to 520 KB on the page). Re-run that step if you swap them. */
+   * The files under photos/ come from images/Ring Ceremony: thumbs downsized
+   * with lanczos and a mild unsharp (ffmpeg), fulls kept at original size.
+   * Re-run that step if you swap them. With four photos, the last wide one
+   * runs across the whole grid on a desktop, as a closing band. */
   gallery: {
     photos: [
       {
-        thumb: "photos/couple-thumb.jpg",
-        full: "photos/couple-full.jpg",
+        thumb: "photos/selfie-thumb.jpg",
+        full: "photos/selfie-full.jpg",
         shape: "tall",
-        alt: "Akanksha and Ashish at their ring ceremony",
+        alt: "Akanksha and Ashish, cheek to cheek at their ring ceremony",
       },
       {
-        thumb: "photos/moment-thumb.jpg",
-        full: "photos/moment-full.jpg",
+        thumb: "photos/hands-thumb.jpg",
+        full: "photos/hands-full.jpg",
         shape: "wide",
-        alt: "Ashish kissing Akanksha on the cheek",
+        alt: "Akanksha and Ashish showing their engagement rings",
+      },
+      {
+        thumb: "photos/sofa-thumb.jpg",
+        full: "photos/sofa-full.jpg",
+        shape: "wide",
+        alt: "Ashish lying across Akanksha's lap on the ceremony sofa",
       },
       {
         thumb: "photos/rings-thumb.jpg",
